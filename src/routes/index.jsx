@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
-import MainLayout from "../layouts/MainLayout";
-import HomePage from "../pages/HomePage";
+import MainLayout from "../layouts/MainLayout.jsx";
+import HomePage from "../pages/auth/user/HomePage.jsx";
 import LoginUSer from "../pages/user/LoginUser";
 import Profile from "../pages/Profile";
 import Payment from "../pages/Payment";
@@ -10,7 +10,7 @@ import ManageBid from "../pages/ManageBid";
 import Information from "../pages/Information";
 import Catalog from "../pages/Catalog";
 import CarDetails from "../pages/CarDetails";
-import AddBid from "../pages/AddBid"; 
+import AddBid from "../pages/AddBid";
 
 
 const router = createBrowserRouter([
@@ -25,42 +25,42 @@ const router = createBrowserRouter([
         path: "/",
         element: <HomePage />,
       },
-    //   {
-    //     path: "/login",
-    //     element: <LoginUser />,
-    //   },
-    //   {
-    //     path: "/profile",
-    //     element: <Profile />,
-    //   },
-    //   {
-    //     path: "/payment",
-    //     element: <Payment />,
-    //   },
-    //   {
-    //     path: "/upcoming",
-    //     element: <Upcoming />,
-    //   },
-    //   {
-    //     path: "/managebid",
-    //     element: <ManageBid />,
-    //   },
-    //   {
-    //     path: "/information",
-    //     element: <Information />,
-    //   },
-    //   {
-    //     path: "/catalog",
-    //     element: <Catalog />,
-    //   },
-    //   {
-    //     path: "/cardetails",
-    //     element: <CarDetails />,
-    //   },
-    //   {
-    //     path: "/addbid",
-    //     element: <AddBid />,
-    //   },
+      //   {
+      //     path: "/login",
+      //     element: <LoginUser />,
+      //   },
+      //   {
+      //     path: "/profile",
+      //     element: <Profile />,
+      //   },
+      //   {
+      //     path: "/payment",
+      //     element: <Payment />,
+      //   },
+      //   {
+      //     path: "/upcoming",
+      //     element: <Upcoming />,
+      //   },
+      //   {
+      //     path: "/managebid",
+      //     element: <ManageBid />,
+      //   },
+      //   {
+      //     path: "/information",
+      //     element: <Information />,
+      //   },
+      //   {
+      //     path: "/catalog",
+      //     element: <Catalog />,
+      //   },
+      //   {
+      //     path: "/cardetails",
+      //     element: <CarDetails />,
+      //   },
+      //   {
+      //     path: "/addbid",
+      //     element: <AddBid />,
+      //   },
     ],
   },
 ]);
