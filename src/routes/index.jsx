@@ -12,7 +12,7 @@ import ManageBid from "../pages/auth/admin/ManageBid";
 import Information from "../pages/InformationPage";
 import Catalog from "../pages/CatalogPage";
 import CarDetails from "../pages/DetailPage";
-// import AddBid from "../pages/AddBid";
+import AddBid from "../pages/AddBidPage";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +50,10 @@ const router = createBrowserRouter([
             {
                 path: "/detail",
                 element: <CarDetails />,
+            },
+            {
+                path: "/add",
+                element: <AddBid />,
             },
         ],
     },

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Catalog = () => {
   const dataMobil = [
@@ -12,7 +12,7 @@ const Catalog = () => {
       kilometers: "20,000",
       transmission: "Automatic",
       listedDate: "12-10-2024",
-      timeLeft: "2d 10h"
+      timeLeft: "2d 10h",
     },
     {
       id: 2,
@@ -23,7 +23,7 @@ const Catalog = () => {
       kilometers: "15,000",
       transmission: "Automatic",
       listedDate: "12-10-2024",
-      timeLeft: "1d 8h"
+      timeLeft: "1d 8h",
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ const Catalog = () => {
       kilometers: "10,000",
       transmission: "Automatic",
       listedDate: "12-10-2024",
-      timeLeft: "3d 5h"
+      timeLeft: "3d 5h",
     },
     {
       id: 4,
@@ -45,147 +45,114 @@ const Catalog = () => {
       kilometers: "25,000",
       transmission: "Automatic",
       listedDate: "12-10-2024",
-      timeLeft: "4d 12h"
-    }
+      timeLeft: "4d 12h",
+    },
   ];
 
   const filterCategory = (category, element) => {
-    const items = document.querySelectorAll('.card-item');
+    const items = document.querySelectorAll(".card-item");
     items.forEach((item) => {
-      if (category === 'All' || item.getAttribute('data-category') === category) {
-        item.style.display = 'block';
+      if (category === "All" || item.getAttribute("data-category") === category) {
+        item.style.display = "block";
       } else {
-        item.style.display = 'none';
+        item.style.display = "none";
       }
     });
 
-    const buttons = document.querySelectorAll('.category-btn');
+    const buttons = document.querySelectorAll(".category-btn");
     buttons.forEach((btn) => {
-      btn.classList.remove('active');
+      btn.classList.remove("active");
     });
-    element.classList.add('active');
+    element.classList.add("active");
   };
 
   return (
-    <div className="container-fluid px-4 py-3">
-      {/* Header Section */}
-      <div className="mb-4">
-        <h1 className="mb-3"><strong>Our Catalog</strong></h1>
+    <div className="container py-4">
+      {/* Header */}
+      <div className="text-center mb-4">
+        <h1 className="fw-bold">Our Catalog</h1>
+        <br />
         <p className="text-muted">
-          Welcome to Atma AutoBid's exclusive catalog, where you can explore a curated selection of high-quality vehicles. 
-          Dive into the details, and find the perfect vehicle that meets your needs.
+        Welcome to AtmaBid, your premier destination for exclusive vehicle auctions. Discover a meticulously curated selection of high-quality cars that cater to every lifestyle and preference, from sleek and practical sedans to luxurious SUVs and cutting-edge electric vehicles. Whether you’re a first-time buyer, a seasoned car enthusiast, or looking for a reliable family vehicle, AtmaBid has something perfect for you.  
         </p>
       </div>
 
-      {/* Filter and Search Section */}
+      {/* Filter and Search */}
       <div className="d-flex justify-content-between align-items-center mb-4">
-        {/* Category Buttons */}
-        <div className="d-flex align-items-center gap-2">
-          <button 
-            className="btn btn-outline-primary category-btn active" 
-            onClick={(e) => filterCategory('All', e.target)}
-          >
-            All
-          </button>
-          <button 
-            className="btn btn-outline-primary category-btn" 
-            onClick={(e) => filterCategory('Standard', e.target)}
-          >
-            Standard
-          </button>
-          <button 
-            className="btn btn-outline-primary category-btn" 
-            onClick={(e) => filterCategory('Luxury', e.target)}
-          >
-            Luxury
-          </button>
-          <button 
-            className="btn btn-outline-primary category-btn" 
-            onClick={(e) => filterCategory('EV', e.target)}
-          >
-            EV
-          </button>
-        </div>
-
-        {/* Search and Sort */}
-        <div className="d-flex align-items-center gap-3">
-          <div className="input-group" style={{ width: '300px' }}>
-            <input 
-              type="text" 
-              className="form-control" 
-              placeholder="Search vehicles..."
-              aria-label="Search vehicles" 
-            />
-            <button className="btn btn-outline-primary" type="button">
-              Search
-            </button>
-          </div>
-          <div className="dropdown">
-            <button 
-              className="btn btn-outline-secondary dropdown-toggle" 
-              type="button" 
-              data-bs-toggle="dropdown" 
-              aria-expanded="false"
+        {/* Categories */}
+        <div className="d-flex gap-2">
+          {["All", "Standard", "Luxury", "EV"].map((cat) => (
+            <button
+              key={cat}
+              className={`btn btn-outline-primary category-btn ${cat === "All" ? "active" : ""}`}
+              onClick={(e) => filterCategory(cat, e.target)}
             >
-              Sort By
+              {cat}
             </button>
-            <ul className="dropdown-menu">
-              <li><button className="dropdown-item">Price: Low to High</button></li>
-              <li><button className="dropdown-item">Price: High to Low</button></li>
-              <li><button className="dropdown-item">Time Left</button></li>
-            </ul>
-          </div>
+          ))}
+        </div>
+        {/* Search and Sort */}
+        <div className="d-flex gap-3 align-items-center">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search vehicles..."
+            style={{ maxWidth: "300px" }}
+          />
+          <button className="btn btn-outline-primary">Search</button>
         </div>
       </div>
 
-      {/* Card Grid */}
-      <div className="row g-4">
-        {dataMobil.map((item) => (
-          <div key={item.id} className="col-lg-3 col-md-6 card-item" data-category={item.category}>
+     {/* Product Cards */}
+        <div className="row g-4">
+        {dataMobil.map((car) => (
+            <div key={car.id} className="col-lg-3 col-md-6 card-item" data-category={car.category}>
             <div className="card h-100 shadow-sm">
-              <img 
-                src={`/images/${item.image}`} 
+                <img
+                src={`/images/${car.image}`}
+                alt={car.nama}
                 className="card-img-top"
-                alt={item.nama}
-                style={{ height: '200px', objectFit: 'cover' }}
-              />
-              <div className="card-body d-flex flex-column">
-                <h5 className="card-title fw-bold mb-3">{item.nama}</h5>
+                style={{ height: "200px", objectFit: "cover" }}
+                />
+                <div className="card-body d-flex flex-column">
+                <h5 className="card-title fw-bold mb-3">{car.nama}</h5>
+                
+                {/* Vehicle Details */}
                 <div className="mb-3">
-                  <div className="small text-muted mb-1">
-                    <i className="bi bi-speedometer2 me-2"></i>
-                    {item.kilometers} km
-                  </div>
-                  <div className="small text-muted mb-1">
-                    <i className="bi bi-gear me-2"></i>
-                    {item.transmission}
-                  </div>
-                  <div className="small text-muted">
-                    <i className="bi bi-calendar me-2"></i>
-                    Listed: {item.listedDate}
-                  </div>
+                    <div className="d-flex justify-content-between mb-1">
+                    <span className="text-muted small">Kilometers:</span>
+                    <span className="small">{car.kilometers}</span>
+                    </div>
+                    <div className="d-flex justify-content-between mb-1">
+                    <span className="text-muted small">Transmission:</span>
+                    <span className="small">{car.transmission}</span>
+                    </div>
+                    <div className="d-flex justify-content-between mb-1">
+                    <span className="text-muted small">Listed on:</span>
+                    <span className="small">{car.listedDate}</span>
+                    </div>
                 </div>
-                <div className="d-flex justify-content-between align-items-center mt-auto mb-3">
-                  <div>
-                    <div className="text-muted small">Current Bid</div>
-                    <div className="fw-bold text-primary">{item.harga}</div>
-                  </div>
-                  <div className="text-end">
-                    <div className="text-muted small">Time Left</div>
-                    <div className="fw-bold text-danger">{item.timeLeft}</div>
-                  </div>
+
+                {/* Bid and Time Information */}
+                <div className="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                    <span className="text-muted small d-block">Current Bid</span>
+                    <span className="fw-bold text-primary">{car.harga}</span>
+                    </div>
+                    <div className="text-end">
+                    <span className="text-muted small d-block">Time Left</span>
+                    <span className="fw-bold text-danger">{car.timeLeft}</span>
+                    </div>
                 </div>
-                <Link 
-                  to="/detail" 
-                  className="btn btn-primary w-100"
-                >
-                  Bid Now
+
+                <Link to="/detail" className="btn btn-primary mt-auto w-100">
+                    Bid Now
                 </Link>
-              </div>
+                </div>
             </div>
-          </div>
+            </div>
         ))}
-      </div>
+        </div>
     </div>
   );
 };
