@@ -4,8 +4,10 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100px;
+    height: 80px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     filter: drop-shadow(1px 1px 1px grey);
     background-color: white;
     padding: 0;
@@ -13,27 +15,30 @@
     margin: 0;
 }
 
+/* Logo */
 .logo {
-    width: 10%;
+    width: 11%;
     height: 100%;
-    margin-left: 2%;
     padding: 0;
+    margin-left: 2%;
 }
 
 .logo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1);
 }
 
+/* Container untuk tombol link */
 .container-linkz {
     height: 100%;
-    width: 60%;
+    width: 50%; /* Mengurangi lebar kontainer link */
     display: flex;
     align-items: center;
+    justify-content: flex-start; /* Tombol tetap di kiri */
 }
 
+/* Container untuk login info */
 .container-loginz {
     width: 25%;
     height: 100%;
@@ -42,40 +47,44 @@
     justify-content: center;
 }
 
+/* Info pengguna */
 .user-info {
     display: flex;
     align-items: center;
-    padding: 25px 0;
+    padding: 0 15px; /* Padding dikurangi agar lebih seimbang */
 }
 
 .user-photo {
-    width: 40px;
-    height: 40px;
+    width: 35px; /* Ukuran foto profil sedikit lebih kecil */
+    height: 35px;
     border-radius: 50%;
     margin-right: 10px;
 }
 
+/* Tautan login */
 .loginlink {
     font-weight: bold;
     text-decoration: none;
     color: black;
 }
 
+/* Link container */
 .linkz {
     display: flex;
-    width: 30%;
+    width: 100%; /* Memperlebar link container */
     height: 100%;
+    justify-content: flex-start; /* Menyusun tombol ke kiri */
 }
 
 .linkz .button-nav {
     background-color: white;
-    width: 100%;
+    width: auto; /* Menyesuaikan lebar dengan isi teks */
     height: 100%;
     border-style: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 10% 0 10%;
+    padding: 0 20px; /* Memberikan padding agar tombol lebih nyaman */
     transition: all 0.3s ease;
 }
 
@@ -84,6 +93,7 @@
     color: white;
 }
 
+/* Dropdown menu */
 .dropdown {
     position: absolute;
     top: 50px;

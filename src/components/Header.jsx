@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css';
+import logo from '../assets/images/logo.png';
+import profileImage from '../assets/images/profile.png';
 
 const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,7 +28,7 @@ const Header = () => {
                 {/* Logo */}
                 <div className="logo">
                     <a href="/">
-                        <img src="./images/logo.png" alt="Logo" />
+                        <img src={logo} alt="Logo" />
                     </a>
                 </div>
 
@@ -43,7 +45,7 @@ const Header = () => {
                 <div className="container-loginz">
                     {isLoggedIn ? (
                         <div className="user-info" onClick={handleDropdownToggle}>
-                            <img src="./images/profile.png" alt="User Photo" className="user-photo" />
+                            <img src={profileImage} alt="User Photo" className="user-photo" />
                             <span className="user-name fw-bold">Lucas</span>
                             {dropdownVisible && (
                                 <div className="dropdown">

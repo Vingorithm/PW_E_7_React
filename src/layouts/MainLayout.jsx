@@ -16,12 +16,13 @@ const routes = [
 
 const MainLayout = () => {
   return (
-    <div className="mt-4 pt-5">
+    <div>
       <Header routes={routes} />
       <Outlet />
       <Footer />
     </div>
   );
 };
+
 
 export default MainLayout;

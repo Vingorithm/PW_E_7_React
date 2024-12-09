@@ -11,9 +11,9 @@ const Footer = () => {
       <hr />
       <div className="footerBot">
         <div className="footerBotNav">
-          <a href="/home">Home</a>
+          <a href="/">Home</a>
           <a href="/information">About</a>
-          <a href="/home">Contact</a>
+          <a href="/information">Contact</a>
         </div>
         <div className="footerBotSocial">
           <i className="fa-brands fa-facebook"></i>
