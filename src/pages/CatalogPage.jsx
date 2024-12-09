@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const ManageUser = () => {
+const Catalog = () => {
 
 };
 
-export default ManageUser;
+export default Catalog;

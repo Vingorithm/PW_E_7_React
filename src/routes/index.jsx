@@ -1,15 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
-import MainLayout from "../layouts/MainLayout.jsx";
-import HomePage from "../pages/auth/user/HomePage.jsx";
+import MainLayout from "../layouts/MainLayout";
+import UserLayout from "../layouts/UserLayout";
+import AdminLayout from "../layouts/AdminLayout";
+import HomePage from "../pages/auth/user/HomePage";
 import LoginUser from "../pages/auth/user/LoginUser";
-// import Profile from "../pages/Profile";
-// import Payment from "../pages/Payment";
-// import Upcoming from "../pages/Upcoming";
-// import ManageBid from "../pages/ManageBid";
-// import Information from "../pages/Information";
-// import Catalog from "../pages/Catalog";
-// import CarDetails from "../pages/CarDetails";
+import Profile from "../pages/ProfilePage";
+import Payment from "../pages/PaymentPage";
+import Upcoming from "../pages/UpcomingPage";
+import ManageBid from "../pages/auth/admin/ManageBid";
+import Information from "../pages/InformationPage";
+import Catalog from "../pages/CatalogPage";
+import CarDetails from "../pages/DetailPage";
 // import AddBid from "../pages/AddBid";
 
 const router = createBrowserRouter([
@@ -18,48 +20,57 @@ const router = createBrowserRouter([
         element: <div>Routes Not Found!</div>,
     },
     {
+        // Main Layout: Halaman utama untuk user, kayak catalog, infomation, dll
         element: <MainLayout />,
         children: [
             {
                 path: "/",
                 element: <HomePage />,
             },
-            //   {
-            //     path: "/login",
-            //     element: <LoginUser />,
-            //   },
-            //   {
-            //     path: "/profile",
-            //     element: <Profile />,
-            //   },
-            //   {
-            //     path: "/payment",
-            //     element: <Payment />,
-            //   },
-            //   {
-            //     path: "/upcoming",
-            //     element: <Upcoming />,
-            //   },
-            //   {
-            //     path: "/managebid",
-            //     element: <ManageBid />,
-            //   },
-            //   {
-            //     path: "/information",
-            //     element: <Information />,
-            //   },
-            //   {
-            //     path: "/catalog",
-            //     element: <Catalog />,
-            //   },
-            //   {
-            //     path: "/cardetails",
-            //     element: <CarDetails />,
-            //   },
-            //   {
-            //     path: "/addbid",
-            //     element: <AddBid />,
-            //   },
+            {
+                path: "/information",
+                element: <Information />,
+            },
+            {
+                path: "/payment",
+                element: <Payment />,
+            },
+            {
+                path: "/profile",
+                element: <Profile />,
+            },
+            {
+                path: "/upcoming",
+                element: <Upcoming />,
+            },
+            {
+                path: "/catalog",
+                element: <Catalog />,
+            },
+            {
+                path: "/details",
+                element: <CarDetails />,
+            },
+        ],
+    },
+    {
+        // User Layout: Login dan halaman user lainnya
+        element: <UserLayout />,
+        children: [
+            {
+                path: "/login",
+                element: <LoginUser />,
+            },
+        ],
+    },
+    {
+        // Admin Layout: Halaman admin
+        element: <AdminLayout />,
+        children: [
+            {
+                path: "/admin/managebid",
+                element: <ManageBid />,
+            },
         ],
     },
 ]);

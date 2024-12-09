@@ -4,17 +4,9 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-  },
-  {
-    path: "/information",
-    name: "Information",
-  },
 ];
 
-const MainLayout = () => {
+const AdminLayout = () => {
   return (
     <div className="mt-4 pt-5">
       <Header routes={routes} />
@@ -24,4 +16,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default AdminLayout;

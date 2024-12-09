@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const ManageUser = () => {
+const Detail = () => {
 
 };
 
-export default ManageUser;
+export default Detail;
