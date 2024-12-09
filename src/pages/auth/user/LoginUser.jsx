@@ -18,47 +18,46 @@ const LoginUser = () => {
 
   return (
     <>
-      <HeaderLogin /> {/* Menambahkan HeaderLogin */}
-      <div className={`container-main ${isRightPanelActive ? 'right-panel-active' : ''}`}>
-        <div className="container-signup" id="main">
-          <div className="sign-up">
+      <div className={`page-login container-main ${isRightPanelActive ? 'right-panel-active' : ''}`}>
+        <div className="page-login container-signup" id="main">
+          <div className="page-login sign-up">
             <form onSubmit={handleSignupSubmit}>
-              <h1 className="heder">Sign Up</h1>
+              <h1 className="page-login heder">Sign Up</h1>
               <input type="text" name="txt" placeholder="Name" required />
               <input type="email" name="email" placeholder="Email" required />
               <input type="password" name="pass" placeholder="Password" required />
               <input type="password" name="passConfirm" placeholder="Confirm Password" required />
               <p>or sign up with</p>
-              <div className="container-social">
+              <div className="page-login container-social">
                 <a href="#"><i className="fa-brands fa-facebook"></i></a>
                 <a href="#"><i className="fa-brands fa-instagram"></i></a>
                 <a href="#"><i className="fa-brands fa-twitter"></i></a>
               </div>
-              <button className="fix" type="submit">Sign Up</button>
+              <button className="page-login fix" type="submit">Sign Up</button>
             </form>
           </div>
-          <div className="log-in">
+          <div className="page-login log-in">
             <form onSubmit={handleLoginSubmit}>
-              <h1 className="heder">Log In</h1>
+              <h1 className="page-login heder">Log In</h1>
               <input type="email" name="email" placeholder="Email" required />
               <input type="password" name="pass" placeholder="Password" required />
               <p>or Log in with</p>
-              <div className="container-social">
+              <div className="page-login container-social">
                 <a href="#"><i className="fa-brands fa-facebook"></i></a>
                 <a href="#"><i className="fa-brands fa-instagram"></i></a>
                 <a href="#"><i className="fa-brands fa-twitter"></i></a>
               </div>
               <a href="#">Forgot your Password?</a>
-              <button className="fix" type="submit">Log In</button>
+              <button className="page-login fix" type="submit">Log In</button>
             </form>
           </div>
-          <div className="container-overlay">
-            <div className="overlay">
-              <div className="overlay-left">
+          <div className="page-login container-overlay">
+            <div className="page-login overlay">
+              <div className="page-login overlay-left">
                 <h1>Already Have an Account?</h1>
                 <button onClick={() => setIsRightPanelActive(false)} id="login">Log in</button>
               </div>
-              <div className="overlay-right">
+              <div className="page-login overlay-right">
                 <h1>Don't Have an Account?</h1>
                 <button onClick={() => setIsRightPanelActive(true)} id="signup">Sign Up</button>
               </div>

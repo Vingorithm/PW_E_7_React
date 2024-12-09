@@ -24,43 +24,43 @@ const Header = () => {
 
     return (
         <header>
-            <div className="navbar">
+            <div className="page-navbar navbar">
                 {/* Logo */}
-                <div className="logo">
+                <div className="page-navbar logo">
                     <a href="/">
                         <img src={logo} alt="Logo" />
                     </a>
                 </div>
 
                 {/* Navigation Links */}
-                <div className="container-linkz">
-                    <div className="linkz">
-                        <a className="navlink button-nav" href="/catalog">Catalog</a>
-                        <a className="navlink button-nav" href="/upcoming">Upcoming</a>
-                        <a className="navlink button-nav" href="/information">Information</a>
+                <div className="page-navbar container-linkz">
+                    <div className="page-navbar linkz">
+                        <a className="page-navbar button-nav" href="/catalog">Catalog</a>
+                        <a className="page-navbar button-nav" href="/upcoming">Upcoming</a>
+                        <a className="page-navbar button-nav" href="/information">Information</a>
                     </div>
                 </div>
 
                 {/* User Login/Dropdown */}
-                <div className="container-loginz">
+                <div className="page-navbar container-loginz">
                     {isLoggedIn ? (
-                        <div className="user-info" onClick={handleDropdownToggle}>
-                            <img src={profileImage} alt="User Photo" className="user-photo" />
-                            <span className="user-name fw-bold">Lucas</span>
+                        <div className="page-navbar user-info" onClick={handleDropdownToggle}>
+                            <img src={profileImage} alt="User Photo" className="page-navbar user-photo" />
+                            <span className="page-navbar user-name fw-bold">Lucas</span>
                             {dropdownVisible && (
-                                <div className="dropdown">
-                                    <a href="/profile" className="dropdown-item" id="profileDetail">
+                                <div className="page-navbar dropdown">
+                                    <a href="/profile" className="page-navbar dropdown-item" id="profileDetail">
                                         <i className="fas fa-eye"></i> Detail
                                     </a>
-                                    <a href="/tambahLelang" className="dropdown-item" id="tambahLelangButton">
+                                    <a href="/tambahLelang" className="page-navbar dropdown-item" id="tambahLelangButton">
                                         <i className="fas fa-plus-circle"></i> Tambah Lelang
                                     </a>
-                                    <a href="/kelola_lelang" className="dropdown-item" id="lelangSayaButton">
+                                    <a href="/kelola_lelang" className="page-navbar dropdown-item" id="lelangSayaButton">
                                         <i className="fas fa-auction"></i> Lelang Saya
                                     </a>
                                     <a
                                         href="/"
-                                        className="dropdown-item logout"
+                                        className="page-navbar dropdown-item logout"
                                         id="logoutButton"
                                         onClick={handleLogout}
                                     >
@@ -70,7 +70,7 @@ const Header = () => {
                             )}
                         </div>
                     ) : (
-                        <a className="loginlink button-nav" href="/login" style={{ display: 'flex' }}>
+                        <a className="page-navbar loginlink page-navbar button-nav" href="/login">
                             Login / Register
                         </a>
                     )}

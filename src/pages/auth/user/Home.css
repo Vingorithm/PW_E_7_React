@@ -1,11 +1,11 @@
-* {
+/* styles.module.css */
+.page-home * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Roboto;
 }
-
-body {
+.page-home body {
     background-color: #F5F6FA;
     height: 100%;
     width: 100%;
@@ -13,7 +13,7 @@ body {
     padding: 0;
 }
 
-.container-main {
+.page-home .container-main {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -22,13 +22,13 @@ body {
     flex-direction: column;
 }
 
-.linkz {
+.page-home .linkz {
     display: flex;
     width: 30%;
     height: 100%;
 }
 
-.linkz .button-nav {
+.page-home .linkz .button-nav {
     background-color: white;
     width: 100%;
     height: 100%;
@@ -39,24 +39,19 @@ body {
     padding: 0 10% 0 10%;
     transition: all 0.3s ease;
 }
-
-.linkz .button-nav:hover {
+.page-home .linkz .button-nav:hover {
     background-color: rgb(56, 52, 52);
     color: white;
-
 }
-
-.navlink {
+.page-home .navlink {
     text-decoration: none;
     color: black;
     font-weight: bold;
 }
-
-.loginregis {
+.page-home .loginregis {
     height: 100%;
 }
-
-.loginregis .button-nav {
+.page-home .loginregis .button-nav {
     background-color: white;
     width: 110%;
     height: 100%;
@@ -66,30 +61,19 @@ body {
     justify-content: center;
     padding: 0;
     transition: all 0.3s ease;
-
 }
-
-.loginregis .button-nav:hover {
+.page-home .loginregis .button-nav:hover {
     color: white;
-
     background-color: rgb(56, 52, 52);
 }
-
-.loginlink {
+.page-home .loginlink {
     font-weight: bold;
     text-decoration: none;
-    /* text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-thickness: 2px; */
     color: black;
-
 }
 
-
-
 /* landing page */
-
-.container-landingP {
+.page-home .container-landingP {
     position: relative;
     top: 0;
     margin-top: 100px;
@@ -101,23 +85,16 @@ body {
     align-items: center;
     justify-content: start;
 }
-
-.backgroundLanding {
+.page-home .backgroundLanding {
     width: 100%;
     height: 100%;
-    /* background-image: url('../images/car2.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
     position: absolute;
 }
-
-
-.container-landingP::before {
+.page-home .container-landingP::before {
     content: '';
     position: absolute;
     top: 0;
@@ -127,8 +104,7 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
-
-.TitleTextLanding {
+.page-home .TitleTextLanding {
     margin-top: 13%;
     color: white;
     z-index: 2;
@@ -137,25 +113,19 @@ body {
     opacity: 0;
     transition: all 0.6s ease;
 }
-
-.TitleTextLanding.active {
+.page-home .TitleTextLanding.active {
     opacity: 1;
 }
 
-
 /* Search bar */
-
-.searchBar {
+.page-home .searchBar {
     z-index: 2;
     width: max-content;
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
-
-
-.search {
+.page-home .search {
     width: 650px;
     display: flex;
     align-items: center;
@@ -173,12 +143,10 @@ body {
     opacity: 0;
     transition: all 0.6s ease;
 }
-
-.search.active {
+.page-home .search.active {
     opacity: 1;
 }
-
-.search-input {
+.page-home .search-input {
     font-size: 16px;
     color: white;
     margin-left: 14px;
@@ -189,24 +157,19 @@ body {
     flex: 1;
     z-index: 2;
 }
-
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration {
+.page-home input[type="search"]::-webkit-search-decoration,
+.page-home input[type="search"]::-webkit-search-cancel-button,
+.page-home input[type="search"]::-webkit-search-results-button,
+.page-home input[type="search"]::-webkit-search-results-decoration {
     display: none;
 }
-
-.search-input::placeholder {
+.page-home .search-input::placeholder {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.8);
 }
 
-
-
 /* Buttons */
-
-.buttonLanding {
+.page-home .buttonLanding {
     width: 20%;
     height: 75px;
     z-index: 2;
@@ -217,74 +180,47 @@ input[type="search"]::-webkit-search-results-decoration {
     opacity: 0;
     transition: all 0.6s ease;
 }
-
-.buttonLanding.active {
+.page-home .buttonLanding.active {
     opacity: 1;
 }
-
-.btnA,
-.btnB {
+.page-home .btnA,
+.page-home .btnB {
     width: 100%;
     height: 100%;
     border-radius: 4px;
     transition: all ease 0.3s;
-
 }
-
-.btnA {
-
+.page-home .btnA {
     background-color: white;
     border-style: solid;
     border-color: black;
-
 }
-
-.btnA a {
+.page-home .btnA a {
     color: black;
     text-decoration: none;
     font-weight: bold;
     margin-top: 1rem;
-
 }
-
-.btnA:hover {
+.page-home .btnA:hover {
     background-color: black;
-
-    .btnAlink {
-        color: white;
-    }
 }
-
-.btnB {
-
+.page-home .btnB {
     background-color: black;
     border-style: solid;
     border-color: white;
-
 }
-
-.btnB p {
+.page-home .btnB p {
     color: white;
     text-decoration: none;
     font-weight: bold;
     margin-top: 1rem;
 }
-
-.btnB:hover {
+.page-home .btnB:hover {
     background-color: white;
-
-    .btnBlink {
-        color: black;
-    }
 }
 
-
-/* carousel */
-
-
-/* featured cars */
-
-.container-featuredz {
+/* Features Section */
+.page-home .container-featuredz {
     margin-top: 5%;
     width: 100%;
     display: flex;
@@ -292,34 +228,24 @@ input[type="search"]::-webkit-search-results-decoration {
     justify-content: center;
     align-items: start;
 }
-
-.container-featuredz h1 {
+.page-home .container-featuredz h1 {
     margin-left: 5%;
     font-weight: bolder;
     margin-bottom: 0;
 }
-
-.container-featuredz p {
+.page-home .container-featuredz p {
     font-weight: 700;
     margin-left: 88%;
 }
-
-
-.container-cardz {
-
+.page-home .container-cardz {
     flex-wrap: wrap;
     display: flex;
     justify-content: start;
     margin-left: 3%;
     gap: 1%;
-
 }
 
-
-
-/* Card Catalog */
-
-.content {
+.page-home .content {
     width: 100%;
     margin-top: 5%;
     display: flex;
@@ -327,49 +253,49 @@ input[type="search"]::-webkit-search-results-decoration {
     align-items: center;
 }
 
-.card {
+.page-home .card {
     width: 20%;
     display: inline-block;
     padding: 0;
     margin-right: 10px;
 }
 
-.card-text {
+.page-home .card-text {
     margin-bottom: 8px;
 }
 
-.text-card {
+.page-home .text-card {
     text-align: left;
 }
 
-.text-card span {
+.page-home .text-card span {
     display: block;
     margin-bottom: 0px;
 }
 
-.card-span-list {
+.page-home .card-span-list {
     font-size: 12px;
     color: #6c757d;
     text-decoration: underline;
 }
 
-.bid-price {
+.page-home .bid-price {
     font-size: 18px;
     color: #000;
 }
 
-.time-left {
+.page-home .time-left {
     font-size: 14px;
     color: #000;
     margin-bottom: 0px;
 }
 
-.bid-section .text-muted,
-.time-section .text-muted {
+.page-home .bid-section .text-muted,
+.page-home .time-section .text-muted {
     margin-bottom: 2px;
 }
 
-.custom-bid-btn {
+.page-home .custom-bid-btn {
     width: 100%;
     background-color: black;
     color: white;
@@ -379,72 +305,59 @@ input[type="search"]::-webkit-search-results-decoration {
     font-size: 14px;
     transition: background-color 0.3s ease;
 }
-
-.custom-bid-btn:hover {
+.page-home .custom-bid-btn:hover {
     background-color: rgb(78, 78, 78);
     color: white;
 }
 
-.container-text-left {
+.page-home .container-text-left {
     width: 80%;
 }
 
-.containerCard {
+.page-home .containerCard {
     display: inline-block;
-
 }
-
-.containerCard::-webkit-scrollbar {
+.page-home .containerCard::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
-
-.containerCard::-webkit-scrollbar-track {
+.page-home .containerCard::-webkit-scrollbar-track {
     background: transparent;
 }
-
-.containerCard::-webkit-scrollbar-thumb {
+.page-home .containerCard::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 30px;
     transition: background-color 0.3s;
 }
-
-.containerCard::-webkit-scrollbar-thumb:hover {
+.page-home .containerCard::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.containerCard {
+.page-home .containerCard {
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
 }
 
-
-
 /* carousel */
-.container-carouselz {
+.page-home .container-carouselz {
     margin-top: 3%;
     height: 100%;
 }
-
-.carousel-header-container {
+.page-home .carousel-header-container {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-.carousel-header {
+.page-home .carousel-header {
     width: 80%;
     margin-bottom: 1%;
 }
-
-.carousel-header h1 {
+.page-home .carousel-header h1 {
     font-weight: bold;
     text-align: center;
 }
-
-
-.carousel-item {
+.page-home .carousel-item {
     height: 52rem;
     background: #777;
     color: white;
@@ -452,8 +365,7 @@ input[type="search"]::-webkit-search-results-decoration {
     background-position: center;
     background-size: center;
 }
-
-.overlay-image {
+.page-home .overlay-image {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -464,38 +376,28 @@ input[type="search"]::-webkit-search-results-decoration {
     background-size: cover;
     filter: brightness(0.4);
 }
-
-.overlay-image.A {
+.page-home .overlay-image.A {
     background-position: center;
-
 }
-
-.overlay-image.B {
+.page-home .overlay-image.B {
     background-position: center;
-
 }
-
-.overlay-image.C {
+.page-home .overlay-image.C {
     background-position: 0% 60%;
-
 }
-
-.container {
+.page-home .container {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     padding-bottom: 120px;
 }
-
-.carousel-indicators li {
+.page-home .carousel-indicators li {
     list-style: none;
 }
 
-
 /* How to Bid */
-
-.timeline-header {
+.page-home .timeline-header {
     width: 100%;
     display: flex;
     align-items: center;
@@ -504,24 +406,20 @@ input[type="search"]::-webkit-search-results-decoration {
     opacity: 1;
     transition: all 0.6s ease;
 }
-
-.timeline-header.inView {
+.page-home .timeline-header.inView {
     opacity: 1;
 }
-
-.timeline-header h1 {
+.page-home .timeline-header h1 {
     font-weight: bolder;
     font-size: 48px;
 }
-
-.timeline {
+.page-home .timeline {
     position: relative;
     max-width: 100%;
     background: #F5F6FA;
     margin: 0% 5% 10% 5%;
 }
-
-.timeline::after {
+.page-home .timeline::after {
     content: '';
     position: absolute;
     width: 2px;
@@ -532,9 +430,7 @@ input[type="search"]::-webkit-search-results-decoration {
     margin-left: -3px;
     z-index: 2;
 }
-
-
-.textBox {
+.page-home .textBox {
     padding: 20px 30px;
     background: #fff;
     position: relative;
@@ -545,61 +441,43 @@ input[type="search"]::-webkit-search-results-decoration {
     opacity: 1;
     transition: all 0.6s ease;
 }
-
-.textBox.inView {
+.page-home .textBox.inView {
     opacity: 1;
 }
-
-.textBox:hover {
+.page-home .textBox:hover {
     transform: scale(1.1) translateX(5%);
     cursor: default;
 }
-
-.textBox.A {
+.page-home .textBox.A {
     text-align: right;
 }
-
-.textBox.A:hover {
+.page-home .textBox.A:hover {
     transform: scale(1.1) translateX(-5%);
     cursor: default;
-
 }
-
-
-
-
-
-.container-howToBid {
+.page-home .container-howToBid {
     padding: 10px 50px;
     position: relative;
     width: 50%;
     background-color: #F5F6FA;
 }
-
-.left {
+.page-home .left {
     left: -0%;
 }
-
-.right {
+.page-home .right {
     left: 50%;
 }
-
-
-
-.Number-container {
+.page-home .Number-container {
     position: absolute;
     width: 40px;
     right: -19px;
     top: 32px;
     z-index: 10;
 }
-
-.Number-container.right {
+.page-home .Number-container.right {
     left: -21px;
-
 }
-
-.Number {
+.page-home .Number {
     width: 40px;
     height: 40px;
     background-color: black;
@@ -610,20 +488,15 @@ input[type="search"]::-webkit-search-results-decoration {
     border-color: black;
     border-style: solid;
     border-width: 2px;
-
-
 }
-
-.Number h2 {
+.page-home .Number h2 {
     font-weight: bold;
     color: white;
     font-size: 18;
     margin: 0;
     padding: 0;
-
 }
-
-.leftArrow {
+.page-home .leftArrow {
     height: 0;
     width: 0;
     position: absolute;
@@ -634,8 +507,7 @@ input[type="search"]::-webkit-search-results-decoration {
     border-left: 15px solid white;
     right: -15px;
 }
-
-.rightArrow {
+.page-home .rightArrow {
     height: 0;
     width: 0;
     position: absolute;
@@ -647,9 +519,8 @@ input[type="search"]::-webkit-search-results-decoration {
     left: -15px;
 }
 
-
 /* About Us */
-.container-about {
+.page-home .container-about {
     background-color: transparent;
     width: 100%;
     display: flex;
@@ -657,8 +528,7 @@ input[type="search"]::-webkit-search-results-decoration {
     justify-content: center;
     overflow: hidden;
 }
-
-.container-aboutCard {
+.page-home .container-aboutCard {
     width: 65%;
     height: 75%;
     background-color: transparent;
@@ -670,14 +540,12 @@ input[type="search"]::-webkit-search-results-decoration {
     border-width: 1px;
     border-style: solid;
 }
-
-.image-about {
+.page-home .image-about {
     width: 60%;
     background-size: cover;
     background: linear-gradient(to left, rgba(26, 26, 26, 0.5) 10%, rgba(0, 0, 0, 0) 90%), url("../images/car3.jpg") center / cover no-repeat;
 }
-
-.text-about {
+.page-home .text-about {
     padding: 40px;
     width: 40%;
     display: flex;
@@ -687,32 +555,27 @@ input[type="search"]::-webkit-search-results-decoration {
     backdrop-filter: blur(30px);
     color: white;
 }
-
-.text-about h1 {
+.page-home .text-about h1 {
     font-weight: bold;
 }
-
-.text-about p {
+.page-home .text-about p {
     width: 100%;
     text-align: justify;
     margin-bottom: 13%;
 }
-
-.videoBackground {
+.page-home .videoBackground {
     width: 100%;
     height: 100%;
     object-fit: cover;
     filter: brightness(0.5);
 }
-
-.videoBackgroundBot {
+.page-home .videoBackgroundBot {
     width: 100%;
     height: 820px;
     object-fit: cover;
     filter: brightness(0.5);
 }
-
-.aboutButton {
+.page-home .aboutButton {
     width: fit-content;
     border-radius: 4px;
     font-weight: thin;

@@ -1,124 +1,152 @@
-/* navigation bar */
-.navbar {
+.page-navbar .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    filter: drop-shadow(1px 1px 1px grey);
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1));
     background-color: white;
-    padding: 0;
+    padding: 0 20px; /* Adjust padding for more space */
     z-index: 1000;
     margin: 0;
+    transition: background-color 0.3s ease;
+}
+
+.page-navbar .navbar:hover {
+    background-color: #f8f8f8; /* Subtle background change on hover */
 }
 
 /* Logo */
-.logo {
-    width: 11%;
+.page-navbar .logo {
+    width: 10%;
     height: 100%;
     padding: 0;
     margin-left: 2%;
 }
 
-.logo img {
+.page-navbar .logo img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
-/* Container untuk tombol link */
-.container-linkz {
+/* Container for the navigation links */
+.page-navbar .container-linkz {
     height: 100%;
-    width: 50%; /* Mengurangi lebar kontainer link */
+    width: 50%;
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Tombol tetap di kiri */
+    justify-content: flex-start;
 }
 
-/* Container untuk login info */
-.container-loginz {
-    width: 25%;
+.page-navbar .linkz {
+    display: flex;
+    width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-around; /* Distribute links evenly */
 }
 
-/* Info pengguna */
-.user-info {
-    display: flex;
-    align-items: center;
-    padding: 0 15px; /* Padding dikurangi agar lebih seimbang */
-}
-
-.user-photo {
-    width: 35px; /* Ukuran foto profil sedikit lebih kecil */
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-/* Tautan login */
-.loginlink {
+/* Individual nav buttons */
+.page-navbar .button-nav {
+    background-color: transparent;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
     font-weight: bold;
-    text-decoration: none;
-    color: black;
+    color: #333;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Link container */
-.linkz {
-    display: flex;
-    width: 100%; /* Memperlebar link container */
-    height: 100%;
-    justify-content: flex-start; /* Menyusun tombol ke kiri */
-}
-
-.linkz .button-nav {
-    background-color: white;
-    width: auto; /* Menyesuaikan lebar dengan isi teks */
-    height: 100%;
-    border-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px; /* Memberikan padding agar tombol lebih nyaman */
-    transition: all 0.3s ease;
-}
-
-.linkz .button-nav:hover {
-    background-color: rgb(56, 52, 52);
+.page-navbar .button-nav:hover {
+    background-color: #f56a00; /* Hover effect for nav buttons */
     color: white;
 }
 
+/* Container for user info */
+.page-navbar .container-loginz {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end; /* Align user info to the right */
+    align-items: center;
+}
+
+/* User info section */
+.page-navbar .user-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.page-navbar .user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.page-navbar .user-name {
+    font-weight: bold;
+    color: #333;
+}
+
 /* Dropdown menu */
-.dropdown {
+.page-navbar .dropdown {
     position: absolute;
-    top: 50px;
-    right: 10px;
-    width: 150px;
+    top: 80px;
+    right: 0;
+    width: 180px;
     background-color: white;
     border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: none;
     z-index: 10;
     text-align: left;
+    border-radius: 5px;
 }
 
-.dropdown-item {
-    padding: 10px;
+.page-navbar .dropdown-item {
+    padding: 12px 20px;
     display: block;
     text-decoration: none;
-    color: black;
+    color: #333;
     border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease;
 }
 
-.dropdown-item:hover {
+.page-navbar .dropdown-item:hover {
     background-color: #f0f0f0;
 }
 
-.dropdown-item i {
+.page-navbar .dropdown-item i {
     margin-right: 10px;
+}
+
+/* Show dropdown when clicked */
+.page-navbar .user-info.active + .dropdown {
+    display: block;
+}
+
+/* Login/Register link */
+.page-navbar .loginlink {
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #f56a00;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.page-navbar .loginlink:hover {
+    background-color: #d45700;
 }

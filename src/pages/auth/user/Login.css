@@ -1,4 +1,4 @@
-* {
+.page-login * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,7 +6,7 @@
 
 }
 
-body {
+.page-login body {
     background-color: white;
     height: 100%;
     width: 100%;
@@ -14,7 +14,7 @@ body {
     padding: 0;
 }
 
-.container-main {
+.page-login .container-main {
     height: 100vh;
     width: 100%;
     margin: 0;
@@ -24,7 +24,7 @@ body {
     align-items: center;
 }
 
-.container-signup {
+.page-login .container-signup {
     margin-top: 10%;
     position: relative;
     width: 100%;
@@ -37,8 +37,8 @@ body {
         0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-.sign-up,
-.log-in {
+.page-login .sign-up,
+.page-login .log-in {
     position: absolute;
     top: 0;
     left: 0;
@@ -47,28 +47,28 @@ body {
     transition: all 0.6s ease-in-out;
 }
 
-.sign-up {
+.page-login .sign-up {
     opacity: 0;
     z-index: 1;
 }
 
-.log-in {
+.page-login .log-in {
     z-index: 2;
 }
 
-.container-signup.right-panel-active .sign-up {
+.page-login .container-signup.right-panel-active .sign-up {
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
 }
 
-.container-signup.right-panel-active .log-in {
+.page-login .container-signup.right-panel-active .log-in {
     transform: translateX(100%);
     opacity: 0;
     z-index: 1;
 }
 
-form {
+.page-login form {
     background: white;
     display: flex;
     align-items: center;
@@ -79,20 +79,20 @@ form {
     text-align: center;
 }
 
-h1 {
+.page-login h1 {
     font-weight: bold;
     margin: 0;
     color: white;
     z-index: 5;
 }
 
-.heder {
+.page-login .heder {
     color: black;
     font-weight: 900;
     font-family: Roboto;
 }
 
-p {
+.page-login p {
     font-size: 14px;
     font-weight: 100;
     line-height: 10px;
@@ -101,7 +101,7 @@ p {
     color: black;
 }
 
-input {
+.page-login input {
     background: #eee;
     padding: 12px 15px;
     width: 100%;
@@ -111,7 +111,7 @@ input {
     outline: none;
 }
 
-a {
+.page-login a {
     color: #333;
     font-size: 14px;
     text-decoration: none;
@@ -119,7 +119,7 @@ a {
 
 }
 
-button {
+.page-login button {
     color: #fff;
     background: black;
     font-size: 12px;
@@ -136,12 +136,12 @@ button {
     z-index: 5;
 }
 
-button:active {
+.page-login button:active {
     transform: scale(0.90);
 }
 
-#signup,
-#login {
+.page-login #signup,
+.page-login #login {
     background: black;
     border: 2px solid #fff;
     color: white;
@@ -149,7 +149,7 @@ button:active {
 
 
 
-.container-overlay {
+.page-login .container-overlay {
     position: absolute;
     top: 0;
     left: 50%;
@@ -160,11 +160,11 @@ button:active {
     transition: transform 0.6s ease-in-out;
 }
 
-.container-signup.right-panel-active .container-overlay {
+.page-login .container-signup.right-panel-active .container-overlay {
     transform: translateX(-100%);
 }
 
-.overlay {
+.page-login .overlay {
     position: relative;
     background: black;
     background-size: cover;
@@ -177,12 +177,12 @@ button:active {
     z-index: 2;
 }
 
-.container-signup.right-panel-active .overlay {
+.page-login .container-signup.right-panel-active .overlay {
     transform: translateX(50%);
 }
 
-.overlay-left::before,
-.overlay-right::before {
+.page-login .overlay-left::before,
+.page-login .overlay-right::before {
     content: '';
     position: absolute;
     top: 0;
@@ -193,8 +193,8 @@ button:active {
     z-index: 1;
 }
 
-.overlay-left,
-.overlay-right {
+.page-login .overlay-left,
+.page-login .overlay-right {
     position: absolute;
     display: flex;
     align-items: center;
@@ -208,7 +208,7 @@ button:active {
     z-index: 2;
 }
 
-.overlay-left {
+.page-login .overlay-left {
     transform: translateX(0%);
     background-image: url('../images/car3.jpg');
     background-size: cover;
@@ -216,7 +216,7 @@ button:active {
     background-repeat: no-repeat;
 }
 
-.overlay-right {
+.page-login .overlay-right {
     right: 0;
     transform: translateX(0);
     background-image: url('../images/car2.jpg');
@@ -225,22 +225,22 @@ button:active {
     background-repeat: no-repeat;
 }
 
-.container-signup.right-panel-active .overlay-left {
+.page-login .container-signup.right-panel-active .overlay-left {
     transform: translateX(0);
 }
 
-.container-signup.right-panel-active .overlay-right {
+.page-login .container-signup.right-panel-active .overlay-right {
     transform: translateX(0%);
 }
 
-.container-social {
+.page-login .container-social {
     margin: 1px 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.container-social a {
+.page-login .container-social a {
     height: 40px;
     width: 40px;
     margin: 0 5px;
@@ -251,6 +251,6 @@ button:active {
     border-radius: 50%;
 }
 
-.fix a {
+.page-login .fix a {
     color: white;
 }
