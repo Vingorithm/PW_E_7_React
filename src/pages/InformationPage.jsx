@@ -1,6 +1,7 @@
 import React from "react";
 import { FaUserCircle, FaIdBadge, FaCar, FaGavel, FaExternalLinkAlt } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
 const Information = () => {
   const scrollHowToBid = () => {

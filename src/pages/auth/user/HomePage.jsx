@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import './Home.css';
+import Video from '../../../assets/videos/vid1.mp4';
 
 const Home = () => {
   return (
@@ -13,12 +14,9 @@ const Home = () => {
       </head>
 
       <div className="page-home container-main">
-        <div className="page-home header">
-          {/* Include your header component here */}
-        </div>
         <div className="page-home container-landingP">
           <video className="page-home videoBackground" autoPlay loop muted playsInline>
-            <source className="page-home videoBackgroundSource" src="./videos/vid1.mp4" type="video/mp4" />
+            <source className="page-home videoBackgroundSource" src={Video} type="video/mp4" />
           </video>
           <div className="page-home backgroundLanding">
             <h1 className="page-home TitleTextLanding" id="fadein1">Find Your Dream Car Today</h1>

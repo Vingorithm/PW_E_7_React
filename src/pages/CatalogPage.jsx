@@ -152,6 +152,7 @@ const Catalog = () => {
             </div>
             </div>
         ))}
+        <br />
         </div>
     </div>
   );
