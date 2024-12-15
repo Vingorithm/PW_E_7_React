@@ -5,6 +5,7 @@
     box-sizing: border-box;
     font-family: Roboto;
 }
+
 .page-home body {
     background-color: #F5F6FA;
     height: 100%;
@@ -39,18 +40,22 @@
     padding: 0 10% 0 10%;
     transition: all 0.3s ease;
 }
+
 .page-home .linkz .button-nav:hover {
     background-color: rgb(56, 52, 52);
     color: white;
 }
+
 .page-home .navlink {
     text-decoration: none;
     color: black;
     font-weight: bold;
 }
+
 .page-home .loginregis {
     height: 100%;
 }
+
 .page-home .loginregis .button-nav {
     background-color: white;
     width: 110%;
@@ -62,10 +67,12 @@
     padding: 0;
     transition: all 0.3s ease;
 }
+
 .page-home .loginregis .button-nav:hover {
     color: white;
     background-color: rgb(56, 52, 52);
 }
+
 .page-home .loginlink {
     font-weight: bold;
     text-decoration: none;
@@ -76,7 +83,7 @@
 .page-home .container-landingP {
     position: relative;
     top: 0;
-    margin-top: 100px;
+    margin-top: 0px;
     padding: 0;
     width: 100%;
     height: calc(100vh - 100px);
@@ -85,6 +92,7 @@
     align-items: center;
     justify-content: start;
 }
+
 .page-home .backgroundLanding {
     width: 100%;
     height: 100%;
@@ -93,7 +101,9 @@
     align-items: center;
     justify-content: start;
     position: absolute;
+    z-index: 0;
 }
+
 .page-home .container-landingP::before {
     content: '';
     position: absolute;
@@ -102,20 +112,22 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    z-index: -1;
 }
+
 .page-home .TitleTextLanding {
     margin-top: 13%;
     color: white;
     z-index: 2;
     font-weight: bold;
     font-size: 44px;
-    opacity: 0;
+    opacity: 1;
     transition: all 0.6s ease;
 }
-.page-home .TitleTextLanding.active {
+
+/* .page-home .TitleTextLanding.active {
     opacity: 1;
-}
+} */
 
 /* Search bar */
 .page-home .searchBar {
@@ -125,6 +137,7 @@
     align-items: center;
     justify-content: center;
 }
+
 .page-home .search {
     width: 650px;
     display: flex;
@@ -140,12 +153,14 @@
     margin-bottom: 9%;
     color: white;
     font-weight: bold;
-    opacity: 0;
+    opacity: 1;
     transition: all 0.6s ease;
 }
-.page-home .search.active {
+
+/* .page-home .search.active {
     opacity: 1;
-}
+} */
+
 .page-home .search-input {
     font-size: 16px;
     color: white;
@@ -157,12 +172,14 @@
     flex: 1;
     z-index: 2;
 }
+
 .page-home input[type="search"]::-webkit-search-decoration,
 .page-home input[type="search"]::-webkit-search-cancel-button,
 .page-home input[type="search"]::-webkit-search-results-button,
 .page-home input[type="search"]::-webkit-search-results-decoration {
     display: none;
 }
+
 .page-home .search-input::placeholder {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.8);
@@ -177,12 +194,14 @@
     align-items: center;
     justify-content: center;
     gap: 10%;
-    opacity: 0;
+    opacity: 1;
     transition: all 0.6s ease;
 }
-.page-home .buttonLanding.active {
+
+/* .page-home .buttonLanding.active {
     opacity: 1;
-}
+} */
+
 .page-home .btnA,
 .page-home .btnB {
     width: 100%;
@@ -190,34 +209,52 @@
     border-radius: 4px;
     transition: all ease 0.3s;
 }
+
 .page-home .btnA {
     background-color: white;
     border-style: solid;
     border-color: black;
 }
+
 .page-home .btnA a {
     color: black;
     text-decoration: none;
     font-weight: bold;
     margin-top: 1rem;
+    transition: color ease 0.3s;
 }
+
 .page-home .btnA:hover {
     background-color: black;
 }
+
+.page-home .btnA:hover a {
+    color: white;
+}
+
 .page-home .btnB {
     background-color: black;
     border-style: solid;
     border-color: white;
 }
+
 .page-home .btnB p {
     color: white;
     text-decoration: none;
     font-weight: bold;
     margin-top: 1rem;
+    transition: color ease 0.3s;
 }
+
 .page-home .btnB:hover {
     background-color: white;
 }
+
+\.page-home .btnB:hover p {
+    color: black;
+}
+
+
 
 /* Features Section */
 .page-home .container-featuredz {
@@ -228,15 +265,18 @@
     justify-content: center;
     align-items: start;
 }
+
 .page-home .container-featuredz h1 {
     margin-left: 5%;
     font-weight: bolder;
     margin-bottom: 0;
 }
+
 .page-home .container-featuredz p {
     font-weight: 700;
     margin-left: 88%;
 }
+
 .page-home .container-cardz {
     flex-wrap: wrap;
     display: flex;
@@ -305,6 +345,7 @@
     font-size: 14px;
     transition: background-color 0.3s ease;
 }
+
 .page-home .custom-bid-btn:hover {
     background-color: rgb(78, 78, 78);
     color: white;
@@ -317,18 +358,22 @@
 .page-home .containerCard {
     display: inline-block;
 }
+
 .page-home .containerCard::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
+
 .page-home .containerCard::-webkit-scrollbar-track {
     background: transparent;
 }
+
 .page-home .containerCard::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 30px;
     transition: background-color 0.3s;
 }
+
 .page-home .containerCard::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.7);
 }
@@ -343,20 +388,24 @@
     margin-top: 3%;
     height: 100%;
 }
+
 .page-home .carousel-header-container {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .page-home .carousel-header {
     width: 80%;
     margin-bottom: 1%;
 }
+
 .page-home .carousel-header h1 {
     font-weight: bold;
     text-align: center;
 }
+
 .page-home .carousel-item {
     height: 52rem;
     background: #777;
@@ -365,6 +414,7 @@
     background-position: center;
     background-size: center;
 }
+
 .page-home .overlay-image {
     position: absolute;
     bottom: 0;
@@ -376,15 +426,19 @@
     background-size: cover;
     filter: brightness(0.4);
 }
+
 .page-home .overlay-image.A {
     background-position: center;
 }
+
 .page-home .overlay-image.B {
     background-position: center;
 }
+
 .page-home .overlay-image.C {
     background-position: 0% 60%;
 }
+
 .page-home .container {
     position: absolute;
     bottom: 0;
@@ -392,6 +446,7 @@
     right: 0;
     padding-bottom: 120px;
 }
+
 .page-home .carousel-indicators li {
     list-style: none;
 }
@@ -406,19 +461,25 @@
     opacity: 1;
     transition: all 0.6s ease;
 }
+
 .page-home .timeline-header.inView {
     opacity: 1;
 }
+
 .page-home .timeline-header h1 {
     font-weight: bolder;
     font-size: 48px;
 }
+
+
 .page-home .timeline {
     position: relative;
     max-width: 100%;
     background: #F5F6FA;
-    margin: 0% 5% 10% 5%;
+    margin: 0% 0% 10% 0%;
+    padding: 10% 0%;
 }
+
 .page-home .timeline::after {
     content: '';
     position: absolute;
@@ -430,6 +491,7 @@
     margin-left: -3px;
     z-index: 2;
 }
+
 .page-home .textBox {
     padding: 20px 30px;
     background: #fff;
@@ -441,32 +503,40 @@
     opacity: 1;
     transition: all 0.6s ease;
 }
+
 .page-home .textBox.inView {
     opacity: 1;
 }
+
 .page-home .textBox:hover {
     transform: scale(1.1) translateX(5%);
     cursor: default;
 }
+
 .page-home .textBox.A {
     text-align: right;
 }
+
 .page-home .textBox.A:hover {
     transform: scale(1.1) translateX(-5%);
     cursor: default;
 }
+
 .page-home .container-howToBid {
     padding: 10px 50px;
     position: relative;
     width: 50%;
     background-color: #F5F6FA;
 }
+
 .page-home .left {
     left: -0%;
 }
+
 .page-home .right {
     left: 50%;
 }
+
 .page-home .Number-container {
     position: absolute;
     width: 40px;
@@ -474,9 +544,11 @@
     top: 32px;
     z-index: 10;
 }
+
 .page-home .Number-container.right {
     left: -21px;
 }
+
 .page-home .Number {
     width: 40px;
     height: 40px;
@@ -489,6 +561,7 @@
     border-style: solid;
     border-width: 2px;
 }
+
 .page-home .Number h2 {
     font-weight: bold;
     color: white;
@@ -496,6 +569,7 @@
     margin: 0;
     padding: 0;
 }
+
 .page-home .leftArrow {
     height: 0;
     width: 0;
@@ -507,6 +581,7 @@
     border-left: 15px solid white;
     right: -15px;
 }
+
 .page-home .rightArrow {
     height: 0;
     width: 0;
@@ -528,6 +603,7 @@
     justify-content: center;
     overflow: hidden;
 }
+
 .page-home .container-aboutCard {
     width: 65%;
     height: 75%;
@@ -540,11 +616,13 @@
     border-width: 1px;
     border-style: solid;
 }
+
 .page-home .image-about {
     width: 60%;
     background-size: cover;
     background: linear-gradient(to left, rgba(26, 26, 26, 0.5) 10%, rgba(0, 0, 0, 0) 90%), url("../images/car3.jpg") center / cover no-repeat;
 }
+
 .page-home .text-about {
     padding: 40px;
     width: 40%;
@@ -555,28 +633,34 @@
     backdrop-filter: blur(30px);
     color: white;
 }
+
 .page-home .text-about h1 {
     font-weight: bold;
 }
+
 .page-home .text-about p {
     width: 100%;
     text-align: justify;
     margin-bottom: 13%;
 }
-.page-home .videoBackground {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.5);
-}
+
+
 .page-home .videoBackgroundBot {
     width: 100%;
     height: 820px;
     object-fit: cover;
     filter: brightness(0.5);
 }
+
 .page-home .aboutButton {
     width: fit-content;
     border-radius: 4px;
     font-weight: thin;
+}
+
+.page-home .videoBackground {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.5);
 }

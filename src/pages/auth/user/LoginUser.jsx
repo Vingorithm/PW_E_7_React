@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import './Login.css';
-import HeaderLogin from '../../../components/HeaderLogin';
 
-const LoginUser = () => {
+const LoginRegister = () => {
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem('isLoggedIn', 'true');
-    window.location.href = '/'; 
+    window.location.href = '/';
   };
 
   const handleSignupSubmit = (e) => {
@@ -17,9 +16,12 @@ const LoginUser = () => {
   };
 
   return (
-    <>
-      <div className={`page-login container-main ${isRightPanelActive ? 'right-panel-active' : ''}`}>
-        <div className="page-login container-signup" id="main">
+
+    <body className='page-login body'>
+
+      <div className="page-login container-main">
+        <div className={`container-signup ${isRightPanelActive ? 'right-panel-active' : ''}`} id="main">
+          {/* Sign Up Form */}
           <div className="page-login sign-up">
             <form onSubmit={handleSignupSubmit}>
               <h1 className="page-login heder">Sign Up</h1>
@@ -36,6 +38,8 @@ const LoginUser = () => {
               <button className="page-login fix" type="submit">Sign Up</button>
             </form>
           </div>
+
+          {/* Log In Form */}
           <div className="page-login log-in">
             <form onSubmit={handleLoginSubmit}>
               <h1 className="page-login heder">Log In</h1>
@@ -51,22 +55,24 @@ const LoginUser = () => {
               <button className="page-login fix" type="submit">Log In</button>
             </form>
           </div>
+
+          {/* Overlay */}
           <div className="page-login container-overlay">
             <div className="page-login overlay">
               <div className="page-login overlay-left">
                 <h1>Already Have an Account?</h1>
-                <button onClick={() => setIsRightPanelActive(false)} id="login">Log in</button>
+                <button id="login" onClick={() => setIsRightPanelActive(false)}>Log in</button>
               </div>
-              <div className="page-login overlay-right">
+              <div className="overlay-right">
                 <h1>Don't Have an Account?</h1>
-                <button onClick={() => setIsRightPanelActive(true)} id="signup">Sign Up</button>
+                <button id="signup" onClick={() => setIsRightPanelActive(true)}>Sign Up</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </body>
   );
 };
 
-export default LoginUser;
+export default LoginRegister;
