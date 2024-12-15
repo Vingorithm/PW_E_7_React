@@ -11,6 +11,17 @@ const Header = () => {
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.page-navbar.user-info') &&
+                !event.target.closest('.page-navbar.dropdown')) {
+                setDropdownVisible(false);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
+
     const handleDropdownToggle = () => {
         setDropdownVisible(!dropdownVisible);
     };
@@ -47,8 +58,7 @@ const Header = () => {
                         <div className="page-navbar user-info" onClick={handleDropdownToggle}>
                             <img src={profileImage} alt="User Photo" className="page-navbar user-photo" />
                             <span className="page-navbar user-name fw-bold">Lucas</span>
-                            {dropdownVisible && (
-                                <div className="page-navbar dropdown">
+                                <div className={`page-navbar dropdown ${dropdownVisible ? 'visible' : ''}`}>
                                     <a href="/profile" className="page-navbar dropdown-item" id="profileDetail">
                                         <i className="fas fa-eye"></i> Detail
                                     </a>
@@ -56,7 +66,7 @@ const Header = () => {
                                         <i className="fas fa-plus-circle"></i> Tambah Lelang
                                     </a>
                                     <a href="/kelola_lelang" className="page-navbar dropdown-item" id="lelangSayaButton">
-                                        <i className="fas fa-auction"></i> Lelang Saya
+                                        <i className="fas fa-gavel"></i> Lelang Saya
                                     </a>
                                     <a
                                         href="/"
@@ -67,7 +77,6 @@ const Header = () => {
                                         <i className="fas fa-sign-out-alt"></i> Logout
                                     </a>
                                 </div>
-                            )}
                         </div>
                     ) : (
                         <a className="page-navbar loginlink page-navbar button-nav" href="/login">

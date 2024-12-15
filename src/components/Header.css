@@ -83,11 +83,12 @@
 }
 
 .page-navbar .user-info {
+    position: relative; /* Referensi posisi dropdown */
     display: flex;
     align-items: center;
-    gap: 10px;
-    /* Jarak antara foto dan nama */
     cursor: pointer;
+    margin-right: 60px;
+    gap: 5px;
 }
 
 .page-navbar .user-photo {
@@ -95,23 +96,45 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    margin-right: 5px;
 }
 
 /* Dropdown */
 .page-navbar .dropdown {
     position: absolute;
-    top: calc(100% + 10px);
-    /* Jarak dropdown dari navbar */
-    right: 20px;
-    width: 200px;
-    /* Lebar dropdown */
+    top: 80%; 
+    /* left: 40px;  */
+    width: 150px;
     background-color: white;
     border: 1px solid #ccc;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
     display: none;
-    /* Sembunyikan secara default */
+}
+
+.page-navbar .dropdown.visible {
+    display: block;
+}
+
+.page-navbar .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.page-navbar .dropdown-item i {
+    margin-right: 20px; /* Jarak antara icon dan teks */
+    color: #000;
+}
+
+.page-navbar .dropdown-item:hover {
+    background-color: #f5f5f5; /* Warna hover */
+    color: #000;
 }
 
 .page-navbar .user-info:hover+.dropdown {
