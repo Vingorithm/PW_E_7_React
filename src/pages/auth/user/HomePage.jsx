@@ -5,6 +5,11 @@ import Footer from '../../../components/Footer';
 import './Home.css';
 import Video from '../../../assets/videos/vid1.mp4';
 import Video2 from '../../../assets/videos/vid2.mp4';
+import Image1 from '../../../assets/images/bids1.jpg';
+import Image2 from '../../../assets/images/bids2.jpg';
+import Image3 from '../../../assets/images/bids3.webp';
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { RiAuctionLine } from "react-icons/ri";
 
 const Home = () => {
     // Dummy data for Featured Cars
@@ -46,7 +51,7 @@ const Home = () => {
     const [carouselItems] = useState([
         {
             id: 1,
-            image: './images/bids1.jpg',
+            image: Image1,
             title: 'Toyota Highlander (2017)',
             description: `Last fully redesigned for the 2014 model year, the Toyota Highlander received styling
                         and drivetrain updates for 2017, including a new grille and an available V-6 engine.`,
@@ -54,7 +59,7 @@ const Home = () => {
         },
         {
             id: 2,
-            image: './images/bids2.jpg',
+            image: Image2,
             title: 'Audi Sport quattro concept (2013)',
             description: `quattro is Audi and Audi is quattro – the brand and the technology are indelibly linked.
                         In celebration of the 30th birthday of the Sport quattro, Audi will present its
@@ -65,7 +70,7 @@ const Home = () => {
         },
         {
             id: 3,
-            image: './images/bids3.jpg',
+            image: Image3,
             title: 'Peterbilt 379 (2018)',
             description: `Serving as the successor to the 359, the 379 was a conventional-cab truck configured
                         primarily for highway use, serving as the flagship of the Peterbilt model line. During
@@ -89,7 +94,7 @@ const Home = () => {
                         <div className="page-home searchBar">
                             <form action="">
                                 <div className="page-home search" id="fadein2">
-                                    <i className="page-home fa-solid fa-magnifying-glass"></i>
+                                    <FaMagnifyingGlass />
                                     <input className="page-home search-input" placeholder="Describe what you're Looking for!" type="search" />
                                 </div>
                             </form>
@@ -110,7 +115,7 @@ const Home = () => {
                     <div className="page-home carousel-header-container">
                         <div className="page-home carousel-header">
                             <h1>
-                                <i className="page-home fa-solid fa-gavel"></i> <br /> Hottest Bids
+                                <RiAuctionLine /><br /> Hottest Bids
                             </h1>
                         </div>
                     </div>

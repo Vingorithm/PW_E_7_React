@@ -111,9 +111,9 @@ const Detail = () => {
             </button>
           </div>
           <br />
-          <button className="btn btn-primary" style={{ width: "100%" }}>
-            Place Bid
-          </button>
+          <Link to="/payment" className="btn btn-dark mt-auto w-100">
+              Bid Now
+          </Link>
         </div>
       </div>
 
@@ -121,8 +121,11 @@ const Detail = () => {
         <div className="d-flex justify-content-between align-items-center mb-4">
             <h1>You May Also Like</h1>
             <p className="mb-0">
-            <a href="/catalog" className="navlink button-nav">
-                See more <i className="fa-solid fa-chevron-right"></i>
+            <a 
+              href="/catalog" 
+              style={{ color: 'black', textDecoration: 'none' }}
+            >
+              See more <i className="fa-solid fa-chevron-right"></i>
             </a>
             </p>
         </div>
@@ -157,14 +160,14 @@ const Detail = () => {
                     <div className="d-flex justify-content-between align-items-start mb-3">
                     <div>
                         <span className="text-muted small d-block">Current Bid</span>
-                        <span className="fw-bold text-primary">Rp. 600.000.000</span>
+                        <span className="fw-bold text-dark">Rp. 600.000.000</span>
                     </div>
                     <div className="text-end">
                         <span className="text-muted small d-block">Time Left</span>
-                        <span className="fw-bold text-danger">2d 10h</span>
+                        <span className="fw-bold text-dark">2d 10h</span>
                     </div>
                     </div>
-                    <button className="btn btn-primary mt-auto w-100">Bid Now</button>
+                    <button className="btn btn-dark mt-auto w-100">Bid Now</button>
                 </div>
                 </div>
             </div>

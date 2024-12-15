@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Catalog = () => {
-  const dataMobil = [
+  const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const dummyData = [
     {
       id: 1,
       nama: "Toyota Camry",
@@ -49,8 +55,22 @@ const Catalog = () => {
     },
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // const response = await fetch("");
+        // const data = await response.json();
+        const data = dummyData;
+        setCars(data);
+      } catch (err) {
+        setError("Failed to fetch data. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -60,14 +80,53 @@ const Catalog = () => {
     setSearchQuery(e.target.value);
   };
 
-  const filteredCars = dataMobil.filter((car) => {
+  const filteredCars = cars.filter((car) => {
     const matchesCategory = selectedCategory === "All" || car.category === selectedCategory;
     const matchesSearch = car.nama.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
+  if (loading) {
+    return (
+      <div className="container text-center py-5">
+        <p>Loading cars...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container text-center py-5">
+        <p className="text-danger">{error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container py-4">
+      <style>
+        {`
+          .btn {
+            background-color: black;
+            color: white;
+            border: none;
+          }
+          .btn:hover {
+            background-color: #333;
+            color: white;
+          }
+          .category-btn:not(.active) {
+            background-color: white !important;
+            color: black !important;
+            border: 0.5px solid black !important;
+          }
+          .category-btn.active {
+            background-color: black !important;
+            color: white !important;
+          }
+        `}
+      </style>
+
       <div className="text-center mb-4">
         <h1 className="fw-bold">Our Catalog</h1>
         <br />
@@ -81,7 +140,7 @@ const Catalog = () => {
           {["All", "Standard", "Luxury", "EV"].map((cat) => (
             <button
               key={cat}
-              className={`btn btn-outline-primary category-btn ${cat === selectedCategory ? "active" : ""}`}
+              className={`btn category-btn ${cat === selectedCategory ? "active" : ""}`}
               onClick={() => handleCategoryChange(cat)}
             >
               {cat}
@@ -97,57 +156,59 @@ const Catalog = () => {
             value={searchQuery}
             onChange={handleSearchChange}
           />
-          <button className="btn btn-outline-primary">Search</button>
+          <button className="btn">Search</button>
         </div>
       </div>
 
-      {/* Product Cards */}
-      <div className="row g-4">
-        {filteredCars.map((car) => (
-          <div key={car.id} className="col-lg-3 col-md-6 card-item" data-category={car.category}>
-            <div className="card h-100 shadow-sm">
-              <img
-                src={`/images/${car.image}`}
-                alt={car.nama}
-                className="card-img-top"
-                style={{ height: "200px", objectFit: "cover" }}
-              />
-              <div className="card-body d-flex flex-column">
-                <h5 className="card-title fw-bold mb-3">{car.nama}</h5>
-                
-                <div className="mb-3">
-                  <div className="d-flex justify-content-between mb-1">
-                    <span className="text-muted small">Kilometers:</span>
-                    <span className="small">{car.kilometers}</span>
+      <div className="row g-4" style={{ minHeight: "400px" }}>
+        {filteredCars.length > 0 ? (
+          filteredCars.map((car) => (
+            <div key={car.id} className="col-lg-3 col-md-6 card-item" data-category={car.category}>
+              <div className="card h-100 shadow-sm">
+                <img
+                  src={`/images/${car.image}`}
+                  alt={car.nama}
+                  className="card-img-top"
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title fw-bold mb-3">{car.nama}</h5>
+                  <div className="mb-3">
+                    <div className="d-flex justify-content-between mb-1">
+                      <span className="text-muted small">Kilometers:</span>
+                      <span className="small">{car.kilometers}</span>
+                    </div>
+                    <div className="d-flex justify-content-between mb-1">
+                      <span className="text-muted small">Transmission:</span>
+                      <span className="small">{car.transmission}</span>
+                    </div>
+                    <div className="d-flex justify-content-between mb-1">
+                      <span className="text-muted small">Listed on:</span>
+                      <span className="small">{car.listedDate}</span>
+                    </div>
                   </div>
-                  <div className="d-flex justify-content-between mb-1">
-                    <span className="text-muted small">Transmission:</span>
-                    <span className="small">{car.transmission}</span>
+                  <div className="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <span className="text-muted small d-block">Current Bid</span>
+                      <span className="fw-bold text-dark">{car.harga}</span>
+                    </div>
+                    <div className="text-end">
+                      <span className="text-muted small d-block">Time Left</span>
+                      <span className="fw-bold text-dark">{car.timeLeft}</span>
+                    </div>
                   </div>
-                  <div className="d-flex justify-content-between mb-1">
-                    <span className="text-muted small">Listed on:</span>
-                    <span className="small">{car.listedDate}</span>
-                  </div>
+                  <Link to="/detail" className="btn mt-auto w-100">
+                    Bid Now
+                  </Link>
                 </div>
-
-                <div className="d-flex justify-content-between align-items-start mb-3">
-                  <div>
-                    <span className="text-muted small d-block">Current Bid</span>
-                    <span className="fw-bold text-primary">{car.harga}</span>
-                  </div>
-                  <div className="text-end">
-                    <span className="text-muted small d-block">Time Left</span>
-                    <span className="fw-bold text-danger">{car.timeLeft}</span>
-                  </div>
-                </div>
-
-                <Link to="/detail" className="btn btn-primary mt-auto w-100">
-                  Bid Now
-                </Link>
               </div>
             </div>
+          ))
+        ) : (
+          <div className="col-12 text-center">
+            <p className="text-muted">No cars found matching your search.</p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
