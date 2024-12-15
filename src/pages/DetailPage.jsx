@@ -1,30 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
 const Detail = () => {
-  const [largeImage, setLargeImage] = useState("images/car1.jpg");
-  const [bid, setBid] = useState(100000);
+  const [productDetail, setProductDetail] = useState({
+    name: "Mercedes-AMG GT 4-Door Coupe",
+    brand: "Mercedes",
+    engine: "2.5L I6",
+    kilometers: "10,000",
+    transmission: "Automatic",
+    currentBid: 100000,
+    largeImage: "images/car1.jpg",
+    images: ["car1.jpg", "car2.jpg", "car3.jpg"],
+  });
 
-  const images = [
-    { image: "car1.jpg" },
-    { image: "car2.jpg" },
-    { image: "car3.jpg" },
-  ];
+  const [relatedProducts, setRelatedProducts] = useState([
+    {
+      id: 1,
+      name: "Mercedes-AMG GT 4-Door Coupe",
+      image: "images/car2.jpg",
+      kilometers: "20,000",
+      transmission: "Automatic",
+      listedOn: "12-10-2024",
+      currentBid: 600000000,
+      timeLeft: "2d 10h",
+    },
+  ]);
+
+  const [bid, setBid] = useState(productDetail.currentBid);
 
   const handleImageSwap = (imageSrc) => {
-    setLargeImage(imageSrc);
+    setProductDetail((prevState) => ({
+      ...prevState,
+      largeImage: imageSrc,
+    }));
   };
 
-  const handleIncreaseBid = () => {
-    setBid(bid + 1000);
-  };
-
+  const handleIncreaseBid = () => setBid(bid + 1000);
   const handleDecreaseBid = () => {
-    if (bid > 1000) {
-      setBid(bid - 1000);
-    }
+    if (bid > 1000) setBid(bid - 1000);
   };
+
+  useEffect(() => {
+    const fetchProductDetail = async () => {
+      const response = await new Promise((resolve) =>
+        setTimeout(() => resolve({ data: productDetail }), 1000)
+      );
+      setProductDetail(response.data);
+    };
+
+    const fetchRelatedProducts = async () => {
+      const response = await new Promise((resolve) =>
+        setTimeout(() => resolve({ data: relatedProducts }), 1000)
+      );
+      setRelatedProducts(response.data);
+    };
+
+    fetchProductDetail();
+    fetchRelatedProducts();
+  }, []);
 
   return (
     <div className="container mt-5">
@@ -33,21 +67,21 @@ const Detail = () => {
           <div className="mb-3 flex-grow-1">
             <img
               id="large-image"
-              src={largeImage}
+              src={productDetail.largeImage}
               className="img-fluid large-car"
               alt="Car Large"
               style={{ height: "100%", objectFit: "cover" }}
             />
           </div>
           <div className="row">
-            {images.map((image, index) => (
+            {productDetail.images.map((image, index) => (
               <div className="col-4 mb-2" key={index}>
                 <img
-                  src={`images/${image.image}`}
+                  src={`images/${image}`}
                   className="img-fluid small-car"
                   alt={`Car Small ${index}`}
                   style={{ height: "150px", objectFit: "cover" }}
-                  onClick={() => handleImageSwap(`images/${image.image}`)}
+                  onClick={() => handleImageSwap(`images/${image}`)}
                 />
               </div>
             ))}
@@ -55,20 +89,20 @@ const Detail = () => {
         </div>
         <div className="col-md-4 d-flex flex-column">
           <h1 className="mb-3">
-            <strong>Mercedes-AMG GT 4-Door Coupe</strong>
+            <strong>{productDetail.name}</strong>
           </h1>
           <div className="row">
             <div className="col-6">
               <p><strong>Brand</strong></p>
-              <p>Mercedes</p>
+              <p>{productDetail.brand}</p>
               <p><strong>Engine</strong></p>
-              <p>2.5L I6</p>
+              <p>{productDetail.engine}</p>
             </div>
             <div className="col-6">
               <p><strong>Kilometers</strong></p>
-              <p>10,000</p>
+              <p>{productDetail.kilometers}</p>
               <p><strong>Transmission</strong></p>
-              <p>Automatic</p>
+              <p>{productDetail.transmission}</p>
             </div>
           </div>
           <p><strong>Current Bid</strong></p>
@@ -112,68 +146,69 @@ const Detail = () => {
           </div>
           <br />
           <Link to="/payment" className="btn btn-dark mt-auto w-100">
-              Bid Now
+            Bid Now
           </Link>
         </div>
       </div>
 
       <div className="content mt-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
-            <h1>You May Also Like</h1>
-            <p className="mb-0">
+          <h1>You May Also Like</h1>
+          <p className="mb-0">
             <a 
               href="/catalog" 
               style={{ color: 'black', textDecoration: 'none' }}
             >
               See more <i className="fa-solid fa-chevron-right"></i>
             </a>
-            </p>
+          </p>
         </div>
         <div className="row g-4">
-            {[...Array(8)].map((_, index) => (
-            <div className="col-lg-3 col-md-6" key={index}>
-                <div className="card h-100 shadow-sm">
+          {relatedProducts.map((product) => (
+            <div className="col-lg-3 col-md-6" key={product.id}>
+              <div className="card h-100 shadow-sm">
                 <img
-                    src="images/car2.jpg"
-                    alt={`Car ${index}`}
-                    className="card-img-top"
-                    style={{ height: "200px", objectFit: "cover" }}
+                  src={product.image}
+                  alt={product.name}
+                  className="card-img-top"
+                  style={{ height: "200px", objectFit: "cover" }}
                 />
                 <div className="card-body d-flex flex-column">
-                    <h5 className="card-title fw-bold mb-3">
-                    Mercedes-AMG GT 4-Door Coupe
-                    </h5>
-                    <div className="mb-3">
+                  <h5 className="card-title fw-bold mb-3">{product.name}</h5>
+                  <div className="mb-3">
                     <div className="d-flex justify-content-between mb-1">
-                        <span className="text-muted small">Kilometers:</span>
-                        <span className="small">20,000</span>
+                      <span className="text-muted small">Kilometers:</span>
+                      <span className="small">{product.kilometers}</span>
                     </div>
                     <div className="d-flex justify-content-between mb-1">
-                        <span className="text-muted small">Transmission:</span>
-                        <span className="small">Automatic</span>
+                      <span className="text-muted small">Transmission:</span>
+                      <span className="small">{product.transmission}</span>
                     </div>
                     <div className="d-flex justify-content-between mb-1">
-                        <span className="text-muted small">Listed on:</span>
-                        <span className="small">12-10-2024</span>
+                      <span className="text-muted small">Listed on:</span>
+                      <span className="small">{product.listedOn}</span>
                     </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-start mb-3">
+                  </div>
+                  <div className="d-flex justify-content-between align-items-start mb-3">
                     <div>
-                        <span className="text-muted small d-block">Current Bid</span>
-                        <span className="fw-bold text-dark">Rp. 600.000.000</span>
+                      <span className="text-muted small d-block">Current Bid</span>
+                      <span className="fw-bold text-dark">
+                        Rp. {product.currentBid.toLocaleString()}
+                      </span>
                     </div>
                     <div className="text-end">
-                        <span className="text-muted small d-block">Time Left</span>
-                        <span className="fw-bold text-dark">2d 10h</span>
+                      <span className="text-muted small d-block">Time Left</span>
+                      <span className="fw-bold text-dark">{product.timeLeft}</span>
                     </div>
-                    </div>
-                    <button className="btn btn-dark mt-auto w-100">Bid Now</button>
+                  </div>
+                  <button className="btn btn-dark mt-auto w-100">Bid Now</button>
                 </div>
-                </div>
+              </div>
             </div>
-            ))}
+          ))}
         </div>
-        </div>
+        <br />
+      </div>
     </div>
   );
 };
