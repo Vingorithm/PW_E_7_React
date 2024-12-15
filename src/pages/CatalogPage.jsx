@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Catalog = () => {
@@ -49,111 +49,106 @@ const Catalog = () => {
     },
   ];
 
-  const filterCategory = (category, element) => {
-    const items = document.querySelectorAll(".card-item");
-    items.forEach((item) => {
-      if (category === "All" || item.getAttribute("data-category") === category) {
-        item.style.display = "block";
-      } else {
-        item.style.display = "none";
-      }
-    });
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
-    const buttons = document.querySelectorAll(".category-btn");
-    buttons.forEach((btn) => {
-      btn.classList.remove("active");
-    });
-    element.classList.add("active");
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
   };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredCars = dataMobil.filter((car) => {
+    const matchesCategory = selectedCategory === "All" || car.category === selectedCategory;
+    const matchesSearch = car.nama.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="container py-4">
-      {/* Header */}
       <div className="text-center mb-4">
         <h1 className="fw-bold">Our Catalog</h1>
         <br />
         <p className="text-muted">
-        Welcome to AtmaBid, your premier destination for exclusive vehicle auctions. Discover a meticulously curated selection of high-quality cars that cater to every lifestyle and preference, from sleek and practical sedans to luxurious SUVs and cutting-edge electric vehicles. Whether you’re a first-time buyer, a seasoned car enthusiast, or looking for a reliable family vehicle, AtmaBid has something perfect for you.  
+          Welcome to AtmaBid, your premier destination for exclusive vehicle auctions. Discover a meticulously curated selection of high-quality cars that cater to every lifestyle and preference, from sleek and practical sedans to luxurious SUVs and cutting-edge electric vehicles. Whether you’re a first-time buyer, a seasoned car enthusiast, or looking for a reliable family vehicle, AtmaBid has something perfect for you.  
         </p>
       </div>
 
-      {/* Filter and Search */}
       <div className="d-flex justify-content-between align-items-center mb-4">
-        {/* Categories */}
         <div className="d-flex gap-2">
           {["All", "Standard", "Luxury", "EV"].map((cat) => (
             <button
               key={cat}
-              className={`btn btn-outline-primary category-btn ${cat === "All" ? "active" : ""}`}
-              onClick={(e) => filterCategory(cat, e.target)}
+              className={`btn btn-outline-primary category-btn ${cat === selectedCategory ? "active" : ""}`}
+              onClick={() => handleCategoryChange(cat)}
             >
               {cat}
             </button>
           ))}
         </div>
-        {/* Search and Sort */}
         <div className="d-flex gap-3 align-items-center">
           <input
             type="text"
             className="form-control"
             placeholder="Search vehicles..."
             style={{ maxWidth: "300px" }}
+            value={searchQuery}
+            onChange={handleSearchChange}
           />
           <button className="btn btn-outline-primary">Search</button>
         </div>
       </div>
 
-     {/* Product Cards */}
-        <div className="row g-4">
-        {dataMobil.map((car) => (
-            <div key={car.id} className="col-lg-3 col-md-6 card-item" data-category={car.category}>
+      {/* Product Cards */}
+      <div className="row g-4">
+        {filteredCars.map((car) => (
+          <div key={car.id} className="col-lg-3 col-md-6 card-item" data-category={car.category}>
             <div className="card h-100 shadow-sm">
-                <img
+              <img
                 src={`/images/${car.image}`}
                 alt={car.nama}
                 className="card-img-top"
                 style={{ height: "200px", objectFit: "cover" }}
-                />
-                <div className="card-body d-flex flex-column">
+              />
+              <div className="card-body d-flex flex-column">
                 <h5 className="card-title fw-bold mb-3">{car.nama}</h5>
                 
-                {/* Vehicle Details */}
                 <div className="mb-3">
-                    <div className="d-flex justify-content-between mb-1">
+                  <div className="d-flex justify-content-between mb-1">
                     <span className="text-muted small">Kilometers:</span>
                     <span className="small">{car.kilometers}</span>
-                    </div>
-                    <div className="d-flex justify-content-between mb-1">
+                  </div>
+                  <div className="d-flex justify-content-between mb-1">
                     <span className="text-muted small">Transmission:</span>
                     <span className="small">{car.transmission}</span>
-                    </div>
-                    <div className="d-flex justify-content-between mb-1">
+                  </div>
+                  <div className="d-flex justify-content-between mb-1">
                     <span className="text-muted small">Listed on:</span>
                     <span className="small">{car.listedDate}</span>
-                    </div>
+                  </div>
                 </div>
 
-                {/* Bid and Time Information */}
                 <div className="d-flex justify-content-between align-items-start mb-3">
-                    <div>
+                  <div>
                     <span className="text-muted small d-block">Current Bid</span>
                     <span className="fw-bold text-primary">{car.harga}</span>
-                    </div>
-                    <div className="text-end">
+                  </div>
+                  <div className="text-end">
                     <span className="text-muted small d-block">Time Left</span>
                     <span className="fw-bold text-danger">{car.timeLeft}</span>
-                    </div>
+                  </div>
                 </div>
 
                 <Link to="/detail" className="btn btn-primary mt-auto w-100">
-                    Bid Now
+                  Bid Now
                 </Link>
-                </div>
+              </div>
             </div>
-            </div>
+          </div>
         ))}
-        <br />
-        </div>
+      </div>
     </div>
   );
 };
