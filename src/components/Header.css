@@ -3,27 +3,33 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px; /* Tinggi navbar */
+    height: 60px;
+    /* Height of the navbar */
     display: flex;
     align-items: center;
+    /* Vertically center items */
     justify-content: space-between;
-    padding: 0 10px; /* Ruang horizontal */
     background-color: white;
     z-index: 1000;
-    box-sizing: border-box; /* Termasuk padding dalam ukuran elemen */
+    box-sizing: border-box;
+    /* Include padding in element size */
     filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1));
     transition: background-color 0.3s ease;
+    padding: 0;
+    /* Remove padding */
 }
 
 /* Logo */
 .page-navbar .logo {
     display: flex;
     align-items: center;
-    margin-right: auto; /* Posisi ke kiri */
+    margin-right: auto;
+    /* Posisi ke kiri */
 }
 
 .page-navbar .logo img {
-    width: 120px; /* Ukuran logo */
+    width: 120px;
+    /* Ukuran logo */
     height: auto;
     object-fit: contain;
 }
@@ -32,25 +38,36 @@
 .page-navbar .container-linkz {
     flex: 1;
     display: flex;
-    justify-content: center; /* Pusatkan link */
+    justify-content: center;
     align-items: center;
+    height: 120px;
 }
 
 .page-navbar .linkz {
     display: flex;
-    gap: 20px; /* Jarak antar-link */
+    height: 100%;
+    /* Ensure full height of the navbar */
+    justify-content: center;
+    align-items: center;
+    /* Vertically center child elements */
 }
 
 .page-navbar .button-nav {
-    font-size: 14px; /* Ukuran font */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 14px;
     font-weight: 500;
     text-transform: uppercase;
     color: #333;
     text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 5px;
+    width: 150px;
+    text-align: center;
     transition: all 0.3s ease;
+    line-height: 1;
 }
+
 
 .page-navbar .button-nav:hover {
     background-color: black;
@@ -61,13 +78,15 @@
 .page-navbar .container-loginz {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* Posisi ke kanan */
+    justify-content: flex-end;
+    /* Posisi ke kanan */
 }
 
 .page-navbar .user-info {
     display: flex;
     align-items: center;
-    gap: 10px; /* Jarak antara foto dan nama */
+    gap: 10px;
+    /* Jarak antara foto dan nama */
     cursor: pointer;
 }
 
@@ -81,25 +100,30 @@
 /* Dropdown */
 .page-navbar .dropdown {
     position: absolute;
-    top: calc(100% + 10px); /* Jarak dropdown dari navbar */
+    top: calc(100% + 10px);
+    /* Jarak dropdown dari navbar */
     right: 20px;
-    width: 200px; /* Lebar dropdown */
+    width: 200px;
+    /* Lebar dropdown */
     background-color: white;
     border: 1px solid #ccc;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     text-align: left;
-    display: none; /* Sembunyikan secara default */
+    display: none;
+    /* Sembunyikan secara default */
 }
 
-.page-navbar .user-info:hover + .dropdown {
-    display: block; /* Tampilkan dropdown saat hover */
+.page-navbar .user-info:hover+.dropdown {
+    display: block;
+    /* Tampilkan dropdown saat hover */
 }
 
 /* Responsiveness */
 @media (max-width: 768px) {
     .page-navbar .container-linkz {
-        display: none; /* Sembunyikan link pada layar kecil */
+        display: none;
+        /* Sembunyikan link pada layar kecil */
     }
 
     .page-navbar .navbar {

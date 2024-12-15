@@ -24,7 +24,7 @@ const Header = () => {
 
     return (
         <header>
-            <div className="page-navbar navbar">
+            <div className="page-navbar navbar p-0 " style={{ height: '110px' }}>
                 {/* Logo */}
                 <div className="page-navbar logo">
                     <a href="/">
