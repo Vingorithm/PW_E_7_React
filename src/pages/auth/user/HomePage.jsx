@@ -8,45 +8,50 @@ import Video2 from '../../../assets/videos/vid2.mp4';
 import Image1 from '../../../assets/images/bids1.jpg';
 import Image2 from '../../../assets/images/bids2.jpg';
 import Image3 from '../../../assets/images/bids3.webp';
+import Image4 from '../../../assets/images/car3.jpg';
+
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { RiAuctionLine } from "react-icons/ri";
+import { GoChevronRight } from "react-icons/go";
+import { GoLinkExternal } from "react-icons/go";
 
 const Home = () => {
     // Dummy data for Featured Cars
-    const [cars] = useState([
+    const [cars, setCars] = useState([
         {
             id: 1,
-            image: './images/car2.jpg',
-            name: 'Mercedes-AMG GT 4-Door Coupe',
-            kilometers: '20,000',
-            transmission: 'Automatic',
-            listedOn: '12-10-2024',
-            currentBid: 'Rp. 600.000.000',
-            timeLeft: '2d 10h',
-            detailLink: '/detail',
+            nama: "Toyota Camry",
+            category: "Standard",
+            image: "camry.jpg",
+            harga: "Rp 350.000.000",
+            kilometers: "20,000",
+            transmission: "Automatic",
+            listedDate: "12-10-2024",
+            timeLeft: "2d 10h",
         },
         {
             id: 2,
-            image: './images/car3.jpg',
-            name: 'BMW M5 Competition',
-            kilometers: '15,000',
-            transmission: 'Manual',
-            listedOn: '10-11-2024',
-            currentBid: 'Rp. 800.000.000',
-            timeLeft: '1d 5h',
-            detailLink: '/detail',
+            nama: "BMW 320i",
+            category: "Luxury",
+            image: "bmw.jpg",
+            harga: "Rp 850.000.000",
+            kilometers: "15,000",
+            transmission: "Automatic",
+            listedDate: "12-10-2024",
+            timeLeft: "1d 8h",
         },
         {
             id: 3,
-            image: './images/car4.jpg',
-            name: 'Audi RS7 Sportback',
-            kilometers: '12,000',
-            transmission: 'Automatic',
-            listedOn: '08-09-2024',
-            currentBid: 'Rp. 1.200.000.000',
-            timeLeft: '3d 2h',
-            detailLink: '/detail',
+            nama: "Tesla Model S",
+            category: "Electric",
+            image: "tesla.jpg",
+            harga: "Rp 1,200,000,000",
+            kilometers: "10,000",
+            transmission: "Automatic",
+            listedDate: "10-10-2024",
+            timeLeft: "3d 5h",
         },
+        // Add more car objects as needed
     ]);
     const [carouselItems] = useState([
         {
@@ -80,7 +85,32 @@ const Home = () => {
     ]);
 
     return (
+
+
         <div>
+            <style>
+                {`
+          .btn {
+            background-color: black;
+            color: white;
+            border: none;
+          }
+          .btn:hover {
+            background-color: #333;
+            color: white;
+          }
+          .category-btn:not(.active) {
+            background-color: white !important;
+            color: black !important;
+            border: 0.5px solid black !important;
+          }
+          .category-btn.active {
+            background-color: black !important;
+            color: white !important;
+          }
+        `}
+            </style>
+
             <head>
                 <title>Home</title>
             </head>
@@ -176,42 +206,56 @@ const Home = () => {
                         </button>
                     </div>
                 </div>
-                <div className="page-home content">
-                    <div className="page-home container-text-left">
-                        <div className="page-home d-flex justify-content-between align-items-center mb-1">
-                            <h1><strong className="page-home">Featured Cars</strong></h1>
-                            <a href="/catalog" className="page-home mb-0" style={{ textDecoration: 'none', color: 'black' }}>
-                                see more <i className="page-home fa-solid fa-chevron-right"></i>
-                            </a>
-                        </div>
-                        <div className="page-home row mb-4 overflow-x-scroll d-flex flex-nowrap containerCard">
-                            {cars.map((car) => (
-                                <div key={car.id} className="page-home card">
-                                    <img src={car.image} className="page-home card-img-top" alt={car.name} />
-                                    <div className="page-home card-body">
-                                        <h5 className="page-home card-title text-card"><strong>{car.name}</strong></h5>
-                                        <p className="page-home card-text text-card">
-                                            <span className="page-home">Kilometers: {car.kilometers}</span>
-                                            <span className="page-home">Transmission: {car.transmission}</span>
-                                            <span className="page-home card-span-list">Listed on: {car.listedOn}</span>
-                                        </p>
-                                        <div className="page-home d-flex justify-content-between align-items-start">
-                                            <div className="page-home bid-section" style={{ textAlign: 'left' }}>
-                                                <span className="page-home text-muted small">Current Bid</span><br />
-                                                <span className="page-home bid-price"><strong>{car.currentBid}</strong></span>
-                                            </div>
-                                            <div className="page-home time-section text-right">
-                                                <span className="page-home text-muted small">Time Left</span><br />
-                                                <span className="page-home time-left">{car.timeLeft}</span>
-                                            </div>
+
+                <div className="page-home d-flex justify-content-between align-items-center mb-1 mt-5 px-5">
+                    <h1><strong>Featured Cars</strong></h1>
+                    <Link to="/catalog" className="page-home mb-0" style={{ textDecoration: 'none', color: 'black' }}>
+                        see more                                     <GoChevronRight />
+
+                    </Link>
+                </div>
+                <div className="page-home row g-4" style={{ minHeight: "400px", marginTop: "20px", marginBottom: "20px", padddingRight: "20px", paddingLeft: "20px" }}>
+                    {cars.map((car) => (
+                        <div key={car.id} className="page-home col-lg-3 col-md-6 card-item" data-category={car.category}>
+                            <div className="page-home card h-100 shadow-sm w-100">
+                                <img
+                                    src={`/images/${car.image}`}
+                                    alt={car.nama}
+                                    className="page-home card-img-top"
+                                    style={{ height: "200px", objectFit: "cover" }}
+                                />
+                                <div className="page-home card-body d-flex flex-column">
+                                    <h5 className="page-home card-title fw-bold mb-3">{car.nama}</h5>
+                                    <div className="page-home mb-3">
+                                        <div className="page-home d-flex justify-content-between mb-1">
+                                            <span className="page-home text-muted small">Kilometers:</span>
+                                            <span className="page-home small">{car.kilometers}</span>
                                         </div>
-                                        <br />
-                                        <a href={car.detailLink} className="page-home btn custom-bid-btn">Bid Now</a>
+                                        <div className="page-home d-flex justify-content-between mb-1">
+                                            <span className="page-home text-muted small">Transmission:</span>
+                                            <span className="page-home small">{car.transmission}</span>
+                                        </div>
+                                        <div className="page-home d-flex justify-content-between mb-1">
+                                            <span className="page-home text-muted small">Listed on:</span>
+                                            <span className="page-home small">{car.listedDate}</span>
+                                        </div>
                                     </div>
+                                    <div className="page-home d-flex justify-content-between align-items-start mb-3">
+                                        <div>
+                                            <span className="page-home text-muted small d-block">Current Bid</span>
+                                            <h6 className="page-home fw-bold">{car.harga}</h6>
+                                        </div>
+                                        <div>
+                                            <span className="page-home text-muted small d-block">Time Left</span>
+                                            <h6 className="page-home fw-bold">{car.timeLeft}</h6>
+                                        </div>
+                                    </div>
+                                    <Link to={`/car/${car.id}`} className="page-home btn btn-primary w-100 mt-auto">View Details</Link>
                                 </div>
-                            ))}
+                            </div>
                         </div>
-                    </div>
+                    ))}
+
                 </div>
 
                 <div className="page-home timeline-container">
@@ -221,7 +265,7 @@ const Home = () => {
                         <source className="page-home videoBackgroundSource" src={Video2} type="video/mp4" />
                     </video>
                     <div className="page-home container-aboutCard">
-                        <div className="page-home image-about">
+                        <div className="page-home image-about" style={{ backgroundImage: `url(${Image4})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                         </div>
                         <div className="page-home text-about">
                             <h1>About Us.</h1>
@@ -234,7 +278,8 @@ const Home = () => {
                                 car!
                             </p>
                             <a href="#" className="page-home btn btn-lg btn-secondary aboutButton">
-                                Contact Us <i className="fa-solid fa-up-right-from-square"></i>
+                                Contact Us <GoLinkExternal />
+
                             </a>
                         </div>
                     </div>
