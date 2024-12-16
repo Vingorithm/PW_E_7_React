@@ -1,82 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
+import { data, Link } from "react-router-dom";
 import { GetAllCatalog } from "../clients/apiCatalog";
 
 const Catalog = () => {
-    // const [cars, setCars] = useState([]);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+    const [cars, setCars] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
 
-    const dummyData = [
-        {
-            id: 1,
-            nama: "Toyota Camry",
-            category: "Standard",
-            image: "camry.jpg",
-            harga: "Rp 350.000.000",
-            kilometers: "20,000",
-            transmission: "Automatic",
-            listedDate: "12-10-2024",
-            timeLeft: "2d 10h",
-        },
-        {
-            id: 2,
-            nama: "BMW 320i",
-            category: "Luxury",
-            image: "bmw.jpg",
-            harga: "Rp 850.000.000",
-            kilometers: "15,000",
-            transmission: "Automatic",
-            listedDate: "12-10-2024",
-            timeLeft: "1d 8h",
-        },
-        {
-            id: 3,
-            nama: "Tesla Model 3",
-            category: "EV",
-            image: "tesla.jpg",
-            harga: "Rp 750.000.000",
-            kilometers: "10,000",
-            transmission: "Automatic",
-            listedDate: "12-10-2024",
-            timeLeft: "3d 5h",
-        },
-        {
-            id: 4,
-            nama: "Honda Civic",
-            category: "Standard",
-            image: "civic.jpg",
-            harga: "Rp 450.000.000",
-            kilometers: "25,000",
-            transmission: "Automatic",
-            listedDate: "12-10-2024",
-            timeLeft: "4d 12h",
-        },
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const response = await GetAllCatalog();
+                console.log("Data yang diterima: ", response);
+                setCars(response.data);
+            } catch (err) {
+                setError("Failed to fetch data. Please try again later.");
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    // useEffect(() => {
-    //   const fetchData = async () => {
-    //     try {
-    //       setLoading(true);
-    //       // const response = await fetch("");
-    //       // const data = await response.json();
-    //       const data = dummyData;
-    //       setCars(data);
-    //     } catch (err) {
-    //       setError("Failed to fetch data. Please try again later.");
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   };
-    //   fetchData();
-    // }, []);
-
-    const { data: cars, loading, error } = useFetch(GetAllCatalog);
-
-    console.log(cars);
+        fetchData();
+    }, []);
 
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
@@ -86,14 +34,16 @@ const Catalog = () => {
         setSearchQuery(e.target.value);
     };
 
-    const filteredCars = cars.filter((car) => {
-        const matchesCategory =
-            selectedCategory === "All" || car.category === selectedCategory;
-        const matchesSearch = car.nama
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
+    const filteredCars = Array.isArray(cars)
+        ? cars.filter((car) => {
+              const matchesCategory =
+                  selectedCategory === "All" || car.category === selectedCategory;
+              const matchesSearch = car.nama
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase());
+              return matchesCategory && matchesSearch;
+          })
+        : [];
 
     if (loading) {
         return (

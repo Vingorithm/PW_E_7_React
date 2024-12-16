@@ -24,7 +24,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         footer {
           height: 150px;
           width: 100%;
