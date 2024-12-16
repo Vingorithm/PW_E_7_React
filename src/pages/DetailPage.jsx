@@ -1,33 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { GetAllCatalog } from "../clients/apiCatalog";
 
 const Detail = () => {
-  const [productDetail, setProductDetail] = useState({
-    name: "Mercedes-AMG GT 4-Door Coupe",
-    brand: "Mercedes",
-    engine: "2.5L I6",
-    kilometers: "10,000",
-    transmission: "Automatic",
-    currentBid: 100000,
-    largeImage: "images/car1.jpg",
-    images: ["car1.jpg", "car2.jpg", "car3.jpg"],
-  });
+  const location = useLocation();
+  const car = location.state?.car;
 
-  const [relatedProducts, setRelatedProducts] = useState([
-    {
-      id: 1,
-      name: "Mercedes-AMG GT 4-Door Coupe",
-      image: "images/car2.jpg",
-      kilometers: "20,000",
-      transmission: "Automatic",
-      listedOn: "12-10-2024",
-      currentBid: 600000000,
-      timeLeft: "2d 10h",
-    },
-  ]);
+  console.log(car);
 
-  const [bid, setBid] = useState(productDetail.currentBid);
+  const [productDetail, setProductDetail] = useState(car || {});
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [bid, setBid] = useState(productDetail.currentBid || 100000);
 
   const handleImageSwap = (imageSrc) => {
     setProductDetail((prevState) => ({
@@ -42,21 +26,17 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    const fetchProductDetail = async () => {
-      const response = await new Promise((resolve) =>
-        setTimeout(() => resolve({ data: productDetail }), 1000)
-      );
-      setProductDetail(response.data);
-    };
-
     const fetchRelatedProducts = async () => {
-      const response = await new Promise((resolve) =>
-        setTimeout(() => resolve({ data: relatedProducts }), 1000)
-      );
-      setRelatedProducts(response.data);
+      try {
+        const relatedData = await GetAllCatalog();
+
+        setRelatedProducts(relatedData.data.data);
+      } catch (error) {
+        console.error("Error fetching related products:", error);
+        setRelatedProducts([]);
+      }
     };
 
-    fetchProductDetail();
     fetchRelatedProducts();
   }, []);
 
@@ -74,7 +54,7 @@ const Detail = () => {
             />
           </div>
           <div className="row">
-            {productDetail.images.map((image, index) => (
+            {productDetail.images?.map((image, index) => (
               <div className="col-4 mb-2" key={index}>
                 <img
                   src={`images/${image}`}
@@ -89,20 +69,20 @@ const Detail = () => {
         </div>
         <div className="col-md-4 d-flex flex-column">
           <h1 className="mb-3">
-            <strong>{productDetail.name}</strong>
+            <strong>{productDetail.title}</strong>
           </h1>
           <div className="row">
             <div className="col-6">
               <p><strong>Brand</strong></p>
-              <p>{productDetail.brand}</p>
+              <p>{productDetail.car?.brand}</p>
               <p><strong>Engine</strong></p>
-              <p>{productDetail.engine}</p>
+              <p>{productDetail.car?.capacity}</p>
             </div>
             <div className="col-6">
               <p><strong>Kilometers</strong></p>
-              <p>{productDetail.kilometers}</p>
+              <p>{productDetail.car?.odometer}</p>
               <p><strong>Transmission</strong></p>
-              <p>{productDetail.transmission}</p>
+              <p>{productDetail.car?.transmission}</p>
             </div>
           </div>
           <p><strong>Current Bid</strong></p>
@@ -164,48 +144,52 @@ const Detail = () => {
           </p>
         </div>
         <div className="row g-4">
-          {relatedProducts.map((product) => (
-            <div className="col-lg-3 col-md-6" key={product.id}>
-              <div className="card h-100 shadow-sm">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="card-img-top"
-                  style={{ height: "200px", objectFit: "cover" }}
-                />
-                <div className="card-body d-flex flex-column">
-                  <h5 className="card-title fw-bold mb-3">{product.name}</h5>
-                  <div className="mb-3">
-                    <div className="d-flex justify-content-between mb-1">
-                      <span className="text-muted small">Kilometers:</span>
-                      <span className="small">{product.kilometers}</span>
+          {Array.isArray(relatedProducts) && relatedProducts.length > 0 ? (
+            relatedProducts.map((product) => (
+              <div className="col-lg-3 col-md-6" key={product.id}>
+                <div className="card h-100 shadow-sm">
+                  <img
+                    src={product.auction.car.image || 'default-image.jpg'}
+                    alt={product.auction.title}
+                    className="card-img-top"
+                    style={{ height: "200px", objectFit: "cover" }}
+                  />
+                  <div className="card-body d-flex flex-column">
+                    <h5 className="card-title fw-bold mb-3">{product.auction.title}</h5>
+                    <div className="mb-3">
+                      <div className="d-flex justify-content-between mb-1">
+                        <span className="text-muted small">Kilometers:</span>
+                        <span className="small">{product.auction.car.odometer}</span>
+                      </div>
+                      <div className="d-flex justify-content-between mb-1">
+                        <span className="text-muted small">Transmission:</span>
+                        <span className="small">{product.auction.car.transmission}</span>
+                      </div>
+                      <div className="d-flex justify-content-between mb-1">
+                        <span className="text-muted small">Listed on:</span>
+                        <span className="small">{product.auction.auction_date}</span>
+                      </div>
                     </div>
-                    <div className="d-flex justify-content-between mb-1">
-                      <span className="text-muted small">Transmission:</span>
-                      <span className="small">{product.transmission}</span>
+                    <div className="d-flex justify-content-between align-items-start mb-3">
+                      <div>
+                        <span className="text-muted small d-block">Current Bid</span>
+                        <span className="fw-bold text-dark">
+                          Rp. {product.auction.starting_price}
+                        </span>
+                      </div>
+                      <div className="text-end">
+                        <span className="text-muted small d-block">Time Left</span>
+                        <span className="fw-bold text-dark">--</span>
+                      </div>
                     </div>
-                    <div className="d-flex justify-content-between mb-1">
-                      <span className="text-muted small">Listed on:</span>
-                      <span className="small">{product.listedOn}</span>
-                    </div>
+                    <button className="btn btn-dark mt-auto w-100">Bid Now</button>
                   </div>
-                  <div className="d-flex justify-content-between align-items-start mb-3">
-                    <div>
-                      <span className="text-muted small d-block">Current Bid</span>
-                      <span className="fw-bold text-dark">
-                        Rp. {product.currentBid.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="text-end">
-                      <span className="text-muted small d-block">Time Left</span>
-                      <span className="fw-bold text-dark">{product.timeLeft}</span>
-                    </div>
-                  </div>
-                  <button className="btn btn-dark mt-auto w-100">Bid Now</button>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No related products available.</p>
+          )}
         </div>
         <br />
       </div>

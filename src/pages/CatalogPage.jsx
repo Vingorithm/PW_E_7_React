@@ -14,17 +14,41 @@ const Catalog = () => {
             try {
                 setLoading(true);
                 const response = await GetAllCatalog();
-                console.log("Data yang diterima: ", response.data.data);
-                setCars(response.data.data);
+                console.log(response.data);
+                const auctionData = response.data.data.map(item => item.auction);
+                const processedData = auctionData.map((auction) => {
+                    const auctionEnd = new Date(`${auction.auction_date}T${auction.end_time}`);
+                    const now = new Date();
+                    const timeDifference = auctionEnd - now;
+                    const daysLeft = Math.max(0, Math.floor(timeDifference / (1000 * 60 * 60 * 24)));
+                    const hoursLeft = Math.max(0, Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+        
+                    return {
+                        id: auction.id,
+                        nama: auction.title,
+                        kilometers: auction.car.odometer,
+                        listedDate: auction.auction_date,
+                        harga: auction.starting_price,
+                        timeLeft: `${daysLeft}d ${hoursLeft}h`,
+                        transmission: auction.car.transmission,
+                        category: auction.car.category,
+                        image: auction.car?.image || "default.jpg",
+                    };
+                });
+        
+                console.log("Final processed data:", processedData);
+                setCars(processedData);
             } catch (err) {
-                setError("Failed to fetch data. Please try again later.");
+                console.error("Error details:", err);
+                setError(`Failed to fetch data: ${err.message}`);
             } finally {
                 setLoading(false);
             }
         };
-
+        
         fetchData();
     }, []);
+    
 
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
@@ -183,7 +207,7 @@ const Catalog = () => {
                                                 Current Bid
                                             </span>
                                             <span className="fw-bold text-dark">
-                                                {car.harga}
+                                                Rp. {car.harga}
                                             </span>
                                         </div>
                                         <div className="text-end">
@@ -196,7 +220,10 @@ const Catalog = () => {
                                         </div>
                                     </div>
                                     <Link
-                                        to="/detail"
+                                        to={{
+                                            pathname: "/detail",
+                                            state: { car }
+                                        }}
                                         className="btn mt-auto w-100"
                                     >
                                         Bid Now
