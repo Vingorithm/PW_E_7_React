@@ -8,6 +8,7 @@ const Payment = () => {
   const [order, setOrder] = useState(null);
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [summary, setSummary] = useState(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(""); // State for selected payment method
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
 
   const navigate = useNavigate();
@@ -37,13 +38,21 @@ const Payment = () => {
     fetchData();
   }, []);
 
+  const handleSelectPaymentMethod = (method) => {
+    setSelectedPaymentMethod(method);
+  };
+
   const handlePayment = () => {
+    if (!selectedPaymentMethod) {
+      alert("Please select a payment method.");
+      return;
+    }
     setIsPaymentSuccessful(true);
     setTimeout(() => {
       navigate("/");
     }, 3000);
   };
-  
+
   return (
     <div style={{ fontFamily: "Arial, sans-serif", minHeight: "calc(100vh - 150px)" }}>
       <style>
@@ -77,6 +86,12 @@ const Payment = () => {
               opacity: 1;
             }
           }
+
+          .selected-method {
+            background-color: #d4edda !important;
+            border-color: #155724 !important;
+            color: #155724 !important;
+          }
         `}
       </style>
       <div className="container mt-5" style={{ paddingBottom: "100px" }}>
@@ -85,7 +100,7 @@ const Payment = () => {
           <div className="payment-success-overlay d-flex align-items-center justify-content-center">
             <div className="payment-success-content text-center">
               <h1>Payment Successful!</h1>
-                <MdOutlineDownloadDone style={{ fontSize: "100px", color: "black" }} />
+              <MdOutlineDownloadDone style={{ fontSize: "100px", color: "black" }} />
               <p>Thank you for trusting Atma Bid.</p>
             </div>
           </div>
@@ -128,7 +143,11 @@ const Payment = () => {
           {paymentMethods.length > 0 ? (
             paymentMethods.map((method) => (
               <div className="col-md-2" key={method}>
-                <button className="btn custom-button" style={{ width: "100%" }}>
+                <button
+                  className={`btn custom-button ${selectedPaymentMethod === method ? "selected-method" : ""}`}
+                  style={{ width: "100%" }}
+                  onClick={() => handleSelectPaymentMethod(method)}
+                >
                   <FaCreditCard style={{ fontSize: "30px" }} />
                   <div>{method}</div>
                 </button>
