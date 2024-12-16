@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "atmabid-backend.stary.dev/api", // Ganti dengan base URL API Anda
+    baseURL: "https://atmabid-backend.stary.dev/api", // Ganti dengan base URL API Anda
     timeout: 10000,
 });
 

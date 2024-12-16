@@ -14,8 +14,8 @@ const Catalog = () => {
             try {
                 setLoading(true);
                 const response = await GetAllCatalog();
-                console.log("Data yang diterima: ", response);
-                setCars(response.data);
+                console.log("Data yang diterima: ", response.data.data);
+                setCars(response.data.data);
             } catch (err) {
                 setError("Failed to fetch data. Please try again later.");
             } finally {
@@ -37,7 +37,8 @@ const Catalog = () => {
     const filteredCars = Array.isArray(cars)
         ? cars.filter((car) => {
               const matchesCategory =
-                  selectedCategory === "All" || car.category === selectedCategory;
+                  selectedCategory === "All" ||
+                  car.category === selectedCategory;
               const matchesSearch = car.nama
                   .toLowerCase()
                   .includes(searchQuery.toLowerCase());
