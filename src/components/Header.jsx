@@ -62,10 +62,10 @@ const Header = () => {
                                     <a href="/profile" className="page-navbar dropdown-item" id="profileDetail">
                                         <i className="fas fa-eye"></i> Detail
                                     </a>
-                                    <a href="/tambahLelang" className="page-navbar dropdown-item" id="tambahLelangButton">
+                                    <a href="/addBid" className="page-navbar dropdown-item" id="tambahLelangButton">
                                         <i className="fas fa-plus-circle"></i> Tambah Lelang
                                     </a>
-                                    <a href="/kelola_lelang" className="page-navbar dropdown-item" id="lelangSayaButton">
+                                    <a href="/add" className="page-navbar dropdown-item" id="lelangSayaButton">
                                         <i className="fas fa-gavel"></i> Lelang Saya
                                     </a>
                                     <a

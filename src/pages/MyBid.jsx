@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+import { Link } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const AddBid = () => {
+const MyBid = () => {
   const [selectedMonth, setSelectedMonth] = useState('januari');
+  const [showModal, setShowModal] = useState(false);
 
   const handleMonthChange = (e) => {
     setSelectedMonth(e.target.value);
+  };
+
+  const handleDeleteClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+  };
+
+  const handleConfirmDelete = () => {
+    console.log('Item Deleted');
+    setShowModal(false);
   };
 
   return (
@@ -29,7 +45,8 @@ const AddBid = () => {
                   </option>
                 ))}
               </select>
-              <button
+              <Link
+                to="/addBid" 
                 className="btn btn-primary"
                 style={{
                   marginBottom: '20px',
@@ -41,7 +58,7 @@ const AddBid = () => {
                 }}
               >
                 Tambah Lelang
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -70,12 +87,53 @@ const AddBid = () => {
                     <span className={`status ${auction.status.toLowerCase()}`}>{auction.status}</span>
                   </td>
                   <td>
-                    <button className="btn delete">
+                    <Link
+                      to="/addBid" //to={`/editBid/${auction.id}`}
+                      className="btn btn-primary"
+                      style={{
+                        border: 'none',
+                        background: 'none',
+                        cursor: 'pointer',
+                        padding: '5px',
+                        marginRight: '10px',
+                      }}
+                    >
                       <FaPencilAlt style={{ color: 'blue' }} />
-                    </button>
-                    <button className="btn delete">
+                    </Link>
+
+                    <button className="btn delete" onClick={handleDeleteClick}>
                       <FaTrashAlt style={{ color: 'red' }} />
                     </button>
+
+                    {showModal && (
+                      <div className="modal fade show" style={{ display: 'block', zIndex: 1050 }} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header" style={{ position: 'relative' }}>
+                              <h5 className="modal-title" id="exampleModalLabel" style={{ color: 'black' }}>Delete</h5>
+                              <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleCancel} style={{
+                                position: 'absolute',
+                                top: '10px',
+                                right: '15px',
+                                border: 'none',
+                                background: 'transparent',
+                                fontSize: '1.5rem',
+                                color: '#000',
+                              }}>
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div className="modal-body">
+                              Are you sure you want to delete this item?
+                            </div>
+                            <div className="modal-footer">
+                              <button type="button" className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
+                              <button type="button" className="btn btn-danger" onClick={handleConfirmDelete}>Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -106,7 +164,7 @@ const AddBid = () => {
         }
 
         .status.reject {
-          color: red;
+          color: red !important;
         }
 
         .delete {
@@ -115,9 +173,24 @@ const AddBid = () => {
           cursor: pointer;
           padding: 5px;
         }
+
+        .modal-content {
+          background-color: #f1f1f1;
+          color: #333;
+        }
+
+        .modal-header {
+          background-color: #f1f1f1; 
+          color: white;
+        }
+
+        .modal-footer {
+          background-color: #f1f1f1;
+        }
+        
       `}</style>
     </div>
   );
 };
 
-export default AddBid;
+export default MyBid;
