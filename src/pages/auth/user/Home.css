@@ -80,6 +80,7 @@
 }
 
 /* landing page */
+/* Landing page container */
 .page-home .container-landingP {
     position: relative;
     top: 0;
@@ -125,9 +126,38 @@
     transition: all 0.6s ease;
 }
 
-/* .page-home .TitleTextLanding.active {
-    opacity: 1;
-} */
+@media (max-width: 768px) {
+
+    .page-home .container-landingP {
+        height: calc(100vh - 80px);
+    }
+
+    .page-home .TitleTextLanding {
+        font-size: 32px;
+        margin-top: 20%;
+    }
+
+    .page-home .backgroundLanding {
+        height: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .page-home .container-landingP {
+        height: calc(100vh - 60px);
+    }
+
+    .page-home .TitleTextLanding {
+        font-size: 24px;
+        margin-top: 25%;
+    }
+
+    .page-home .backgroundLanding {
+        height: 70%;
+    }
+}
+
 
 /* Search bar */
 .page-home .searchBar {
@@ -157,10 +187,6 @@
     transition: all 0.6s ease;
 }
 
-/* .page-home .search.active {
-    opacity: 1;
-} */
-
 .page-home .search-input {
     font-size: 16px;
     color: white;
@@ -185,7 +211,49 @@
     color: rgba(255, 255, 255, 0.8);
 }
 
+/* Responsive adjustments */
+@media screen and (max-width: 1024px) {
+    .page-home .search {
+        width: 500px;
+        margin-top: 4%;
+        margin-bottom: 7%;
+    }
+
+    .page-home .search-input {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .page-home .search {
+        width: 100%;
+        margin-top: 3%;
+        margin-bottom: 6%;
+    }
+
+    .page-home .search-input {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .page-home .search {
+        width: 100%;
+        margin-top: 2%;
+        margin-bottom: 5%;
+    }
+
+    .page-home .search-input {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
+
+
 /* Buttons */
+
+/* Landing page button */
 .page-home .buttonLanding {
     width: 20%;
     height: 75px;
@@ -198,10 +266,7 @@
     transition: all 0.6s ease;
 }
 
-/* .page-home .buttonLanding.active {
-    opacity: 1;
-} */
-
+/* Button styles */
 .page-home .btnA,
 .page-home .btnB {
     width: 100%;
@@ -242,7 +307,6 @@
     color: white;
     text-decoration: none;
     font-weight: bold;
-    margin-top: 1rem;
     transition: color ease 0.3s;
 }
 
@@ -250,8 +314,55 @@
     background-color: white;
 }
 
-\.page-home .btnB:hover p {
-    color: black;
+.page-home .btnB:hover p {
+    color: rgb(0, 0, 0);
+}
+
+@media (max-width: 768px) {
+
+    .page-home .buttonLanding {
+        margin-top: 5%;
+        width: 30%;
+        height: 60px;
+        gap: 5%;
+        flex-direction: column;
+    }
+
+    .page-home .btnA,
+    .page-home .btnB {
+
+        height: 100%;
+    }
+
+    .page-home .btnA a,
+    .page-home .btnB p {
+        font-size: 14px;
+    }
+
+    .page-home .btnA,
+    .page-home .btnB {
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .page-home .buttonLanding {
+        margin-top: 10%;
+
+        width: 60%;
+        height: 50px;
+    }
+
+    .page-home .btnA a,
+    .page-home .btnB p {
+        font-size: 12px;
+    }
+
+    .page-home .btnA,
+    .page-home .btnB {
+        padding: 8px 0;
+    }
 }
 
 
@@ -644,23 +755,70 @@
     margin-bottom: 13%;
 }
 
-
-.page-home .videoBackgroundBot {
-    width: 100%;
-    height: 820px;
-    object-fit: cover;
-    filter: brightness(0.5);
-}
-
 .page-home .aboutButton {
     width: fit-content;
     border-radius: 4px;
     font-weight: thin;
 }
 
-.page-home .videoBackground {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.5);
+@media (max-width: 1200px) {
+    .page-home .container-aboutCard {
+        width: 80%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .page-home .image-about {
+        width: 100%;
+        height: 200px;
+    }
+
+    .page-home .text-about {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-home .container-aboutCard {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .page-home .image-about {
+        width: 100%;
+        height: 200px;
+    }
+
+    .page-home .text-about {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .page-home .text-about p {
+        margin-bottom: 10%;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-home .container-aboutCard {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .page-home .image-about {
+        width: 100%;
+        height: 150px;
+    }
+
+    .page-home .text-about {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .page-home .text-about p {
+        margin-bottom: 5%;
+    }
 }
