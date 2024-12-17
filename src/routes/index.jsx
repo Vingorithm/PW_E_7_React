@@ -17,6 +17,8 @@ import ManageBids from "../pages/auth/admin/ManageBids";
 import ManageUsers from "../pages/auth/admin/ManageUsers";
 import AdminLoginLayout from "../layouts/AdminLoginLayout";
 import AdminLogin from "../pages/auth/admin/AdminLogin";
+import ProtectedRoute from "./ProtectedRoute";
+import ProtectedAdminRoute from "./ProtectedAdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -66,7 +68,6 @@ const router = createBrowserRouter([
     ],
   },
   {
-    // User Layout: Login dan halaman user lainnya
     element: <UserLayout />,
     children: [
       {
@@ -76,21 +77,24 @@ const router = createBrowserRouter([
     ],
   },
   {
-    // Admin Layout: Halaman admin
-    element: <AdminLayout />,
+    element: <ProtectedAdminRoute />,
     children: [
       {
-        path: "/admin/managebids",
-        element: <ManageBids />,
-      },
-      {
-        path: "/admin/manageusers",
-        element: <ManageUsers />,
+        element: <AdminLayout />,
+        children: [
+          {
+            path: "/admin/managebids",
+            element: <ManageBids />,
+          },
+          {
+            path: "/admin/manageusers",
+            element: <ManageUsers />,
+          },
+        ],
       },
     ],
   },
   {
-    // Admin Layout: Halaman admin
     element: <AdminLoginLayout />,
     children: [
       {

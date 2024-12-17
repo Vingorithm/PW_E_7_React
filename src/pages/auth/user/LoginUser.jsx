@@ -29,12 +29,13 @@ const LoginRegister = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      await authService.login({
+      const user = await authService.login({
         email: loginData.email,
         password: loginData.password,
       });
       toast.success("Login berhasil!");
       localStorage.setItem("isLoggedIn", "true");
+      console.log(user);
       navigate("/profile");
     } catch (error) {
       toast.error("Login gagal. Periksa email atau password Anda.");

@@ -20,6 +20,7 @@ const AdminLogin = () => {
         console.log("Admin berhasil login:", user);
         navigate("/admin/manageusers");
       } else {
+        await authService.logout();
         toast.error("Anda bukan admin!");
         console.error("Bukan admin:", user);
       }

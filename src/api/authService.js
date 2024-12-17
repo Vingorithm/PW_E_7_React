@@ -31,5 +31,5 @@ export const authService = {
         localStorage.removeItem("isLoggedIn");
       });
     },
-    isAdmin: (user) => user && user.is_admin === true
+    isAdmin: (user) => user.is_admin == true
 };
