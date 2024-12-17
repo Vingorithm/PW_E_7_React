@@ -2,6 +2,10 @@ import React from "react";
 import { FaUserCircle, FaIdBadge, FaCar, FaGavel, FaExternalLinkAlt } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import './Information.css';
+import Video2 from '../assets/videos/vid2.mp4';
+import Image4 from '../assets/images/car3.jpg';
+import { GoLinkExternal } from "react-icons/go";
 
 const Information = () => {
   const scrollHowToBid = () => {
@@ -11,7 +15,7 @@ const Information = () => {
   const styles = {
     timelineHeader: {
       textAlign: "center",
-      margin: "30px 0",
+      margin: "30px 0px",
       color: "#343a40",
     },
     timeline: {
@@ -37,7 +41,7 @@ const Information = () => {
       width: "60px",
       height: "60px",
       borderRadius: "50%",
-      backgroundColor: "#007bff",
+      backgroundColor: "#000000",
       color: "white",
       fontSize: "24px",
       fontWeight: "bold",
@@ -76,6 +80,8 @@ const Information = () => {
     buttonHover: {
       backgroundColor: "#0056b3",
     },
+
+
   };
 
   return (
@@ -87,10 +93,10 @@ const Information = () => {
 
       <div style={styles.timeline}>
         {[
-          { number: 1, title: "Register an Account", description: "Make your very own account and get started on Atma Autobid!", icon: <FaUserCircle size={24} /> },
-          { number: 2, title: "Verify your Identity", description: "Verify your identity through the profile page to bid securely!", icon: <FaIdBadge size={24} /> },
-          { number: 3, title: "Search for your Dream Vehicle", description: "Browse through our catalog to find your perfect vehicle!", icon: <FaCar size={24} /> },
-          { number: 4, title: "Start Bidding", description: "Place your bids and may the best bidder win!", icon: <FaGavel size={24} /> },
+          { number: 1, title: "Register an Account", description: "Before you can start bidding on your dream vehicle, the first step is to register an account with us. Registration is easy and quick! By signing up, you gain full access to our platform, allowing you to participate in all auctions and keep track of your bids.", icon: <FaUserCircle size={24} /> },
+          { number: 2, title: "Verify your Identity", description: "Before you can start bidding on vehicles, we need to make sure that you are a legitimate buyer. Identity verification is an essential step in the process to maintain the integrity of our marketplace and ensure the security of both buyers and sellers.", icon: <FaIdBadge size={24} /> },
+          { number: 3, title: "Search for your Dream Vehicle", description: "Once your account is verified, it’s time to search for the vehicle you’ve been dreaming about. Whether you’re looking for a sports car, an everyday commuter vehicle, or something unique, we have a wide range of options available. Finding your perfect match is easy, thanks to our powerful search tools.", icon: <FaCar size={24} /> },
+          { number: 4, title: "Start Bidding", description: "Now that you’ve found the vehicle you want and are familiar with its details, it’s time to start bidding. Bidding is an exciting and competitive process!", icon: <FaGavel size={24} /> },
         ].map((step, index) => (
           <div key={index} style={styles.containerHowToBid}>
             <div style={styles.numberContainer}>{step.number}</div>
@@ -103,22 +109,7 @@ const Information = () => {
         ))}
       </div>
 
-      <div style={styles.aboutContainer}>
-        <video style={styles.videoBackground} autoPlay loop muted>
-          <source src="./videos/vid2.mp4" type="video/mp4" />
-        </video>
-        <div style={styles.aboutText}>
-          <h1>About Us</h1>
-          <p>
-            Our mission is to provide a safe and enjoyable bidding experience, offering a diverse selection of vehicles—from standard to luxury and
-            electric cars—at competitive prices. At Atma Autobid, we are committed to ensuring customer satisfaction through innovative technology and
-            dedicated support. Join us today and find your dream car!
-          </p>
-          <a href="#" className="btn btn-primary btn-lg">
-            Contact Us <FaExternalLinkAlt />
-          </a>
-        </div>
-      </div>
+
     </div>
   );
 };
