@@ -8,7 +8,7 @@ const routes = [];
 
 const AdminLayout = () => {
   return (
-    <div className="mt-4 pt-5">
+    <div>
       <HeaderAdmin routes={routes} />
       <Outlet />
       <Footer />

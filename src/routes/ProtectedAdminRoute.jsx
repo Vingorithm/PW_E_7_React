@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { authService } from "../api/authService";
 import { toast } from "react-toastify";
 
@@ -10,12 +10,12 @@ const ProtectedAdminRoute = ({ role }) => {
     return <Navigate to="/admin/login" replace />;
   }
 
-  if (authService.isAdmin) {
+  if (!authService.isAdmin) {
     toast.error("Anda bukan admin!");
     return <Navigate to="/profile" replace />;
   }
 
-  return <Navigate to="/admin/manageusers" replace />;
+  return <Outlet />;
 };
 
 export default ProtectedAdminRoute;

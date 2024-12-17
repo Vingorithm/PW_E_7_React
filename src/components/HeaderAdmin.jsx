@@ -1,6 +1,7 @@
 // import React from 'react';
 import { NavLink } from "react-router-dom";
 import "../pages/auth/admin/admin.css";
+import logo from "../assets/images/logo.png";
 
 const HeaderAdmin = () => {
   return (
@@ -11,7 +12,7 @@ const HeaderAdmin = () => {
       >
         {/* Logo */}
         <div className="logo">
-          <img src={""} alt="Logo" />
+          <img src={logo} alt="Logo" />
         </div>
 
         {/* Navbar kanan */}
@@ -39,7 +40,7 @@ const HeaderAdmin = () => {
           >
             <img
               style={{ width: "50px", height: "50px", marginRight: "0.5rem" }}
-              src={""}
+              src={logo}
               alt="Profile Picture"
             />
             <span>{""}</span>
