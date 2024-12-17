@@ -55,19 +55,40 @@ const Information = () => {
       position: "relative",
       marginTop: "50px",
       textAlign: "center",
+      backgroundColor: "#f8f9fa",
+      padding: "50px 0",
     },
-    aboutText: {
+    aboutContent: {
       backgroundColor: "rgba(255, 255, 255, 0.95)",
       padding: "30px",
       borderRadius: "10px",
-      marginTop: "-150px",
-      zIndex: 2,
+      maxWidth: "800px",
+      margin: "0 auto",
       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
     },
-    videoBackground: {
-      width: "100%",
-      height: "400px",
-      objectFit: "cover",
+    teamContainer: {
+      backgroundColor: "#ffffff",
+      padding: "50px 0",
+      textAlign: "center",
+    },
+    teamContent: {
+      maxWidth: "900px",
+      margin: "0 auto",
+      padding: "0 20px",
+    },
+    teamGrid: {
+      display: "flex",
+      justifyContent: "center",
+      flexWrap: "wrap",
+      gap: "20px",
+      marginTop: "30px",
+    },
+    teamMember: {
+      width: "200px",
+      backgroundColor: "#f8f9fa",
+      padding: "20px",
+      borderRadius: "10px",
+      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
     },
     button: {
       backgroundColor: "#007bff",
@@ -76,13 +97,32 @@ const Information = () => {
       padding: "10px 20px",
       borderRadius: "5px",
       transition: "background-color 0.3s ease",
+      marginTop: "20px",
     },
-    buttonHover: {
-      backgroundColor: "#0056b3",
-    },
-
-
   };
+
+  const teamMembers = [
+    { 
+      name: "Kevin Philips Tanamas", 
+      role: "220711789", 
+      description: "Automotive industry veteran with 15 years of experience in online marketplaces." 
+    },
+    { 
+      name: "Nathanael Esmond Hartono", 
+      role: "Chief Technology Officer", 
+      description: "Expert in building scalable web platforms and passionate about automotive technology." 
+    },
+    { 
+      name: "Stanyslaus Hary Muntoro", 
+      role: "Head of Customer Experience", 
+      description: "Dedicated to creating seamless and trustworthy auction experiences for our users." 
+    },
+    { 
+      name: "Marsella Adinda", 
+      role: "Lead Designer", 
+      description: "Creative mind behind our platform's intuitive and user-friendly interface." 
+    }
+  ];
 
   return (
     <div>
@@ -109,7 +149,44 @@ const Information = () => {
         ))}
       </div>
 
+      <div style={styles.aboutContainer}>
+        <div style={styles.aboutContent}>
+          <h2 className="mb-4"><strong>About Us</strong></h2>
+          <p>
+            We are passionate about connecting car enthusiasts with their dream vehicles. Our platform 
+            is designed to provide a transparent, secure, and exciting auction experience for buyers 
+            and sellers alike. With years of experience in the automotive marketplace, we understand 
+            the thrill of finding the perfect vehicle and the importance of a trustworthy platform.
+          </p>
+          <p>
+            Our mission is to simplify the car buying process by offering a wide selection of vehicles, 
+            robust verification processes, and a user-friendly bidding system. Whether you're a collector, 
+            a first-time buyer, or searching for a specific model, we're here to make your automotive 
+            dreams a reality.
+          </p>
+        </div>
+      </div>
 
+      <div style={styles.teamContainer}>
+        <div style={styles.teamContent}>
+          <h2><strong>Meet Our Innovative Team</strong></h2>
+          <p>
+            Behind our vehicle auction platform is a dedicated team of professionals 
+            who are passionate about revolutionizing the way people buy and sell vehicles. 
+            Our diverse team brings together expertise from automotive, technology, 
+            design, and customer experience domains.
+          </p>
+          <div style={styles.teamGrid}>
+            {teamMembers.map((member, index) => (
+              <div key={index} style={styles.teamMember}>
+                <h4>{member.name}</h4>
+                <h5 className="text-muted">{member.role}</h5>
+                <p>{member.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
