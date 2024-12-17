@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { CreateAuction } from "../clients/apiAuction";
-import { jwtDecode } from 'jwt-decode';
 
 const AddBid = () => {
   const [userId, setUserId] = useState(null);
