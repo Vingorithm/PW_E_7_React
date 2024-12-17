@@ -109,17 +109,17 @@ const Information = () => {
     },
     { 
       name: "Nathanael Esmond Hartono", 
-      role: "Chief Technology Officer", 
+      role: "220711888", 
       description: "Expert in building scalable web platforms and passionate about automotive technology." 
     },
     { 
       name: "Stanyslaus Hary Muntoro", 
-      role: "Head of Customer Experience", 
+      role: "220712140", 
       description: "Dedicated to creating seamless and trustworthy auction experiences for our users." 
     },
     { 
       name: "Marsella Adinda", 
-      role: "Lead Designer", 
+      role: "220712081", 
       description: "Creative mind behind our platform's intuitive and user-friendly interface." 
     }
   ];
