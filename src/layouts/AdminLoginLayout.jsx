@@ -1,19 +1,19 @@
 import { Outlet } from "react-router-dom";
 
 import Footer from "../components/Footer";
-import HeaderAdmin from "../components/HeaderAdmin";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Header from "../components/Header";
 
 const routes = [];
 
-const AdminLayout = () => {
+const AdminLoginLayout = () => {
   return (
-    <div className="mt-4 pt-5">
-      <HeaderAdmin routes={routes} />
+    <div>
+      <Header routes={routes} />
       <Outlet />
       <Footer />
     </div>
   );
 };
 
-export default AdminLayout;
+export default AdminLoginLayout;

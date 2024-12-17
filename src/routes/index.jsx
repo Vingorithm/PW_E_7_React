@@ -8,89 +8,106 @@ import LoginUser from "../pages/auth/user/LoginUser";
 import Profile from "../pages/ProfilePage";
 import Payment from "../pages/PaymentPage";
 import Upcoming from "../pages/UpcomingPage";
-import ManageBid from "../pages/auth/admin/ManageBid";
 import Information from "../pages/InformationPage";
 import Catalog from "../pages/CatalogPage";
 import CarDetails from "../pages/DetailPage";
 import MyBid from "../pages/MyBid";
 import AddBid from "../pages/AddBid";
+import ManageBids from "../pages/auth/admin/ManageBids";
+import ManageUsers from "../pages/auth/admin/ManageUsers";
+import AdminLoginLayout from "../layouts/AdminLoginLayout";
+import AdminLogin from "../pages/auth/admin/AdminLogin";
 
 const router = createBrowserRouter([
-    {
-        path: "*",
-        element: <div>Routes Not Found!</div>,
-    },
-    {
-        // Main Layout: Halaman utama untuk user, kayak catalog, infomation, dll
-        element: <MainLayout />,
-        children: [
-            {
-                path: "/",
-                element: <HomePage />,
-            },
-            {
-                path: "/information",
-                element: <Information />,
-            },
-            {
-                path: "/payment",
-                element: <Payment />,
-            },
-            {
-                path: "/profile",
-                element: <Profile />,
-            },
-            {
-                path: "/upcoming",
-                element: <Upcoming />,
-            },
-            {
-                path: "/catalog",
-                element: <Catalog />,
-            },
-            {
-                path: "/detail",
-                element: <CarDetails />,
-            },
-            {
-                path: "/add",
-                element: <MyBid />,
-            },
-            {
-                path: "/addBid",
-                element: <AddBid />,
-            },
-        ],
-    },
-    {
-        // User Layout: Login dan halaman user lainnya
-        element: <UserLayout />,
-        children: [
-            {
-                path: "/login",
-                element: <LoginUser />,
-            },
-        ],
-    },
-    {
-        // Admin Layout: Halaman admin
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "/admin/managebid",
-                element: <ManageBid />,
-            },
-        ],
-    },
+  {
+    path: "*",
+    element: <div>Routes Not Found!</div>,
+  },
+  {
+    // Main Layout: Halaman utama untuk user, kayak catalog, infomation, dll
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "/information",
+        element: <Information />,
+      },
+      {
+        path: "/payment",
+        element: <Payment />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/upcoming",
+        element: <Upcoming />,
+      },
+      {
+        path: "/catalog",
+        element: <Catalog />,
+      },
+      {
+        path: "/detail",
+        element: <CarDetails />,
+      },
+      {
+        path: "/add",
+        element: <MyBid />,
+      },
+      {
+        path: "/addBid",
+        element: <AddBid />,
+      },
+    ],
+  },
+  {
+    // User Layout: Login dan halaman user lainnya
+    element: <UserLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <LoginUser />,
+      },
+    ],
+  },
+  {
+    // Admin Layout: Halaman admin
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/admin/managebids",
+        element: <ManageBids />,
+      },
+      {
+        path: "/admin/manageusers",
+        element: <ManageUsers />,
+      },
+    ],
+  },
+  {
+    // Admin Layout: Halaman admin
+    element: <AdminLoginLayout />,
+    children: [
+      {
+        path: "/admin/login",
+        element: <AdminLogin />,
+      },
+    ],
+  },
 ]);
 
 const AppRouter = () => {
-    return (
-        <>
-            <Toaster position="top-center" richColors />
-            <RouterProvider router={router} />
-        </>
-    );
+  return (
+    <>
+      <Toaster position="top-center" richColors />
+      <RouterProvider router={router} />
+    </>
+  );
 };
 
 export default AppRouter;
