@@ -21,4 +21,8 @@ export const ENDPOINTS = {
     ADMIN_UPDATE_AUCTION: (id) => `/updateAuction/${id}`,
     ADMIN_UPDATE_USER_STATUS: (id) => `/updateUserStatus/${id}`,
     ADMIN_DELETE_USER: (id) => `/deleteUser/${id}`,
+
+    GET_PROFILE: "/user/profile",
+    UPDATE_PROFILE: "/user/profile",
+    CHANGE_PASSWORD: "/user/change-password",
 };
