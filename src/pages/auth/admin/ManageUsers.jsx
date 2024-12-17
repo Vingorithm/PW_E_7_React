@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaUsers, FaGavel } from "react-icons/fa";
 import {
+  DeleteUser,
   GetAllAuction,
   GetAllUser,
   UpdateUserStatus,
@@ -47,6 +48,18 @@ const ManageUsers = () => {
     fetchUsers();
     fetchAuctions();
   }, []);
+
+  const handleDeleteButton = async (id) => {
+    try {
+      console.log(id);
+      await DeleteUser(id);
+      fetchUsers();
+      toast.success("Pengguna berhasil dihapus");
+    } catch (err) {
+      console.error("Error fetching auctions:", err);
+      toast.error("Pengguna gagal dihapus");
+    }
+  };
 
   const handleStatusChange = async (id, newStatus) => {
     try {
@@ -208,6 +221,7 @@ const ManageUsers = () => {
                     </td>
                     <td>
                       <button
+                        onClick={() => handleDeleteButton(user.id)}
                         className="btn delete"
                         style={{ background: "none", border: "none" }}
                       >
