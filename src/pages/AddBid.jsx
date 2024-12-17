@@ -1,70 +1,98 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { CreateAuction } from "../clients/apiAuction";
+import { GetAllCars } from "../clients/apiCar";
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const AddBid = () => {
-  const [userId, setUserId] = useState(null);
-  const [carModel, setCarModel] = useState('');
   const [startingPrice, setStartingPrice] = useState('');
-  const [startDateTime, setStartDateTime] = useState('');
-  const [endDateTime, setEndDateTime] = useState('');
+  const [auctionDate, setAuctionDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const [auctionTitle, setAuctionTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
   const [address, setAddress] = useState('');
   const [isToastVisible, setIsToastVisible] = useState(false);
+  const [cars, setCars] = useState([]); // Menyimpan data mobil dari API
+  const [selectedCarId, setSelectedCarId] = useState('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('auth_token');
-    if (token) {
-      const decoded = jwtDecode(token);
-      setUserId(decoded.user_id);
-    }
+    GetAllCars()
+      .then((response) => {
+        console.log(response.data.data); 
+        if (response.data && Array.isArray(response.data.data)) {
+          setCars(response.data.data);
+        } else {
+          console.error('Expected data to be an array but got:', response.data.data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching cars:', error);
+      });
   }, []);
-
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!userId) {
-    //   console.error('User ID is required!');
-    //   return;
-    // }
+    if (!selectedCarId) {
+        console.error('Please select a car');
+        return;
+    }
 
-    // Construct the formData object
     const formData = new FormData();
-    // formData.append('user_id', userId);  // Assuming 'userId' is stored in your state
-    // formData.append('car_id', carId);    // Assuming you have carId
+    formData.append('car_id', selectedCarId);
     formData.append('starting_price', startingPrice);
-    formData.append('start_time', startDateTime);  // Rename to 'start_time'
-    formData.append('end_time', endDateTime);      // Rename to 'end_time'
-    // formData.append('auction_date', auctionDate);  // Rename to 'auction_date'
-    formData.append('status', 'Upcoming');  // You can adjust this as needed (e.g., 'Upcoming', 'Ongoing', 'Finished')
+    formData.append('auction_date', auctionDate);
+    formData.append('start_time', startTime);
+    formData.append('end_time', endTime);
+    formData.append('status', 'Upcoming');
     formData.append('title', auctionTitle);
     formData.append('description', description);
     formData.append('address', address);
 
-    // Append the image file
     if (image) {
         formData.append('image', image);
+        console.log('Image file:', image.name); // Log image name
     }
 
-    console.log("Submitting auction with data:", formData);
+    console.log('Form data to be sent:', {
+        car_id: selectedCarId,
+        starting_price: startingPrice,
+        auction_date: auctionDate,
+        start_time: startTime,
+        end_time: endTime,
+        status: 'Upcoming',
+        title: auctionTitle,
+        description: description,
+        address: address,
+        image: image ? image.name : 'No image'
+    });
 
     try {
-        const response = await CreateAuction(userId, formData);
-        console.log('Auction created successfully:', response);
-        setIsToastVisible(true);
-        navigate('/myBid');
+      const response = await CreateAuction(formData);
+      console.log('Auction created successfully:', response);
+      toast.success("Auction created successfully")
+      navigate('/add');
     } catch (error) {
-        console.error('Error creating auction:', error);
-        setIsToastVisible(false);
+      console.error('Error creating auction:', error);
+      
+      // Jika ada response dari server
+      if (error.response) {
+        console.error('Server responded with status:', error.response.status);
+        console.error('Response data:', error.response.data);
+      } else {
+        console.error('Error message:', error.message);
+      }
     }
-  };
-
-  
+};
 
   return (
-    <div className="container-main" style={{ marginBottom: '18rem' }}>
+    <div className="container-main" style={{ marginBottom: '25rem' }}>
       <div className="content">
         <div className="container text-center pt-5">
           <h1 className="title pt-2">Sell Your Vehicle</h1>
@@ -80,15 +108,21 @@ const AddBid = () => {
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="carModel" className="form-label">Car Model</label>
-                <input
-                  type="text"
+                <select
                   className="form-control"
                   id="carModel"
                   name="carModel"
-                  value={carModel}
-                  onChange={(e) => setCarModel(e.target.value)}
+                  value={selectedCarId} // The selected car's ID will be stored here
+                  onChange={(e) => setSelectedCarId(e.target.value)} // Updates the selected car ID
                   required
-                />
+                >
+                  <option value="">Select Car</option>
+                  {cars.map((car) => (
+                    <option key={car.id} value={car.id}> 
+                      {car.model} - {car.brand} {/* Display model and brand in the dropdown */}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="mb-3">
                 <label htmlFor="startingPrice" className="form-label">Starting Price</label>
@@ -103,27 +137,39 @@ const AddBid = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="startDateTime" className="form-label">Start Date and Time</label>
+                <label htmlFor="auctionDate" className="form-label">Auction Date</label>
                 <input
-                  type="datetime-local"
+                  type="date"
                   className="form-control"
-                  id="startDateTime"
-                  name="startDateTime"
-                  value={startDateTime}
-                  onChange={(e) => setStartDateTime(e.target.value)}
+                  id="auctionDate"
+                  name="auctionDate"
+                  value={auctionDate}
+                  onChange={(e) => setAuctionDate(e.target.value)}
                   required
                 />
               </div>
 
               <div className="mb-3">
-                <label htmlFor="endDateTime" className="form-label">End Date and Time</label>
+                <label htmlFor="startTime" className="form-label">Start Time</label>
                 <input
-                  type="datetime-local"
+                  type="time"
                   className="form-control"
-                  id="endDateTime"
-                  name="endDateTime"
-                  value={endDateTime}
-                  onChange={(e) => setEndDateTime(e.target.value)}
+                  id="startTime"
+                  name="startTime"
+                  value={startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="endTime" className="form-label">End Time</label>
+                <input
+                  type="time"
+                  className="form-control"
+                  id="endTime"
+                  name="endTime"
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
                   required
                 />
               </div>
