@@ -1,56 +1,57 @@
-import React, { useState, useEffect } from "react";
-import "./Header.css";
-import logo from "../assets/images/logo.png";
-import profileImage from "../assets/images/profile.png";
+import React, { useState, useEffect } from 'react';
+import './Header.css';
+import logo from '../assets/images/logo.png';
+import profileImage from '../assets/images/profile.png';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { authService } from "../api/authService";
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  useEffect(() => {
-    setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
-  }, []);
+    useEffect(() => {
+        setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+    }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        !event.target.closest(".page-navbar.user-info") &&
-        !event.target.closest(".page-navbar.dropdown")
-      ) {
-        setDropdownVisible(false);
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (
+          !event.target.closest(".page-navbar.user-info") &&
+          !event.target.closest(".page-navbar.dropdown")
+        ) {
+          setDropdownVisible(false);
+        }
+      };
+      document.addEventListener("click", handleClickOutside);
+      return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
+
+    const handleDropdownToggle = () => {
+        setDropdownVisible(!dropdownVisible);
+    };
+
+    const handleLogout = async (e) => {
+      e.preventDefault();
+      try {
+        await authService.logout();
+        setIsLoggedIn(false);
+        toast.success("Logout berhasil!");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 2000);
+      } catch (error) {
+        toast.error("Logout gagal. Silakan coba lagi.");
+        console.error("Logout Error:", error);
       }
     };
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
 
-  const handleDropdownToggle = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
-
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    try {
-      await authService.logout();
-      setIsLoggedIn(false);
-      toast.success("Logout berhasil!");
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 2000);
-    } catch (error) {
-      toast.error("Logout gagal. Silakan coba lagi.");
-      console.error("Logout Error:", error);
-    }
-  };
-
-  return (
-    <header>
-      <ToastContainer position="top-right" autoClose={3000} />
-
-      <div className="page-navbar navbar p-0" style={{ height: "110px" }}>
+    return (
+        <header>
+          <div style={{ position: "fixed", top: 0, right: 0, zIndex: 9999 }}>
+            <ToastContainer position="top-right" autoClose={3000} />
+          </div>
+          <div className="page-navbar navbar p-0" style={{ height: "110px" }}>
         <div className="page-navbar logo">
           <a href="/">
             <img src={logo} alt="Logo" />
@@ -120,12 +121,13 @@ const Header = () => {
               </div>
             </div>
           ) : (
-            <a
-              className="page-navbar loginlink page-navbar button-nav"
-              href="/login"
-            >
-              Login / Register
-            </a>
+            <div className="page-navbar container-linkz">
+              <div className="page-navbar linkz">
+                <a className="page-navbar button-nav" href="/login">
+                  Login / Register
+                </a>
+              </div>
+            </div>
           )}
         </div>
       </div>
