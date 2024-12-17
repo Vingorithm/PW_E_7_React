@@ -22,6 +22,37 @@ const Home = () => {
     const [loading, setLoading] = useState(true); // State to manage loading state
     const [error, setError] = useState(null); // State to handle errors
 
+    const [carouselItems] = useState([
+        {
+            id: 1,
+            image: Image1,
+            title: 'Toyota Highlander (2017)',
+            description: `Last fully redesigned for the 2014 model year, the Toyota Highlander received styling
+                        and drivetrain updates for 2017, including a new grille and an available V-6 engine.`,
+            detailLink: '/detail',
+        },
+        {
+            id: 2,
+            image: Image2,
+            title: 'Audi Sport quattro concept (2013)',
+            description: `quattro is Audi and Audi is quattro – the brand and the technology are indelibly linked.
+                        In celebration of the 30th birthday of the Sport quattro, Audi will present its
+                        legitimate successor at the 2013 IAA in Frankfurt am Main. The Audi
+                        Sport quattro concept show car continues the grand quattro tradition, with a stunning
+                        coupe design and plug-in hybrid drive with a system output of 515 kW (700 hp).`,
+            detailLink: '/detail',
+        },
+        {
+            id: 3,
+            image: Image3,
+            title: 'Peterbilt 379 (2018)',
+            description: `Serving as the successor to the 359, the 379 was a conventional-cab truck configured
+                        primarily for highway use, serving as the flagship of the Peterbilt model line. During
+                        much of its production, the 379 was popular among owner-operator drivers.`,
+            detailLink: '/detail',
+        },
+    ]);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -89,11 +120,80 @@ const Home = () => {
                                 <a className="page-home btnAlink" href="/catalog">Start Bidding</a>
                             </button>
                             <button onClick={() => document.getElementById('howToBid').scrollIntoView()} className="page-home btnB">
-                                <p className="page-home btnBlink">How to Bid</p>
+                                <a className="page-navbar button-nav" href="/information">
+                                    How To Bid
+                                </a>
                             </button>
                         </div>
                     </div>
                 </div>
+
+                <div className="page-home container-carouselz">
+                    <div className="page-home carousel-header-container">
+                        <div className="page-home carousel-header">
+                            <h1>
+                                <RiAuctionLine /><br /> Hottest Bids
+                            </h1>
+                        </div>
+                    </div>
+                    <div id="myCarousel" className="page-home carousel slide" data-bs-ride="carousel">
+                        <ol className="page-home carousel-indicators">
+                            {carouselItems.map((item, index) => (
+                                <li
+                                    key={item.id}
+                                    data-bs-target="#myCarousel"
+                                    data-bs-slide-to={index}
+                                    className={`page-home ${index === 0 ? 'active' : ''}`}
+                                ></li>
+                            ))}
+                        </ol>
+
+                        <div className="page-home carousel-inner">
+                            {carouselItems.map((item, index) => (
+                                <div
+                                    key={item.id}
+                                    className={`page-home carousel-item ${index === 0 ? 'active' : ''}`}
+                                >
+                                    <div
+                                        className="page-home overlay-image A"
+                                        style={{ backgroundImage: `url(${item.image})` }}
+                                    ></div>
+                                    <div className="page-home container p-4" style={{ marginLeft: "300px", marginRight: "200px", marginBottom: "100px" }}>
+                                        <h1 className="page-home">{item.title}</h1>
+                                        <p className="page-home">{item.description}</p>
+                                        <a
+                                            href={item.detailLink}
+                                            className="page-home btn btn-lg btn-success"
+                                            style={{ borderRadius: '4px', padding: '8px', marginTop: '10px', }}
+                                        >
+                                            Bid Now
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <button
+                            className="page-home carousel-control-prev"
+                            type="button"
+                            data-bs-target="#myCarousel"
+                            data-bs-slide="prev"
+                        >
+                            <span className="page-home carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span className="page-home visually-hidden">Previous</span>
+                        </button>
+                        <button
+                            className="page-home carousel-control-next"
+                            type="button"
+                            data-bs-target="#myCarousel"
+                            data-bs-slide="next"
+                        >
+                            <span className="page-home carousel-control-next-icon" aria-hidden="true"></span>
+                            <span className="page-home visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+
 
                 {/* Featured Cars Section */}
                 <div className="page-home d-flex justify-content-between align-items-center mb-1 mt-5 px-5">
@@ -108,6 +208,7 @@ const Home = () => {
                         minHeight: "400px",
                         marginTop: "20px",
                         marginBottom: "20px",
+                        marginLeft: "40px",
                         paddingRight: "20px",
                         paddingLeft: "20px",
                         gap: "20px",
@@ -125,14 +226,14 @@ const Home = () => {
                             data-category={car.category}
                             style={{ maxWidth: "300px" }}
                         >
-                            <div className="page-home card h-80 shadow-sm w-100 p-3 ">
+                            <div className="page-home card h-80 shadow-sm w-100">
                                 <img
                                     src={car.image}
                                     alt={car.nama}
                                     className="page-home card-img-top"
                                     style={{ height: "200px", objectFit: "cover" }}
                                 />
-                                <div className="page-home card-body d-flex flex-column">
+                                <div className="page-home card-body d-flex flex-column p-3">
                                     <h5 className="page-home card-title fw-bold mb-3">{car.nama}</h5>
                                     <div className="page-home mb-3">
                                         <div className="d-flex justify-content-between mb-1">
@@ -170,6 +271,9 @@ const Home = () => {
                         </div>
                     ))}
                 </div>
+
+
+
 
                 {/* About Us Section */}
                 <div className="page-home container-about">
