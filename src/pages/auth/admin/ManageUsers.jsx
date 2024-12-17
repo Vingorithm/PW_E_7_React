@@ -65,7 +65,7 @@ const ManageUsers = () => {
       fetchUsers();
       toast.success("Pengguna berhasil dihapus");
     } catch (err) {
-      console.error("Error fetching auctions:", err);
+      console.error("Error delete users:", err);
       toast.error("Pengguna gagal dihapus");
     }
   };
@@ -156,57 +156,19 @@ const ManageUsers = () => {
           }}
         >
           <h2>List Pengguna</h2>
-          <div
+          <button
+            className="btn btn-primary"
+            onClick={() => setModalShow(true)}
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "10px",
-              width: "25rem",
+              backgroundColor: "#00AAB6",
+              border: "none",
+              borderRadius: "50px",
+              maxHeight: "40px",
+              width: "14rem",
             }}
           >
-            <select
-              className="form-select"
-              name="months"
-              id="months"
-              style={{
-                maxHeight: "40px",
-                maxWidth: "10rem",
-              }}
-              value={month}
-              onChange={(e) => setMonth(e.target.value)}
-            >
-              {[
-                "januari",
-                "februari",
-                "maret",
-                "april",
-                "mei",
-                "juni",
-                "agustus",
-                "september",
-                "oktober",
-                "november",
-                "desember",
-              ].map((m) => (
-                <option key={m} value={m}>
-                  {m.charAt(0).toUpperCase() + m.slice(1)}
-                </option>
-              ))}
-            </select>
-            <button
-              className="btn btn-primary"
-              onClick={() => setModalShow(true)}
-              style={{
-                backgroundColor: "#00AAB6",
-                border: "none",
-                borderRadius: "50px",
-                maxHeight: "40px",
-                width: "14rem",
-              }}
-            >
-              Tambah Pengguna
-            </button>
-          </div>
+            Tambah Pengguna
+          </button>
         </div>
 
         {/* Table */}

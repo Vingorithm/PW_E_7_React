@@ -6,15 +6,66 @@ import {
   UpdateUserAuction,
 } from "../../../clients/apiAdmin";
 import { toast, ToastContainer } from "react-toastify";
+import { DeleteAuction } from "../../../clients/apiAuction";
 
 const ManageBids = () => {
-  const [month, setMonth] = useState("januari");
+  const currentMonth = new Date().getMonth();
+  const monthNames = [
+    "januari",
+    "februari",
+    "maret",
+    "april",
+    "mei",
+    "juni",
+    "juli",
+    "agustus",
+    "september",
+    "oktober",
+    "november",
+    "desember",
+  ];
+
+  const [month, setMonth] = useState(monthNames[currentMonth]);
   const [auctions, setAuctions] = useState([]);
+  const [filteredAuctions, setFilteredAuctions] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [auctionsPerPage] = useState(5);
+
+  const formatDateTime = (date, time) => {
+    const days = [
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+    ];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mei",
+      "Jun",
+      "Jul",
+      "Agu",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Des",
+    ];
+    const [year, month, day] = date.split("-");
+    const [hour, minute] = time.split(":");
+    const formattedDate = new Date(`${year}-${month}-${day}T${hour}:${minute}`);
+    const dayName = days[formattedDate.getDay()];
+    const monthName = months[formattedDate.getMonth()];
+
+    return `${dayName}, ${day} ${monthName} ${year} pukul ${hour}:${minute}`;
+  };
 
   const fetchUsers = async () => {
     try {
@@ -33,7 +84,9 @@ const ManageBids = () => {
     try {
       setLoading(true);
       const response = await GetAllAuction();
-      setAuctions(response.data.users || []);
+      const auctionData = response.data.users || [];
+      setAuctions(auctionData);
+      filterAuctionsByMonth(auctionData, monthNames[currentMonth]);
     } catch (err) {
       console.error("Error fetching auctions:", err);
       setError("Gagal memuat data lelang.");
@@ -47,6 +100,18 @@ const ManageBids = () => {
     fetchAuctions();
   }, []);
 
+  useEffect(() => {
+    filterAuctionsByMonth(auctions, month);
+  }, [month, auctions]);
+
+  const filterAuctionsByMonth = (data, selectedMonth) => {
+    const filtered = data.filter((auction) => {
+      const auctionMonth = new Date(auction.auction_date).getMonth();
+      return monthNames[auctionMonth] === selectedMonth;
+    });
+    setFilteredAuctions(filtered);
+  };
+
   const handleStatusChange = async (id, newStatus) => {
     try {
       await UpdateUserAuction(id, { status: newStatus });
@@ -58,6 +123,18 @@ const ManageBids = () => {
     } catch (error) {
       console.error("Error updating status:", error);
       alert("Gagal memperbarui status.");
+    }
+  };
+
+  const handleDeleteButton = async (id) => {
+    try {
+      console.log(id);
+      await DeleteAuction(id);
+      fetchUsers();
+      toast.success("Auction berhasil dihapus");
+    } catch (err) {
+      console.error("Error delete auction:", err);
+      toast.error("Auction gagal dihapus");
     }
   };
 
@@ -127,23 +204,12 @@ const ManageBids = () => {
               style={{
                 maxHeight: "40px",
                 maxWidth: "10rem",
+                marginBottom: "1rem",
               }}
               value={month}
               onChange={(e) => setMonth(e.target.value)}
             >
-              {[
-                "januari",
-                "februari",
-                "maret",
-                "april",
-                "mei",
-                "juni",
-                "agustus",
-                "september",
-                "oktober",
-                "november",
-                "desember",
-              ].map((m) => (
+              {monthNames.map((m) => (
                 <option key={m} value={m}>
                   {m.charAt(0).toUpperCase() + m.slice(1)}
                 </option>
@@ -191,12 +257,16 @@ const ManageBids = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentAuctions.map((auction) => (
+                {filteredAuctions.map((auction) => (
                   <tr key={auction.id}>
                     <td>{auction.id}</td>
                     <td>{auction.user_id}</td>
-                    <td>{`${auction.auction_date} ${auction.start_time}`}</td>
-                    <td>{`${auction.auction_date} ${auction.end_time}`}</td>
+                    <td>
+                      {formatDateTime(auction.auction_date, auction.start_time)}
+                    </td>
+                    <td>
+                      {formatDateTime(auction.auction_date, auction.end_time)}
+                    </td>
                     <td>{`Rp${auction.starting_price}`}</td>
                     <td>
                       <select
@@ -245,6 +315,7 @@ const ManageBids = () => {
                           background: "none",
                           color: "red",
                         }}
+                        onClick={() => handleDeleteButton(auction.id)}
                       >
                         <i className="bi bi-trash-fill"></i>
                       </button>
