@@ -30,6 +30,8 @@ export const ENDPOINTS = {
 
     GET_ALL_UPCOMING: "/auctions/upcoming",
 
+    CREATE_BID: "/bids",
+
     GET_PROFILE: "/user/profile",
     UPDATE_PROFILE: "/user/profile",
     CHANGE_PASSWORD: "/user/change-password",
