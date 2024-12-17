@@ -15,4 +15,9 @@ export const ENDPOINTS = {
     LOGIN: "/login",
     FORGOT_PASSWORD: "/forgot-password",
     LOGOUT: "/logout",
+
+    ADMIN_GET_ALL_USER: "/getAllUser",
+    ADMIN_GET_ALL_AUCTION: "/getAllAuction",
+    ADMIN_UPDATE_AUCTION: (id) => `/updateAuction/${id}`,
+    ADMIN_UPDATE_USER_STATUS: (id) => `/updateUserStatus/${id}`,
 };
