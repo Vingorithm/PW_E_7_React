@@ -20,4 +20,5 @@ export const ENDPOINTS = {
     ADMIN_GET_ALL_AUCTION: "/getAllAuction",
     ADMIN_UPDATE_AUCTION: (id) => `/updateAuction/${id}`,
     ADMIN_UPDATE_USER_STATUS: (id) => `/updateUserStatus/${id}`,
+    ADMIN_DELETE_USER: (id) => `/deleteUser/${id}`,
 };
