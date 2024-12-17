@@ -105,36 +105,63 @@ const ManageBids = () => {
           className="header"
           style={{
             display: "flex",
+            flexWrap: "wrap",
             justifyContent: "space-between",
             alignItems: "center",
             gap: "10px",
           }}
         >
           <h2>List Lelang</h2>
-          <select
-            className="form-select"
-            value={month}
-            onChange={(e) => setMonth(e.target.value)}
-            style={{ maxHeight: "40px", maxWidth: "10rem" }}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "10px",
+              width: "25rem",
+            }}
           >
-            {[
-              "januari",
-              "februari",
-              "maret",
-              "april",
-              "mei",
-              "juni",
-              "agustus",
-              "september",
-              "oktober",
-              "november",
-              "desember",
-            ].map((m) => (
-              <option key={m} value={m}>
-                {m.charAt(0).toUpperCase() + m.slice(1)}
-              </option>
-            ))}
-          </select>
+            <select
+              className="form-select"
+              name="months"
+              id="months"
+              style={{
+                maxHeight: "40px",
+                maxWidth: "10rem",
+              }}
+              value={month}
+              onChange={(e) => setMonth(e.target.value)}
+            >
+              {[
+                "januari",
+                "februari",
+                "maret",
+                "april",
+                "mei",
+                "juni",
+                "agustus",
+                "september",
+                "oktober",
+                "november",
+                "desember",
+              ].map((m) => (
+                <option key={m} value={m}>
+                  {m.charAt(0).toUpperCase() + m.slice(1)}
+                </option>
+              ))}
+            </select>
+            <button
+              className="btn btn-primary"
+              style={{
+                backgroundColor: "#00AAB6",
+                border: "none",
+                borderRadius: "50px",
+                maxHeight: "40px",
+                width: "14rem",
+              }}
+            >
+              Tambah Lelang
+            </button>
+          </div>
         </div>
 
         {/* Table */}

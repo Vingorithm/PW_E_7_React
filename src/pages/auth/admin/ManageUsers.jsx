@@ -8,6 +8,8 @@ import {
 } from "../../../clients/apiAdmin";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Modal, Button } from "react-bootstrap";
+import { authService } from "../../../api/authService";
 
 const ManageUsers = () => {
   const [month, setMonth] = useState("januari");
@@ -17,6 +19,13 @@ const ManageUsers = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(5);
+  const [modalShow, setModalShow] = useState(false);
+  const [signupData, setSignupData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const fetchUsers = async () => {
     try {
@@ -75,6 +84,29 @@ const ManageUsers = () => {
     }
   };
 
+  const handleSignupChange = (e) => {
+    const { name, value } = e.target;
+    setSignupData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await authService.register({
+        username: signupData.username,
+        email: signupData.email,
+        password: signupData.password,
+        password_confirmation: signupData.confirmPassword,
+      });
+      toast.success("Pengguna berhasil didaftarkan");
+      setModalShow(false);
+      fetchUsers();
+    } catch (err) {
+      console.error("Error registering user:", err);
+      toast.error("Gagal mendaftarkan pengguna");
+    }
+  };
+
   // Pagination Logic
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -117,6 +149,7 @@ const ManageUsers = () => {
           className="header"
           style={{
             display: "flex",
+            flexWrap: "wrap",
             justifyContent: "space-between",
             alignItems: "center",
             gap: "10px",
@@ -126,15 +159,21 @@ const ManageUsers = () => {
           <div
             style={{
               display: "flex",
+              flexWrap: "wrap",
               gap: "10px",
               width: "25rem",
             }}
           >
             <select
               className="form-select"
+              name="months"
+              id="months"
+              style={{
+                maxHeight: "40px",
+                maxWidth: "10rem",
+              }}
               value={month}
               onChange={(e) => setMonth(e.target.value)}
-              style={{ maxHeight: "40px", maxWidth: "10rem" }}
             >
               {[
                 "januari",
@@ -154,6 +193,19 @@ const ManageUsers = () => {
                 </option>
               ))}
             </select>
+            <button
+              className="btn btn-primary"
+              onClick={() => setModalShow(true)}
+              style={{
+                backgroundColor: "#00AAB6",
+                border: "none",
+                borderRadius: "50px",
+                maxHeight: "40px",
+                width: "14rem",
+              }}
+            >
+              Tambah Pengguna
+            </button>
           </div>
         </div>
 
@@ -261,6 +313,66 @@ const ManageUsers = () => {
           </div>
         )}
       </div>
+
+      <Modal show={modalShow} onHide={() => setModalShow(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Tambah Pengguna</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleSignupSubmit}>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              required
+              value={signupData.username}
+              onChange={handleSignupChange}
+              className="form-control mb-3"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              value={signupData.email}
+              onChange={handleSignupChange}
+              className="form-control mb-3"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              value={signupData.password}
+              onChange={handleSignupChange}
+              className="form-control mb-3"
+            />
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              required
+              value={signupData.confirmPassword}
+              onChange={handleSignupChange}
+              className="form-control mb-3"
+            />
+            <Button
+              variant="primary"
+              type="submit"
+              className="w-100"
+              style={{
+                backgroundColor: "#00AAB6",
+                border: "none",
+                borderRadius: "50px",
+                maxHeight: "40px",
+                width: "14rem",
+              }}
+            >
+              Sign Up
+            </Button>
+          </form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
