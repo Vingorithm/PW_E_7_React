@@ -4,4 +4,9 @@ export const ENDPOINTS = {
     SHOW_CAR_CATALOG: (id) => `/car-catalogs/${id}`,
     UPDATE_CAR_CATALOG: (id) => `/car-catalogs/${id}`,
     DELETE_CAR_CATALOG: (id) => `/car-catalogs/${id}`,
+
+    REGISTER: "/register",
+    LOGIN: "/login",
+    FORGOT_PASSWORD: "/forgot-password",
+    LOGOUT: "/logout",
 };

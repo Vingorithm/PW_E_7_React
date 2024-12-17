@@ -1,21 +1,38 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { authService } from "../../../api/authService";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login Submitted", { email, password });
-    // Redirect to admin user management or handle login logic here
-    navigate("/admin/kelola_user");
+
+    try {
+      const user = await authService.login({ email, password });
+      if (authService.isAdmin(user)) {
+        toast.success("Login berhasil sebagai admin!");
+        console.log("Admin berhasil login:", user);
+        navigate("/admin/manageusers");
+      } else {
+        toast.error("Anda bukan admin!");
+        console.error("Bukan admin:", user);
+      }
+    } catch (error) {
+      toast.error("Email atau password salah!");
+      console.error("Login Error:", error.response?.data || error.message);
+    }
   };
 
   return (
     <div style={styles.body}>
+      <ToastContainer position="top-right" autoClose={3000} />{" "}
+      {/* Toast Container */}
       <div className="container content">
         <div className="row justify-content-center">
           <div className="col-md-6 col-lg-4">

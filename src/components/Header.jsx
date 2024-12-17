@@ -1,92 +1,136 @@
-import React, { useState, useEffect } from 'react';
-import './Header.css';
-import logo from '../assets/images/logo.png';
-import profileImage from '../assets/images/profile.png';
+import React, { useState, useEffect } from "react";
+import "./Header.css";
+import logo from "../assets/images/logo.png";
+import profileImage from "../assets/images/profile.png";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { authService } from "../api/authService";
 
 const Header = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
-    useEffect(() => {
-        setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
-    }, []);
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+  }, []);
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!event.target.closest('.page-navbar.user-info') &&
-                !event.target.closest('.page-navbar.dropdown')) {
-                setDropdownVisible(false);
-            }
-        };
-        document.addEventListener('click', handleClickOutside);
-        return () => document.removeEventListener('click', handleClickOutside);
-    }, []);
-
-    const handleDropdownToggle = () => {
-        setDropdownVisible(!dropdownVisible);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        !event.target.closest(".page-navbar.user-info") &&
+        !event.target.closest(".page-navbar.dropdown")
+      ) {
+        setDropdownVisible(false);
+      }
     };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
-    const handleLogout = (e) => {
-        e.preventDefault();
-        localStorage.removeItem('isLoggedIn');
-        setIsLoggedIn(false);
-        window.location.href = "/";
-    };
+  const handleDropdownToggle = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
 
-    return (
-        <header>
-            <div className="page-navbar navbar p-0 " style={{ height: '110px' }}>
-                {/* Logo */}
-                <div className="page-navbar logo">
-                    <a href="/">
-                        <img src={logo} alt="Logo" />
-                    </a>
-                </div>
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      await authService.logout();
+      setIsLoggedIn(false);
+      toast.success("Logout berhasil!");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+    } catch (error) {
+      toast.error("Logout gagal. Silakan coba lagi.");
+      console.error("Logout Error:", error);
+    }
+  };
 
-                {/* Navigation Links */}
-                <div className="page-navbar container-linkz">
-                    <div className="page-navbar linkz">
-                        <a className="page-navbar button-nav" href="/catalog">Catalog</a>
-                        <a className="page-navbar button-nav" href="/upcoming">Upcoming</a>
-                        <a className="page-navbar button-nav" href="/information">Information</a>
-                    </div>
-                </div>
+  return (
+    <header>
+      <ToastContainer position="top-right" autoClose={3000} />
 
-                {/* User Login/Dropdown */}
-                <div className="page-navbar container-loginz">
-                    {isLoggedIn ? (
-                        <div className="page-navbar user-info" onClick={handleDropdownToggle}>
-                            <img src={profileImage} alt="User Photo" className="page-navbar user-photo" />
-                            <span className="page-navbar user-name fw-bold">Lucas</span>
-                                <div className={`page-navbar dropdown ${dropdownVisible ? 'visible' : ''}`}>
-                                    <a href="/profile" className="page-navbar dropdown-item" id="profileDetail">
-                                        <i className="fas fa-eye"></i> Detail
-                                    </a>
-                                    <a href="/addBid" className="page-navbar dropdown-item" id="tambahLelangButton">
-                                        <i className="fas fa-plus-circle"></i> Tambah Lelang
-                                    </a>
-                                    <a href="/add" className="page-navbar dropdown-item" id="lelangSayaButton">
-                                        <i className="fas fa-gavel"></i> Lelang Saya
-                                    </a>
-                                    <a
-                                        href="/"
-                                        className="page-navbar dropdown-item logout"
-                                        id="logoutButton"
-                                        onClick={handleLogout}
-                                    >
-                                        <i className="fas fa-sign-out-alt"></i> Logout
-                                    </a>
-                                </div>
-                        </div>
-                    ) : (
-                        <a className="page-navbar loginlink page-navbar button-nav" href="/login">
-                            Login / Register
-                        </a>
-                    )}
-                </div>
+      <div className="page-navbar navbar p-0" style={{ height: "110px" }}>
+        <div className="page-navbar logo">
+          <a href="/">
+            <img src={logo} alt="Logo" />
+          </a>
+        </div>
+
+        <div className="page-navbar container-linkz">
+          <div className="page-navbar linkz">
+            <a className="page-navbar button-nav" href="/catalog">
+              Catalog
+            </a>
+            <a className="page-navbar button-nav" href="/upcoming">
+              Upcoming
+            </a>
+            <a className="page-navbar button-nav" href="/information">
+              Information
+            </a>
+          </div>
+        </div>
+
+        <div className="page-navbar container-loginz">
+          {isLoggedIn ? (
+            <div
+              className="page-navbar user-info"
+              onClick={handleDropdownToggle}
+            >
+              <img
+                src={profileImage}
+                alt="User Photo"
+                className="page-navbar user-photo"
+              />
+              <span className="page-navbar user-name fw-bold">Lucas</span>
+              <div
+                className={`page-navbar dropdown ${
+                  dropdownVisible ? "visible" : ""
+                }`}
+              >
+                <a
+                  href="/profile"
+                  className="page-navbar dropdown-item"
+                  id="profileDetail"
+                >
+                  <i className="fas fa-eye"></i> Detail
+                </a>
+                <a
+                  href="/addBid"
+                  className="page-navbar dropdown-item"
+                  id="tambahLelangButton"
+                >
+                  <i className="fas fa-plus-circle"></i> Tambah Lelang
+                </a>
+                <a
+                  href="/add"
+                  className="page-navbar dropdown-item"
+                  id="lelangSayaButton"
+                >
+                  <i className="fas fa-gavel"></i> Lelang Saya
+                </a>
+                <a
+                  href="/"
+                  className="page-navbar dropdown-item logout"
+                  id="logoutButton"
+                  onClick={handleLogout}
+                >
+                  <i className="fas fa-sign-out-alt"></i> Logout
+                </a>
+              </div>
             </div>
-        </header>
-    );
+          ) : (
+            <a
+              className="page-navbar loginlink page-navbar button-nav"
+              href="/login"
+            >
+              Login / Register
+            </a>
+          )}
+        </div>
+      </div>
+    </header>
+  );
 };
 
 export default Header;
