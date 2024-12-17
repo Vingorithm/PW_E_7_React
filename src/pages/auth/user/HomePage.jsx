@@ -225,7 +225,7 @@ const Home = () => {
                                         <h1 className="page-home">{item.title}</h1>
                                         <p className="page-home">{item.description}</p>
                                         <a
-                                            href={item.detailLink}
+                                            href="/catalog"
                                             className="page-home btn btn-lg btn-success"
                                             style={{ borderRadius: '4px', padding: '8px', marginTop: '10px', }}
                                         >
@@ -350,7 +350,7 @@ const Home = () => {
                             <p>
                                 Our mission is to provide a safe and enjoyable bidding experience, offering a diverse selection of vehicles—from standard to luxury and electric cars—at competitive prices. At Atma Autobid, we are committed to ensuring customer satisfaction through innovative technology and dedicated support. Join us today and find your dream car!
                             </p>
-                            <a href="#" className="page-home btn btn-lg btn-secondary aboutButton" style={{ borderRadius: '4px', padding: '5px', marginTop: '0px' }}>
+                            <a href="https://www.instagram.com/kevintannms/" className="page-home btn btn-lg btn-secondary aboutButton" style={{ borderRadius: '4px', padding: '5px', marginTop: '0px' }}>
                                 Contact Us <GoLinkExternal />
                             </a>
                         </div>
