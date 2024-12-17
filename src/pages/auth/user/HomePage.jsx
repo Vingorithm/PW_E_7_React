@@ -21,6 +21,9 @@ const Home = () => {
     const [cars, setCars] = useState([]); // State to store cars data
     const [loading, setLoading] = useState(true); // State to manage loading state
     const [error, setError] = useState(null); // State to handle errors
+    const [searchQuery, setSearchQuery] = useState(''); // State for the search query
+    const [filteredCars, setFilteredCars] = useState([]); // State to store the filtered cars
+    const [debounceTimeout, setDebounceTimeout] = useState(null); // For debouncing the search
 
     const [carouselItems] = useState([
         {
@@ -94,6 +97,37 @@ const Home = () => {
         fetchData();
     }, []);
 
+    // Handle input change for search
+    const handleSearchChange = (event) => {
+        const query = event.target.value;
+        setSearchQuery(query);
+
+        // Debounce the search functionality
+        if (debounceTimeout) {
+            clearTimeout(debounceTimeout);
+        }
+
+        setDebounceTimeout(
+            setTimeout(() => {
+                filterCars(query);
+            }, 300) // Delay of 300ms
+        );
+    };
+
+    // Filter cars based on the search query
+    const filterCars = (query) => {
+        if (!query) {
+            setFilteredCars([]);
+            return;
+        }
+
+        const filtered = cars.filter((car) =>
+            car.nama.toLowerCase().includes(query.toLowerCase()) ||
+            car.category.toLowerCase().includes(query.toLowerCase())
+        );
+
+        setFilteredCars(filtered);
+    };
     return (
         <div>
             <head>
@@ -111,17 +145,46 @@ const Home = () => {
                             <form action="">
                                 <div className="page-home search" id="fadein2">
                                     <FaMagnifyingGlass />
-                                    <input className="page-home search-input" placeholder="Describe what you're Looking for!" type="search" />
+                                    <input
+                                        className="page-home search-input"
+                                        type="text"
+                                        placeholder="Describe what you're looking for..."
+                                        value={searchQuery}
+                                        onChange={handleSearchChange}
+                                    />
                                 </div>
                             </form>
+
+                            {/* Display search suggestions or filtered results */}
+                            {searchQuery && (
+                                <div className="page-home search-results">
+                                    {filteredCars.length > 0 ? (
+                                        filteredCars.map((car) => (
+                                            <div key={car.id} className="search-result-item">
+                                                <Link to={`/car/${car.id}`} className="search-result-link">
+                                                    <div className="search-result-content">
+                                                        <span className="search-result-name">{car.nama} - {car.category}</span>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p className="no-results">No cars found matching your search.</p>
+                                    )}
+                                </div>
+                            )}
                         </div>
+
                         <div className="page-home buttonLanding" id="fadein3">
                             <button className="page-home btnA">
                                 <a className="page-home btnAlink" href="/catalog">Start Bidding</a>
                             </button>
-                            <button onClick={() => document.getElementById('howToBid').scrollIntoView()} className="page-home btnB">
+                            <button
+                                onClick={() => document.getElementById('howToBid').scrollIntoView()}
+                                className="page-home btnB"
+                            >
                                 <a className="page-navbar button-nav" href="/information">
-                                    How To Bid
+                                    How to Bid
                                 </a>
                             </button>
                         </div>
