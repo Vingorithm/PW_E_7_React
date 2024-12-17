@@ -5,6 +5,12 @@ export const ENDPOINTS = {
     UPDATE_CAR_CATALOG: (id) => `/car-catalogs/${id}`,
     DELETE_CAR_CATALOG: (id) => `/car-catalogs/${id}`,
 
+    GET_ALL_AUCTION: "/auctions",
+    CREATE_AUCTION: "/auctions",
+    SHOW_AUCTION: (id) => `/auctions/${id}`,
+    UPDATE_AUCTION: (id) => `/auctions/${id}`,
+    DELETE_AUCTION: (id) => `/auctions/${id}`,
+
     REGISTER: "/register",
     LOGIN: "/login",
     FORGOT_PASSWORD: "/forgot-password",

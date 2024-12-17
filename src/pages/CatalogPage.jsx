@@ -24,8 +24,9 @@ const Catalog = () => {
                     const hoursLeft = Math.max(0, Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
         
                     return {
-                        id: auction.id,
-                        nama: auction.title,
+                        id_auction: auction.id,
+                        id: auction.car.id,
+                        nama: auction.car.brand,
                         kilometers: auction.car.odometer,
                         listedDate: auction.auction_date,
                         harga: auction.starting_price,
@@ -163,7 +164,7 @@ const Catalog = () => {
                         >
                             <div className="card h-100 shadow-sm">
                                 <img
-                                    src={`/images/${car.image}`}
+                                    src={car.image || 'default-image.jpg'}
                                     alt={car.nama}
                                     className="card-img-top"
                                     style={{
@@ -219,13 +220,7 @@ const Catalog = () => {
                                             </span>
                                         </div>
                                     </div>
-                                    <Link
-                                        to={{
-                                            pathname: "/detail",
-                                            state: { car }
-                                        }}
-                                        className="btn mt-auto w-100"
-                                    >
+                                    <Link to={`/detail/${car.id_auction}`} className="btn mt-auto w-100">
                                         Bid Now
                                     </Link>
                                 </div>
