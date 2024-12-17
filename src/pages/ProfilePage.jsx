@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaEdit, FaUser, FaLock } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { GetProfile } from "../clients/apiUser"; 
-import { UpdateProfile } from "../clients/apiUser"; 
+import { GetProfile, UpdateProfile, ChangePassword } from "../clients/apiUser"; 
 import carImage from '../assets/images/car10.png';
 import profile from '../assets/images/profile.png';
 import { toast } from 'react-toastify';
@@ -10,9 +9,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);  // Loading state
-  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [isPasswordChange, setIsPasswordChange] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,14 +22,12 @@ const Profile = () => {
     password: '',
     email: '',
     full_name: '',
-    phone: '',
-    ektp: null,
+    phone_number: '',
     status: '',
-    foto_profile: profile,
+    photo_profile: profile,
     identity_number: '',
   });
 
-  // Fetch profile data after component mounts
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -38,10 +38,10 @@ const Profile = () => {
           password: response.data.user.password || '',
           email: response.data.user.email || '',
           full_name: response.data.user.full_name || '',
-          phone: response.data.user.phone || '',
-          ektp: response.data.user.ektp || null,
+          phone_number: response.data.user.phone_number || '',
+          identity_number: response.data.user.identity_number || null,
           status: response.data.user.status,
-          foto_profile: response.data.user.foto_profile,
+          photo_profile: response.data.user.photo_profile,
           identity_number: response.data.user.identity_number,
         });
       } catch (err) {
@@ -63,56 +63,43 @@ const Profile = () => {
     setIsEditing(false);
   };
 
-  const handleSaveProfile = async (e) => {
-    e.preventDefault(); // Mencegah reload form
+  const handleSave = async () => {
+    try {  
+      const formDataToSend = new FormData();
 
-    try {
-        setLoading(true);
-        setError(null);
+      formDataToSend.append("username", formData.username);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("full_name", formData.full_name);
+      formDataToSend.append("phone_number", formData.phone_number);
+      formDataToSend.append("identity_number", formData.identity_number);
+      formDataToSend.append("status", formData.status);
+  
+      if (formData.photo_profile && formData.photo_profile instanceof File) {
+        formDataToSend.append("photo_profile", formData.photo_profile);
+      }
 
-        // Menyiapkan formData untuk mengirim file bersama dengan data lainnya
-        const formData = new FormData();
-        
-        formData.append('email', formData.email);  // Menambahkan email
-        formData.append('full_name', formData.full_name);  // Menambahkan full_name
-        formData.append('phone_number', formData.phone_number);  // Menambahkan phone_number
-        formData.append('identity_number', formData.identity_number);  // Menambahkan identity_number
-
-        // Menambahkan file jika ada
-        if (formData.photo_profile) {
-            formData.append('photo_profile', formData.photo_profile);  // Menambahkan file foto_profile
-        }
-
-        if (formData.identity_number_file) {
-            formData.append('identity_number', formData.identity_number_file);  // Menambahkan file identity_number
-        }
-
-        console.log('Sending data:', formData);
-
-        const response = await UpdateProfile(formData);
-        console.log('Full Response:', response); // Log lengkap respons
-        console.log('Response data:', response.data);  
-
-        // Menampilkan toast notification
-        toast.success("Profile updated successfully!", {
-            position: "top-right", // Posisi toast
-            autoClose: 3000,       // Durasi tampil 3 detik
-        });
-
-        // Arahkan kembali ke halaman About
-        setIsPasswordChange(false); // Ini akan menampilkan tab About
-        setIsEditing(false); // Menonaktifkan mode edit
-    } catch (err) {
-        console.error("Update error:", err);
-        setError(`Failed to update profile: ${err.message}`);
-        toast.error("Failed to update profile!", {
-            position: "top-right",
-            autoClose: 3000,
-        });
-    } finally {
-        setLoading(false);
+      console.log("Sending FormData:", Object.fromEntries(formDataToSend.entries()));
+  
+      const response = await UpdateProfile(formDataToSend);
+      
+      console.log('Profile updated successfully:', response);
+      const updatedProfile = await GetProfile();
+      setFormData({
+        username: updatedProfile.data.user.username || '',
+        email: updatedProfile.data.user.email || '',
+        full_name: updatedProfile.data.user.full_name || '',
+        phone_number: updatedProfile.data.user.phone_number || '',
+        identity_number: updatedProfile.data.user.identity_number || '',
+        status: updatedProfile.data.user.status || '',
+        photo_profile: updatedProfile.data.user.photo_profile || '',
+      });
+      toast('Profile updated successfully!');
+      handleShowAbout();
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast('Failed to update profile. Please try again.');
     }
-};
+  };  
 
   const handleChange = (e) => {
     const { id, value } = e.target; 
@@ -126,18 +113,70 @@ const Profile = () => {
     setIsPasswordChange(false);
   };
 
+  const handleChangePassword = async (event) => {
+    event.preventDefault();
+
+    if (newPassword !== confirmPassword) {
+      setErrorMessage("New password and confirm password do not match.");
+      return;
+    }
+    if (newPassword.length < 8) {
+      setErrorMessage('New password must be at least 8 characters long.');
+      return;
+    }
+
+    try {
+      setLoading(true); // Set loading state to true while making the API call
+      const response = await ChangePassword({
+        current_password: currentPassword,
+        new_password: newPassword,
+        new_password_confirmation: confirmPassword,
+      });
+
+      if (response.data.status === "success") {
+        setSuccessMessage(response.data.message);
+        setErrorMessage(""); // Clear any previous errors
+        // Reset form fields after successful password change
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+        toast.success('Password updated successfully!');
+      } else {
+        setErrorMessage(response.data.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      setErrorMessage(error.response ? error.response.data.message : "An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleShowChangePassword = () => {
     setIsPasswordChange(true);
   };
 
   const handleUpdatePassword = (event) => {
     event.preventDefault();
-    alert('Password updated successfully!');
+    toast('Password updated successfully!');
     handleShowAbout();
   };
 
   const handleCurrentPasswordChange = (e) => {
     setCurrentPassword(e.target.value);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; 
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData({
+          ...formData,
+          photo_profile: reader.result // Simpan file dalam bentuk base64 ke state
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   if (loading) {
@@ -165,15 +204,24 @@ const Profile = () => {
             transform: 'translate(-50%, -50%)',
             width: '200px',
             height: '200px',
-            zIndex: '50'
-          }}>
-            <img src={formData.foto_profile ? formData.foto_profile : profile} alt="Profile" className="rounded-circle" width="150" style={{
+            zIndex: '50',
+            cursor: isEditing ? 'pointer' : 'default'
+          }}onClick={() => isEditing && document.getElementById('fileInput').click()}
+          >
+            <img src={formData.photo_profile ? formData.photo_profile : profile} alt="Profile" className="rounded-circle" width="150" style={{
               width: '50%',
               height: '50%',
               objectFit: 'cover',
               borderRadius: '50%'
             }}/>
           </div>
+          <input
+            type="file"
+            id="fileInput"
+            style={{ display: 'none' }} // Input file disembunyikan
+            onChange={(e) => handleFileChange(e)} // Handle perubahan file
+            accept="image/*"
+          />
           <div className="position-absolute mt-5" style={{ right: 0, top: '160%', transform: 'translateY(-50%)' }}>
             <button className="btn btn-primary" onClick={handleEnableEdit}>
               <FaEdit /> Edit Profile
@@ -206,7 +254,7 @@ const Profile = () => {
               <form className="profile-form">
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label fw-bold">Username</label>
-                  <input type="text" id="username" value={formData.username} disabled={isEditing} className="form-control" />
+                  <input type="text" id="username" value={formData.username} className="form-control" disabled/>
                 </div>
 
                 <div className="mb-3">
@@ -215,13 +263,13 @@ const Profile = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="fullname" className="form-label fw-bold">Full Name</label>
-                  <input type="text" id="fullname" value={formData.fullname} disabled={!isEditing} onChange={handleChange} className="form-control" />
+                  <label htmlFor="full_name" className="form-label fw-bold">Full Name</label>
+                  <input type="text" id="full_name" value={formData.full_name} disabled={!isEditing} onChange={handleChange} className="form-control" />
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="phone" className="form-label fw-bold">Phone Number</label>
-                  <input type="tel" id="phone" value={formData.phone} disabled={!isEditing} onChange={handleChange} className="form-control" />
+                  <label htmlFor="phone_number" className="form-label fw-bold">Phone Number</label>
+                  <input type="tel" id="phone_number" value={formData.phone_number} disabled={!isEditing} onChange={handleChange} className="form-control" />
                 </div>
 
                 <div className="mb-3">
@@ -229,7 +277,7 @@ const Profile = () => {
                   <p style={{ fontSize: '12px', fontStyle: 'italic', textAlign: 'justify' }}>
                     Based on PERDIRJEND NO 3.KN.2016 concerning PMPJ (Implementation of the Principles of Knowing Your Customer), users are required to submit their KTP (Indonesian National Identity Card)
                   </p>
-                  <input type="file" id="image" name="image" disabled={!isEditing} onChange={handleChange} className="form-control" />
+                  <input type="file" id="image" name="image" value={formData.identity_number} disabled={!isEditing} onChange={handleChange} className="form-control" />
                 </div>
 
                 <div className="mb-3 fw-bold">
@@ -262,7 +310,7 @@ const Profile = () => {
                     <button
                       type="button"
                       className="btn"
-                      onClick={handleSaveProfile}
+                      onClick={handleSave}
                       style={{ backgroundColor: '#333', color: '#fff', width: '150px'}}
                     >
                       Save
@@ -277,15 +325,18 @@ const Profile = () => {
           {isPasswordChange && (
             <div id="change-password" className="content-section">
               <h3>Change Password</h3>
-              <form className="profile-form" onSubmit={handleUpdatePassword}>
+              <form className="profile-form" onSubmit={handleChangePassword}>
                 <label htmlFor="current-password">Current Password</label>
-                <input type="password" id="current-password" value={currentPassword} onChange={handleCurrentPasswordChange} required className="form-control" />
+                <input type="password" id="current-password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required className="form-control" />
 
                 <label htmlFor="new-password">New Password</label>
-                <input type="password" id="new-password" required className="form-control" />
+                <input type="password" id="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required className="form-control" />
 
                 <label htmlFor="confirm-password">Confirm Password</label>
-                <input type="password" id="confirm-password" required className="form-control" />
+                <input type="password" id="confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required className="form-control" />
+
+                {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+                {successMessage && <div className="alert alert-success">{successMessage}</div>}
 
                 <div className="button-group mt-3 d-flex justify-content-end">
                   <button
@@ -296,7 +347,7 @@ const Profile = () => {
                   >
                     Cancel
                   </button>
-                  <button type="submit" className="btn btn-dark">Save Changes</button>
+                  <button type="submit" className="btn btn-dark">{loading ? 'Saving...' : 'Save'}</button>
                 </div>
               </form>
             </div>

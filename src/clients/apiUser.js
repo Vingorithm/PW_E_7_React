@@ -6,3 +6,6 @@ export const GetProfile = () =>
 
 export const UpdateProfile = (formData) =>
     apiClient.post(ENDPOINTS.UPDATE_PROFILE, formData);
+
+export const ChangePassword = (formData) =>
+    apiClient.post(ENDPOINTS.CHANGE_PASSWORD, formData);
