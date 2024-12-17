@@ -9,20 +9,21 @@ const Detail = () => {
   const [productDetail, setProductDetail] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [bid, setBid] = useState(0);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     const fetchCarDetail = async () => {
       try {
         const response = await ShowAuction(id);
-        console.log(response.data);
-        setProductDetail(response.data);
+        console.log(response.data.data);
+        setProductDetail(response.data.data);
         setBid(parseFloat(response.data.starting_price) || 100000);
       } catch (error) {
         console.error("Error fetching car detail:", error);
       }
     };
 
-  const fetchRelatedProducts = async () => {
+    const fetchRelatedProducts = async () => {
       try {
         const relatedData = await GetAllCatalog();
         setRelatedProducts(relatedData?.data?.data || []);
@@ -35,6 +36,44 @@ const Detail = () => {
     fetchRelatedProducts();
   }, [id]);
 
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      if (!productDetail || !productDetail.end_time) return;
+      const today = new Date();
+      const [hours, minutes, seconds] = productDetail.end_time.split(':');
+      
+      const auctionEndTime = new Date(
+        today.getFullYear(), 
+        today.getMonth(), 
+        today.getDate(), 
+        parseInt(hours), 
+        parseInt(minutes), 
+        parseInt(seconds)
+      );
+  
+      if (auctionEndTime <= today) {
+        auctionEndTime.setDate(auctionEndTime.getDate() + 1);
+      }
+  
+      const timeDifference = auctionEndTime - today;
+  
+      if (timeDifference > 0) {
+        setTimeLeft({
+          days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((timeDifference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((timeDifference / 1000 / 60) % 60),
+          seconds: Math.floor((timeDifference / 1000) % 60),
+        });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+  
+    const timerInterval = setInterval(calculateTimeLeft, 1000);
+  
+    return () => clearInterval(timerInterval);
+  }, [productDetail]);
+  
   const handleIncreaseBid = () => setBid((prevBid) => prevBid + 1000);
   const handleDecreaseBid = () => {
     setBid((prevBid) => (prevBid > 1000 ? prevBid - 1000 : prevBid));
@@ -78,12 +117,32 @@ const Detail = () => {
           <p><strong>Description</strong></p>
           <p>{productDetail.description}</p>
           <p><strong>Current Bid</strong></p>
-          <p style={{ fontSize: "24px" }}>Rp. {bid.toLocaleString()}</p>
+          <p style={{ fontSize: "24px" }}>Rp. {productDetail.starting_price}</p>
           <p><strong>Auction Date</strong></p>
           <p>{productDetail.auction_date}</p>
-          <p><strong>Time</strong></p>
-          <p>{productDetail.start_time} - {productDetail.end_time}</p>
-          
+
+          <div className="mb-3">
+            <p><strong>Time Left</strong></p>
+            <div className="d-flex justify-content-between">
+              {['days', 'hours', 'minutes', 'seconds'].map((unit) => (
+                <div 
+                  key={unit} 
+                  className="time-box text-center p-2 rounded" 
+                  style={{
+                    width: '100px', 
+                    backgroundColor: '#f8f9fa', 
+                    border: '1px solid #dee2e6'
+                  }}
+                >
+                  <strong className="d-block" style={{ fontSize: '1.5rem' }}>
+                    {timeLeft[unit]}
+                  </strong>
+                  <small className="text-muted text-uppercase">{unit}</small>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="d-flex align-items-center">
             <button
               type="button"
@@ -167,7 +226,7 @@ const Detail = () => {
                         <span className="fw-bold text-dark">{product.auction?.status}</span>
                       </div>
                     </div>
-                    <Link to={`/detail/${product.id}`} className="btn btn-dark mt-auto w-100">
+                    <Link to={`/detail/${product.auction?.car?.id}`} className="btn btn-dark mt-auto w-100">
                       Bid Now
                     </Link>
                   </div>
