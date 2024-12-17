@@ -88,28 +88,7 @@ const Home = () => {
 
 
         <div>
-            <style>
-                {`
-          .btn {
-            background-color: black;
-            color: white;
-            border: none;
-          }
-          .btn:hover {
-            background-color: #333;
-            color: white;
-          }
-          .category-btn:not(.active) {
-            background-color: white !important;
-            color: black !important;
-            border: 0.5px solid black !important;
-          }
-          .category-btn.active {
-            background-color: black !important;
-            color: white !important;
-          }
-        `}
-            </style>
+
 
             <head>
                 <title>Home</title>
@@ -171,13 +150,13 @@ const Home = () => {
                                         className="page-home overlay-image A"
                                         style={{ backgroundImage: `url(${item.image})` }}
                                     ></div>
-                                    <div className="page-home container">
+                                    <div className="page-home container p-4" style={{ marginLeft: "300px", marginRight: "200px", marginBottom: "100px" }}>
                                         <h1 className="page-home">{item.title}</h1>
                                         <p className="page-home">{item.description}</p>
                                         <a
                                             href={item.detailLink}
                                             className="page-home btn btn-lg btn-success"
-                                            style={{ borderRadius: '4px' }}
+                                            style={{ borderRadius: '4px', padding: '8px', marginTop: '10px', }}
                                         >
                                             Bid Now
                                         </a>
@@ -214,10 +193,25 @@ const Home = () => {
 
                     </Link>
                 </div>
-                <div className="page-home row g-4" style={{ minHeight: "400px", marginTop: "20px", marginBottom: "20px", padddingRight: "20px", paddingLeft: "20px" }}>
+                <div
+                    className="page-home row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"
+                    style={{
+                        minHeight: "400px",
+                        marginTop: "20px",
+                        marginBottom: "20px",
+                        paddingRight: "20px",
+                        paddingLeft: "20px",
+                        gap: "20px",
+                    }}
+                >
                     {cars.map((car) => (
-                        <div key={car.id} className="page-home col-lg-3 col-md-6 card-item" data-category={car.category}>
-                            <div className="page-home card h-100 shadow-sm w-100">
+                        <div
+                            key={car.id}
+                            className="page-home col card-item"
+                            data-category={car.category}
+                            style={{ maxWidth: "300px" }}
+                        >
+                            <div className="page-home card h-100 shadow-sm w-100 p-3 ">
                                 <img
                                     src={`/images/${car.image}`}
                                     alt={car.nama}
@@ -227,36 +221,42 @@ const Home = () => {
                                 <div className="page-home card-body d-flex flex-column">
                                     <h5 className="page-home card-title fw-bold mb-3">{car.nama}</h5>
                                     <div className="page-home mb-3">
-                                        <div className="page-home d-flex justify-content-between mb-1">
-                                            <span className="page-home text-muted small">Kilometers:</span>
-                                            <span className="page-home small">{car.kilometers}</span>
+                                        <div className="d-flex justify-content-between mb-1">
+                                            <span className="text-muted small">Kilometers:</span>
+                                            <span className="small">{car.kilometers}</span>
                                         </div>
-                                        <div className="page-home d-flex justify-content-between mb-1">
-                                            <span className="page-home text-muted small">Transmission:</span>
-                                            <span className="page-home small">{car.transmission}</span>
+                                        <div className="d-flex justify-content-between mb-1">
+                                            <span className="text-muted small">Transmission:</span>
+                                            <span className="small">{car.transmission}</span>
                                         </div>
-                                        <div className="page-home d-flex justify-content-between mb-1">
-                                            <span className="page-home text-muted small">Listed on:</span>
-                                            <span className="page-home small">{car.listedDate}</span>
-                                        </div>
-                                    </div>
-                                    <div className="page-home d-flex justify-content-between align-items-start mb-3">
-                                        <div>
-                                            <span className="page-home text-muted small d-block">Current Bid</span>
-                                            <h6 className="page-home fw-bold">{car.harga}</h6>
-                                        </div>
-                                        <div>
-                                            <span className="page-home text-muted small d-block">Time Left</span>
-                                            <h6 className="page-home fw-bold">{car.timeLeft}</h6>
+                                        <div className="d-flex justify-content-between mb-1">
+                                            <span className="text-muted small">Listed on:</span>
+                                            <span className="small">{car.listedDate}</span>
                                         </div>
                                     </div>
-                                    <Link to={`/car/${car.id}`} className="page-home btn btn-primary w-100 mt-auto">View Details</Link>
+                                    <div className="d-flex justify-content-between align-items-start mb-3">
+                                        <div>
+                                            <span className="text-muted small d-block">Current Bid</span>
+                                            <h6 className="fw-bold">{car.harga}</h6>
+                                        </div>
+                                        <div>
+                                            <span className="text-muted small d-block">Time Left</span>
+                                            <h6 className="fw-bold">{car.timeLeft}</h6>
+                                        </div>
+                                    </div>
+                                    <Link
+                                        to={`/car/${car.id}`}
+                                        className="btn btn-primary w-100 mt-auto p-2"
+                                        style={{ backgroundColor: "black" }}
+                                    >
+                                        View Details
+                                    </Link>
                                 </div>
                             </div>
                         </div>
                     ))}
-
                 </div>
+
 
                 <div className="page-home timeline-container">
                 </div>
@@ -277,7 +277,8 @@ const Home = () => {
                                 technology and dedicated support. Join us today and find your dream
                                 car!
                             </p>
-                            <a href="#" className="page-home btn btn-lg btn-secondary aboutButton">
+                            <a href="#" className="page-home btn btn-lg btn-secondary aboutButton" style={{ borderRadius: '4px', padding: '5px', marginTop: '0px' }}>
+
                                 Contact Us <GoLinkExternal />
 
                             </a>
