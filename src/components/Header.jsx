@@ -5,10 +5,12 @@ import profileImage from '../assets/images/profile.png';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { authService } from "../api/authService";
+import { GetProfile } from "../clients/apiUser"; 
 
 const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [formData, setFormData] = useState({ username: "" });
 
     useEffect(() => {
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
@@ -26,6 +28,22 @@ const Header = () => {
       document.addEventListener("click", handleClickOutside);
       return () => document.removeEventListener("click", handleClickOutside);
     }, []);
+
+    useEffect(() => {
+        const fetchProfileData = async () => {
+          try {
+            const response = await GetProfile();
+            setFormData({
+              username: response.data.user.username
+            });
+            console.log("Profile data fetched successfully:", response);
+          } catch (err) {
+            console.error("Error details:", err); 
+          } 
+        };
+    
+        fetchProfileData();
+      }, []); 
 
     const handleDropdownToggle = () => {
         setDropdownVisible(!dropdownVisible);
@@ -83,7 +101,7 @@ const Header = () => {
                 alt="User Photo"
                 className="page-navbar user-photo"
               />
-              <span className="page-navbar user-name fw-bold">Lucas</span>
+              <span className="page-navbar user-name fw-bold">{formData.username}</span>
               <div
                 className={`page-navbar dropdown ${
                   dropdownVisible ? "visible" : ""

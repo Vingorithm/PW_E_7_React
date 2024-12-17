@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import { CreateAuction } from "../clients/apiAuction";
+import { useParams } from 'react-router-dom';
 
 const AddBid = () => {
+
+  const { userId } = useParams();
+
   const [carModel, setCarModel] = useState('');
   const [startingPrice, setStartingPrice] = useState('');
   const [startDateTime, setStartDateTime] = useState('');
@@ -12,20 +17,45 @@ const AddBid = () => {
   const [address, setAddress] = useState('');
   const [isToastVisible, setIsToastVisible] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      carModel,
-      startingPrice,
-      startDateTime,
-      endDateTime,
-      auctionTitle,
-      description,
-      image,
-      address,
-    });
-    setIsToastVisible(true); // Show the toast
+
+    if (!userId) {
+      console.error('User ID is required!');
+      return;
+    }
+
+    // Construct the formData object
+    const formData = new FormData();
+    formData.append('user_id', userId);  // Assuming 'userId' is stored in your state
+    formData.append('car_id', carId);    // Assuming you have carId
+    formData.append('starting_price', startingPrice);
+    formData.append('start_time', startDateTime);  // Rename to 'start_time'
+    formData.append('end_time', endDateTime);      // Rename to 'end_time'
+    formData.append('auction_date', auctionDate);  // Rename to 'auction_date'
+    formData.append('status', 'Upcoming');  // You can adjust this as needed (e.g., 'Upcoming', 'Ongoing', 'Finished')
+    formData.append('title', auctionTitle);
+    formData.append('description', description);
+    formData.append('address', address);
+
+    // Append the image file
+    if (image) {
+        formData.append('image', image);
+    }
+
+    console.log("Submitting auction with data:", formData);
+
+    try {
+        const response = await CreateAuction(userId, formData);
+        console.log('Auction created successfully:', response);
+        setIsToastVisible(true);
+        navigate('/kelola-lelang/myBid');
+    } catch (error) {
+        console.error('Error creating auction:', error);
+        setIsToastVisible(false);
+    }
   };
+
 
   return (
     <div className="container-main" style={{ marginBottom: '18rem' }}>
