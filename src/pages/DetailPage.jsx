@@ -79,6 +79,10 @@ const Detail = () => {
     setBid((prevBid) => (prevBid > 1000 ? prevBid - 1000 : prevBid));
   };
 
+  const filteredRelatedProducts = relatedProducts.filter((product) => 
+    product.auction?.status === "ongoing"
+  );
+
   return (
     <div className="container mt-5">
       <div className="row align-items-stretch">
@@ -107,7 +111,7 @@ const Detail = () => {
             </div>
             <div className="col-6">
               <p><strong>Kilometers</strong></p>
-              <p>{productDetail.car?.odometer}</p>
+              <p>{productDetail.car?.odometer} km</p>
               <p><strong>Transmission</strong></p>
               <p>{productDetail.car?.transmission}</p>
               <p><strong>Condition</strong></p>
@@ -199,7 +203,7 @@ const Detail = () => {
                     style={{ height: "200px", objectFit: "cover" }}
                   />
                   <div className="card-body d-flex flex-column">
-                    <h5 className="card-title fw-bold mb-3">{product.auction?.car?.brand}</h5>
+                    <h5 className="card-title fw-bold mb-3">{product.auction?.car?.brand} {product.auction?.car?.model}</h5>
                     <div className="mb-3">
                       <div className="d-flex justify-content-between mb-1">
                         <span className="text-muted small">Kilometers:</span>

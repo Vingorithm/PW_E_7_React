@@ -26,6 +26,7 @@ const Catalog = () => {
                     return {
                         id_auction: auction.id,
                         id: auction.car.id,
+                        model: auction.car.model,
                         nama: auction.car.brand,
                         kilometers: auction.car.odometer,
                         listedDate: auction.auction_date,
@@ -60,16 +61,15 @@ const Catalog = () => {
     };
 
     const filteredCars = Array.isArray(cars)
-        ? cars.filter((car) => {
-              const matchesCategory =
-                  selectedCategory === "All" ||
-                  car.category === selectedCategory;
-              const matchesSearch = car.nama
-                  .toLowerCase()
-                  .includes(searchQuery.toLowerCase());
-              return matchesCategory && matchesSearch;
-          })
-        : [];
+    ? cars.filter((car) => {
+        const matchesCategory =
+            selectedCategory === "All" || car.category === selectedCategory;
+        const matchesSearch =
+            car.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            car.model.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+        })
+    : [];
 
     if (loading) {
         return (
@@ -141,17 +141,14 @@ const Catalog = () => {
                         </button>
                     ))}
                 </div>
-                <div className="d-flex gap-3 align-items-center">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search vehicles..."
-                        style={{ maxWidth: "300px" }}
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                    />
-                    <button className="btn">Search</button>
-                </div>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search vehicles..."
+                    style={{ maxWidth: "300px" }}
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
             </div>
 
             <div className="row g-4" style={{ minHeight: "400px" }}>
@@ -174,7 +171,7 @@ const Catalog = () => {
                                 />
                                 <div className="card-body d-flex flex-column">
                                     <h5 className="card-title fw-bold mb-3">
-                                        {car.nama}
+                                    {car.nama} {car.model}
                                     </h5>
                                     <div className="mb-3">
                                         <div className="d-flex justify-content-between mb-1">
@@ -182,7 +179,7 @@ const Catalog = () => {
                                                 Kilometers:
                                             </span>
                                             <span className="small">
-                                                {car.kilometers}
+                                                {car.kilometers} km
                                             </span>
                                         </div>
                                         <div className="d-flex justify-content-between mb-1">
