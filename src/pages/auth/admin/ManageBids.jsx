@@ -6,7 +6,9 @@ import {
   UpdateUserAuction,
 } from "../../../clients/apiAdmin";
 import { toast, ToastContainer } from "react-toastify";
-import { DeleteAuction } from "../../../clients/apiAuction";
+import { CreateAuction, DeleteAuction } from "../../../clients/apiAuction";
+import { GetAllCars } from "../../../clients/apiCar";
+import { Modal, Button, Form } from "react-bootstrap";
 
 const ManageBids = () => {
   const currentMonth = new Date().getMonth();
@@ -33,6 +35,20 @@ const ManageBids = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [auctionsPerPage] = useState(5);
+
+  const [showModal, setShowModal] = useState(false);
+  const [cars, setCars] = useState([]);
+  const [formData, setFormData] = useState({
+    car_id: "",
+    starting_price: "",
+    start_time: "",
+    end_time: "",
+    auction_date: "",
+    title: "",
+    description: "",
+    address: "",
+    image: null,
+  });
 
   const formatDateTime = (date, time) => {
     const days = [
@@ -65,6 +81,16 @@ const ManageBids = () => {
     const monthName = months[formattedDate.getMonth()];
 
     return `${dayName}, ${day} ${monthName} ${year} pukul ${hour}:${minute}`;
+  };
+
+  const fetchCars = async () => {
+    try {
+      const response = await GetAllCars();
+      setCars(response.data.cars || []);
+    } catch (error) {
+      console.error("Error fetching cars:", error);
+      toast.error("Gagal memuat data mobil.");
+    }
   };
 
   const fetchUsers = async () => {
@@ -135,6 +161,31 @@ const ManageBids = () => {
     } catch (err) {
       console.error("Error delete auction:", err);
       toast.error("Auction gagal dihapus");
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, files } = e.target;
+    setFormData({
+      ...formData,
+      [name]: files ? files[0] : value,
+    });
+  };
+
+  const handleSubmitAuction = async () => {
+    try {
+      const data = new FormData();
+      Object.keys(formData).forEach((key) => {
+        data.append(key, formData[key]);
+      });
+
+      await CreateAuction(data);
+      toast.success("Lelang berhasil ditambahkan!");
+      fetchAuctions();
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error creating auction:", error);
+      toast.error("Gagal menambahkan lelang.");
     }
   };
 
@@ -223,6 +274,10 @@ const ManageBids = () => {
                 borderRadius: "50px",
                 maxHeight: "40px",
                 width: "14rem",
+              }}
+              onClick={() => {
+                setShowModal(true);
+                fetchCars();
               }}
             >
               Tambah Lelang
