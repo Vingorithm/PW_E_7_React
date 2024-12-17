@@ -7,7 +7,7 @@ export const GetAllUser = () =>
 export const GetAllAuction = () =>
     apiClient.get(ENDPOINTS.ADMIN_GET_ALL_AUCTION);
 
-export const UpdateAuction = (id, data) =>
+export const UpdateUserAuction = (id, data) =>
   apiClient.put(ENDPOINTS.ADMIN_UPDATE_AUCTION(id), data);
 
 export const UpdateUserStatus = (id, data) =>

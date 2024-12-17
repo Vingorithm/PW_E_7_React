@@ -32,7 +32,7 @@ const AdminLogin = () => {
 
   return (
     <div style={styles.body}>
-      <ToastContainer position="top-right" autoClose={3000} />{" "}
+      <ToastContainer position="top-right" autoClose={3000} />
       {/* Toast Container */}
       <div className="container content">
         <div className="row justify-content-center">
