@@ -24,7 +24,7 @@
     display: flex;
     align-items: center;
     margin-right: auto;
-    margin-left: 30px;
+    margin-left: 5px;
 }
 
 .page-navbar .logo img {
@@ -150,6 +150,6 @@
 
     .page-navbar .navbar {
         height: auto;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 }

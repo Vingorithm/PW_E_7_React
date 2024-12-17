@@ -28,7 +28,7 @@ const AddBid = () => {
   };
 
   return (
-    <div className="container-main">
+    <div className="container-main" style={{ marginBottom: '18rem' }}>
       <div className="content">
         <div className="container text-center pt-5">
           <h1 className="title pt-2">Sell Your Vehicle</h1>
@@ -157,7 +157,7 @@ const AddBid = () => {
           </div>
         )}
       </div>
-      <style jsx>{`
+      <style>{`
         body {
             font-family: 'Roboto', sans-serif;
         }
