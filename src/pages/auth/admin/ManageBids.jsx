@@ -150,7 +150,7 @@ const ManageBids = () => {
   return (
     <div className="dashboard" style={{ padding: "1rem" }}>
       <ToastContainer position="top-right" autoClose={3000} />
-      <h1>Kelola Lelang</h1>
+      <h1>Dashboard</h1>
 
       {/* Statistics */}
       <div
@@ -188,7 +188,7 @@ const ManageBids = () => {
             gap: "10px",
           }}
         >
-          <h2>List Lelang</h2>
+          <h4>List Lelang</h4>
           <div
             style={{
               display: "flex",
@@ -257,7 +257,7 @@ const ManageBids = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredAuctions.map((auction) => (
+                {currentAuctions.map((auction) => (
                   <tr key={auction.id}>
                     <td>{auction.id}</td>
                     <td>{auction.user_id}</td>

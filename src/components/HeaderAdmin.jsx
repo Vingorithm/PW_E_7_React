@@ -12,7 +12,9 @@ const HeaderAdmin = () => {
       >
         {/* Logo */}
         <div className="logo">
-          <img src={logo} alt="Logo" />
+          <a href="/">
+            <img src={logo} alt="Logo" />
+          </a>
         </div>
 
         {/* Navbar kanan */}
@@ -32,19 +34,6 @@ const HeaderAdmin = () => {
               <a href="/admin/managebids">Kelola Lelang</a>
             </li>
           </ul>
-
-          {/* Profil Pengguna */}
-          <div
-            className="user-profile"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <img
-              style={{ width: "50px", height: "50px", marginRight: "0.5rem" }}
-              src={logo}
-              alt="Profile Picture"
-            />
-            <span>{""}</span>
-          </div>
         </div>
       </nav>
     </header>

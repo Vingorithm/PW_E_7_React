@@ -12,7 +12,6 @@ import { Modal, Button } from "react-bootstrap";
 import { authService } from "../../../api/authService";
 
 const ManageUsers = () => {
-  const [month, setMonth] = useState("januari");
   const [auctions, setAuctions] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -117,7 +116,7 @@ const ManageUsers = () => {
   return (
     <div className="dashboard" style={{ padding: "1rem" }}>
       <ToastContainer position="top-right" autoClose={3000} />
-      <h1>Kelola Pengguna</h1>
+      <h1>Dashboard</h1>
 
       {/* Statistics */}
       <div
@@ -155,7 +154,7 @@ const ManageUsers = () => {
             gap: "10px",
           }}
         >
-          <h2>List Pengguna</h2>
+          <h4>List Pengguna</h4>
           <button
             className="btn btn-primary"
             onClick={() => setModalShow(true)}
