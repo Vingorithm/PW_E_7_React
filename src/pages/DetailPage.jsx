@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { GetAllCatalog, ShowCarCatalog } from "../clients/apiCatalog";
 import { ShowAuction } from "../clients/apiAuction";
 
@@ -10,6 +10,8 @@ const Detail = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [bid, setBid] = useState(0);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [loading, setLoading] = useState(false); // For auto loading
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCarDetail = async () => {
@@ -83,6 +85,14 @@ const Detail = () => {
     product.auction?.status === "ongoing"
   );
 
+  const handleBidNowCardClick = (carId) => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate(`/detail/${carId}`);
+    }, 500);
+  };
+
   return (
     <div className="container mt-5">
       <div className="row align-items-stretch">
@@ -98,7 +108,7 @@ const Detail = () => {
         </div>
         <div className="col-md-4 d-flex flex-column">
           <h1 className="mb-3">
-            <strong>{productDetail.title}</strong>
+            <strong>{productDetail.car?.brand} {productDetail.car?.model}</strong>
           </h1>
           <div className="row">
             <div className="col-6">
@@ -118,10 +128,8 @@ const Detail = () => {
               <p>{productDetail.car?.condition}</p>
             </div>
           </div>
-          <p><strong>Description</strong></p>
-          <p>{productDetail.description}</p>
           <p><strong>Current Bid</strong></p>
-          <p style={{ fontSize: "24px" }}>Rp. {productDetail.starting_price}</p>
+          <p style={{ fontSize: "32px" }}>Rp. {productDetail.starting_price}</p>
           <p><strong>Auction Date</strong></p>
           <p>{productDetail.auction_date}</p>
 
@@ -230,9 +238,13 @@ const Detail = () => {
                         <span className="fw-bold text-dark">{product.auction?.status}</span>
                       </div>
                     </div>
-                    <Link to={`/detail/${product.auction?.car?.id}`} className="btn btn-dark mt-auto w-100">
-                      Bid Now
-                    </Link>
+                    <button
+                      className="btn btn-dark mt-auto w-100"
+                      disabled={product.auction?.status === "Ongoing" || loading}
+                      onClick={() => handleBidNowCardClick(product.auction?.car?.id)} 
+                    >
+                      {loading ? "Loading..." : "Bid Now"}
+                    </button>
                   </div>
                 </div>
               </div>
