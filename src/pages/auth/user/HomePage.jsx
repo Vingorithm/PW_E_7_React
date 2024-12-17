@@ -134,7 +134,7 @@ const Home = () => {
                 <title>Home</title>
             </head>
             <div className="page-home container-main">
-                {/* Video background and landing section */}
+                {/* Video background and landing section tes*/}
                 <div className="page-home container-landingP">
                     <video className="page-home videoBackground" autoPlay loop muted playsInline>
                         <source className="page-home videoBackgroundSource" src={Video} type="video/mp4" />
