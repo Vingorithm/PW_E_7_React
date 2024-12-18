@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { Link } from "react-router-dom";
-import { GetAllAuction,DeleteAuction } from '../clients/apiAuction';  
+import { GetAllAuction,DeleteAuction, UpdateAuction } from '../clients/apiAuction';  
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast } from 'react-toastify';
 
@@ -61,6 +61,7 @@ const MyBid = () => {
     setShowModal(false);
     setAuctionToDelete(null);
   };
+  
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -126,7 +127,7 @@ const MyBid = () => {
                     </td>
                     <td className="d-flex justify-content-between align-items-center">
                       <Link
-                        to={`/editBid/${auction.id}`} // Navigate to the edit page
+                        to={`/addBid`} 
                         className="btn btn-primary"
                         style={{
                           border: 'none',
