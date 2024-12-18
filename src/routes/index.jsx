@@ -26,7 +26,6 @@ const router = createBrowserRouter([
     element: <div>Routes Not Found!</div>,
   },
   {
-    // Main Layout: Halaman utama untuk user, kayak catalog, infomation, dll
     element: <MainLayout />,
     children: [
       {
