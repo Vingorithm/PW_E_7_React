@@ -127,7 +127,7 @@ const MyBid = () => {
                     </td>
                     <td className="d-flex justify-content-between align-items-center">
                       <Link
-                        to={`/addBid`} 
+                        to={`/addBid/${auction.id}`} 
                         className="btn btn-primary"
                         style={{
                           border: 'none',

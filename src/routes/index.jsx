@@ -65,6 +65,10 @@ const router = createBrowserRouter([
         path: "/addBid",
         element: <AddBid />,
       },
+      {
+        path: "/addBid/:auctionId",
+        element: <AddBid />,
+      },
     ],
   },
   {
