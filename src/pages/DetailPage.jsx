@@ -98,33 +98,88 @@ const Detail = () => {
   }, [navigate]);
 
   const placeBid = async () => {
+    const userId = localStorage.getItem('userId');
     if (!id || !bid) {
       toast.error("Invalid bid data!");
       return;
     }
-  
+
     const currentBid = parseFloat(productDetail.starting_price);
-    if (bid <= currentBid) {
-      toast.error("Bid must be greater than the current bid!");
+    const minimumBid = currentBid + 1000;
+    
+    if (bid < minimumBid) {
+      toast.error(`Bid must be at least ${formatCurrency(minimumBid)}!`);
       return;
     }
 
-    if (timeLeft.days === 0 && timeLeft.hours === 0 && 
-        timeLeft.minutes === 0 && timeLeft.seconds === 0) {
-      toast.error("Auction has ended!");
-      return;
-    }
-  
     setLoading(true);
     try {
-      const response = await CreateBid(id, bid);
-      if (response.status === 200) {
+      console.log('Sending bid with data:', {
+        auction_id: parseInt(id),
+        bid_price: parseFloat(bid),
+        user_id: parseInt(userId)
+      });
+
+      const response = await CreateBid(
+        parseInt(id), 
+        parseFloat(bid),
+        parseInt(userId)
+      );
+      
+      console.log('Bid response:', response);
+
+      if (response.data?.success) {
         toast.success("Bid placed successfully!");
         await fetchCarDetail();
+      } else {
+        console.error('Unexpected response format:', response);
+        throw new Error(response.data?.message || "Failed to place bid");
       }
     } catch (error) {
-      console.error("Error placing bid:", error);
-      toast.error(error.message || "Failed to place bid. Please try again.");
+      console.error("Full error details:", {
+        error,
+        response: error.response,
+        data: error.response?.data
+      });
+      
+      if (error.response) {
+        switch (error.response.status) {
+          case 401:
+            toast.error("Please login to place a bid");
+            navigate('/login');
+            break;
+          case 403:
+            toast.error("You are not authorized to place bids");
+            break;
+          case 404:
+            toast.error("Auction not found");
+            break;
+          case 422:
+            const errorMessage = error.response.data?.message || "Invalid bid data";
+            toast.error(errorMessage);
+            break;
+          case 500:
+            toast.error("Server error. Please try again later.");
+            // Log server error details
+            console.error("Server Error Details:", {
+              status: error.response.status,
+              data: error.response.data,
+              headers: error.response.headers
+            });
+            break;
+          default:
+            toast.error("Failed to place bid. Please try again.");
+        }
+        
+        // Refresh data jika perlu
+        if (error.response.status !== 401) {
+          await fetchCarDetail();
+        }
+      } else if (error.request) {
+        toast.error("Network error. Please check your connection.");
+      } else {
+        toast.error(error.message || "Failed to place bid");
+      }
     } finally {
       setLoading(false);
     }
