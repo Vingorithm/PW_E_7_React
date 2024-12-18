@@ -2,7 +2,7 @@ import React from "react";
 import { FaUserCircle, FaIdBadge, FaCar, FaGavel, FaExternalLinkAlt } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import './Information.css';
+import './information.css';
 import Video2 from '../assets/videos/vid2.mp4';
 import Image4 from '../assets/images/car3.jpg';
 import { GoLinkExternal } from "react-icons/go";

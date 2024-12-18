@@ -42,7 +42,6 @@ const Profile = () => {
           identity_number: response.data.user.identity_number || null,
           status: response.data.user.status,
           photo_profile: response.data.user.photo_profile,
-          identity_number: response.data.user.identity_number,
         });
       } catch (err) {
         console.error("Error details:", err); 
