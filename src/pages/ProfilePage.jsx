@@ -64,25 +64,34 @@ const Profile = () => {
   };
 
   const handleSave = async () => {
-    try {  
-      const formDataToSend = new FormData();
-
-      formDataToSend.append("username", formData.username);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("full_name", formData.full_name);
-      formDataToSend.append("phone_number", formData.phone_number);
-      formDataToSend.append("identity_number", formData.identity_number);
-      formDataToSend.append("status", formData.status);
+    try {
+      const validatedFormData = {
+        username: formData.username || '',
+        email: formData.email || '',
+        full_name: formData.full_name || '',  // Jangan kirimkan nilai kosong
+        phone_number: formData.phone_number || '',  // Pastikan tidak kosong
+        identity_number: formData.identity_number && formData.identity_number !== 'null' ? formData.identity_number : '',  // Pastikan tidak 'null' string
+        status: formData.status || 'Unverified',  // Default status jika tidak ada
+      };
   
-      if (formData.photo_profile && formData.photo_profile instanceof File) {
-        formDataToSend.append("photo_profile", formData.photo_profile);
+      const formDataToSend = new FormData();
+      formDataToSend.append("username", validatedFormData.username);
+      formDataToSend.append("email", validatedFormData.email);
+      formDataToSend.append("full_name", validatedFormData.full_name);
+      formDataToSend.append("phone_number", validatedFormData.phone_number);
+      formDataToSend.append("identity_number", validatedFormData.identity_number);
+      formDataToSend.append("status", validatedFormData.status);
+  
+      if (formDataToSend.photo_profile && formDataToSend.photo_profile instanceof File) {
+        formDataToSend.append("photo_profile", formDataToSend.photo_profile);
       }
-
+  
       console.log("Sending FormData:", Object.fromEntries(formDataToSend.entries()));
   
       const response = await UpdateProfile(formDataToSend);
-      
+  
       console.log('Profile updated successfully:', response);
+  
       const updatedProfile = await GetProfile();
       setFormData({
         username: updatedProfile.data.user.username || '',
@@ -93,13 +102,15 @@ const Profile = () => {
         status: updatedProfile.data.user.status || '',
         photo_profile: updatedProfile.data.user.photo_profile || '',
       });
+  
       toast('Profile updated successfully!');
       handleShowAbout();
     } catch (error) {
       console.error('Error updating profile:', error);
       toast('Failed to update profile. Please try again.');
     }
-  };  
+  };
+  
 
   const handleChange = (e) => {
     const { id, value } = e.target; 

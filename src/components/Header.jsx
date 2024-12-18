@@ -63,6 +63,27 @@ const Header = () => {
         console.error("Logout Error:", error);
       }
     };
+    // const handleLogout = async (e) => {
+    //   e.preventDefault();
+    
+    //   try {
+    //     await authService.logout(); // Cobalah untuk logout di backend
+    //     setIsLoggedIn(false);
+    //     toast.success("Logout berhasil!");
+    //   } catch (error) {
+    //     // Tangani jika server gagal melakukan logout (misalnya 401)
+    //     console.error("Logout Error:", error);
+    //     toast.error("Gagal logout di server. Akan logout secara paksa.");
+    //   } finally {
+    //     // Logout paksa di frontend
+    //     localStorage.removeItem("authToken");
+    //     localStorage.removeItem("isLoggedIn");
+    //     setIsLoggedIn(false);
+    //     setTimeout(() => {
+    //       window.location.href = "/login"; // Redirect ke halaman login
+    //     }, 2000);
+    //   }
+    // };    
 
     return (
         <header>
