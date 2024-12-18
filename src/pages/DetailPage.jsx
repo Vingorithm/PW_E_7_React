@@ -14,13 +14,20 @@ const Detail = () => {
   const [bid, setBid] = useState(0);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
   const fetchCarDetail = useCallback(async () => {
     try {
       const response = await ShowAuction(id);
+      console.log('Full response data:', response.data.data);
+      
+      const userId = response.data.data.user_id;
+      console.log('Extracted user_id:', userId);
+      
+      setUserId(userId);
       setProductDetail(response.data.data);
-      setBid(Math.max(parseFloat(response.data.data.starting_price) + 1000, 100000));
+      setBid(Math.max(parseFloat(response.data.data.starting_price) + 1000, response.data.data.starting_price));
     } catch (error) {
       console.error("Error fetching car detail:", error);
       toast.error("Failed to load auction details");
@@ -98,8 +105,7 @@ const Detail = () => {
   }, [navigate]);
 
   const placeBid = async () => {
-    const userId = localStorage.getItem('userId');
-    if (!id || !bid) {
+    if (!bid) {
       toast.error("Invalid bid data!");
       return;
     }
@@ -115,15 +121,17 @@ const Detail = () => {
     setLoading(true);
     try {
       console.log('Sending bid with data:', {
-        auction_id: parseInt(id),
-        bid_price: parseFloat(bid),
-        user_id: parseInt(userId)
+        // auction_id: parseInt(id),
+        // user_id: parseInt(userId),
+        bid_price: parseFloat(bid)
       });
 
+      console.log(userId);
+
       const response = await CreateBid(
-        parseInt(id), 
+        // parseInt(id), 
         parseFloat(bid),
-        parseInt(userId)
+        // parseInt(userId)
       );
       
       console.log('Bid response:', response);
@@ -171,7 +179,6 @@ const Detail = () => {
             toast.error("Failed to place bid. Please try again.");
         }
         
-        // Refresh data jika perlu
         if (error.response.status !== 401) {
           await fetchCarDetail();
         }
