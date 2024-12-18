@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { FaCreditCard } from "react-icons/fa";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import logoBlu from "../assets/images/payment/logo-blu.png";
+import logoBrimo from "../assets/images/payment/logo-brimo.png";
+import logoDana from "../assets/images/payment/logo-dana.png";
+import logoGopay from "../assets/images/payment/logo-gopay.png";
+import logoMastercard from "../assets/images/payment/logo-mastercard.png";
+import logoPaypal from "../assets/images/payment/logo-paypal.png";
 
 const Payment = () => {
   const [order, setOrder] = useState(null);
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [summary, setSummary] = useState(null);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(""); // State for selected payment method
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
-
   const navigate = useNavigate();
+
+  const paymentLogos = {
+    Mastercard: logoMastercard,
+    Paypal: logoPaypal,
+    Dana: logoDana,
+    "Bca Mobile": logoBlu,
+    Gopay: logoGopay,
+    Brimo: logoBrimo,
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +70,7 @@ const Payment = () => {
     <div style={{ fontFamily: "Arial, sans-serif", minHeight: "calc(100vh - 150px)" }}>
       <style>
         {`
-         .payment-success-overlay {
+          .payment-success-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -92,12 +105,19 @@ const Payment = () => {
             border-color: #155724 !important;
             color: #155724 !important;
           }
+
+          .payment-button img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+          }
         `}
       </style>
+
       <div className="container mt-5" style={{ paddingBottom: "100px" }}>
         {/* Payment Success Overlay */}
         {isPaymentSuccessful && (
-          <div className="payment-success-overlay d-flex align-items-center justify-content-center">
+          <div className="payment-success-overlay">
             <div className="payment-success-content text-center">
               <h1>Payment Successful!</h1>
               <MdOutlineDownloadDone style={{ fontSize: "100px", color: "black" }} />
@@ -107,94 +127,69 @@ const Payment = () => {
         )}
 
         {/* Order Section */}
-        {order ? (
-          <div className="row">
+        {order && (
+          <div className="row mb-4">
             <div className="col-md-12">
               <h2>Your Order</h2>
-              <div className="card mb-3 d-flex flex-row">
+              <div className="card d-flex flex-row">
                 <img
                   src={order.image}
                   className="img-fluid"
-                  alt="Car Image"
-                  style={{ width: "200px", height: "auto", objectFit: "cover" }}
+                  alt="Car"
+                  style={{ width: "200px", objectFit: "cover" }}
                 />
                 <div className="card-body">
-                  <h5 className="card-title">
-                    <strong>{order.title}</strong>
-                  </h5>
-                  <p className="card-text">
-                    <small className="text-muted">Order Date: {order.orderDate}</small>
-                  </p>
-                  <p className="card-text">
-                    <small className="text-muted">Harga: Rp. {order.price.toLocaleString()}</small>
-                  </p>
+                  <h5 className="card-title">{order.title}</h5>
+                  <p className="card-text text-muted">Order Date: {order.orderDate}</p>
+                  <p className="card-text text-muted">Price: Rp. {order.price.toLocaleString()}</p>
                 </div>
               </div>
             </div>
           </div>
-        ) : (
-          <p>Loading order...</p>
         )}
-        <br />
 
         {/* Payment Methods */}
         <h2>Payment Method</h2>
         <div className="row mt-3">
-          {paymentMethods.length > 0 ? (
-            paymentMethods.map((method) => (
-              <div className="col-md-2" key={method}>
-                <button
-                  className={`btn custom-button ${selectedPaymentMethod === method ? "selected-method" : ""}`}
-                  style={{ width: "100%" }}
-                  onClick={() => handleSelectPaymentMethod(method)}
-                >
-                  <FaCreditCard style={{ fontSize: "30px" }} />
-                  <div>{method}</div>
-                </button>
-              </div>
-            ))
-          ) : (
-            <p>Loading payment methods...</p>
-          )}
+          {paymentMethods.map((method) => (
+            <div className="col-md-2 mb-3" key={method}>
+              <button
+                className={`btn payment-button ${selectedPaymentMethod === method ? "selected-method" : ""}`}
+                style={{ width: "100%" }}
+                onClick={() => handleSelectPaymentMethod(method)}
+              >
+                <img
+                  src={paymentLogos[method]}
+                  alt={method}
+                  onError={(e) => (e.target.src = logoMastercard)} // Fallback to Mastercard
+                />
+                <div>{method}</div>
+              </button>
+            </div>
+          ))}
         </div>
 
         {/* Payment Summary */}
-        {summary ? (
+        {summary && (
           <>
             <hr />
-            <div className="d-flex justify-content-between">
-              <h5>Subtotal</h5>
-              <h5>Rp. {summary.subtotal.toLocaleString()}</h5>
-            </div>
-            <div className="d-flex justify-content-between">
-              <h5>Est. Shipping Cost</h5>
-              <h5>Rp. {summary.shippingCost.toLocaleString()}</h5>
-            </div>
-            <div className="d-flex justify-content-between">
-              <h5>Tax (11%)</h5>
-              <h5>Rp. {summary.tax.toLocaleString()}</h5>
-            </div>
-            <div className="d-flex justify-content-between">
-              <h5>Application Cost</h5>
-              <h5>Rp. {summary.applicationCost.toLocaleString()}</h5>
-            </div>
-            <hr />
-            <div className="d-flex justify-content-between">
-              <h5>
-                <strong>Total</strong>
-              </h5>
-              <h5>
-                <strong>Rp. {summary.total.toLocaleString()}</strong>
-              </h5>
-            </div>
+            {[
+              ["Subtotal", summary.subtotal],
+              ["Est. Shipping Cost", summary.shippingCost],
+              ["Tax (11%)", summary.tax],
+              ["Application Cost", summary.applicationCost],
+              ["Total", summary.total],
+            ].map(([label, value]) => (
+              <div className="d-flex justify-content-between" key={label}>
+                <h5>{label}</h5>
+                <h5>Rp. {value.toLocaleString()}</h5>
+              </div>
+            ))}
           </>
-        ) : (
-          <p>Loading summary...</p>
         )}
 
         {/* Pay Now Button */}
-        <div className="d-flex justify-content-between mt-4">
-          <h5></h5>
+        <div className="d-flex justify-content-end mt-4">
           <button onClick={handlePayment} className="btn btn-dark" style={{ padding: "10px 30px" }}>
             Pay Now
           </button>

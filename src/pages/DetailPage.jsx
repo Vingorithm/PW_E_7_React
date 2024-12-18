@@ -129,7 +129,7 @@ const Detail = () => {
       console.log(userId);
 
       const response = await CreateBid(
-        // parseInt(id), 
+        parseInt(id), 
         parseFloat(bid),
         // parseInt(userId)
       );
@@ -153,21 +153,21 @@ const Detail = () => {
       if (error.response) {
         switch (error.response.status) {
           case 401:
-            toast.error("Please login to place a bid");
+            // toast.error("Please login to place a bid");
             navigate('/login');
             break;
           case 403:
-            toast.error("You are not authorized to place bids");
+            // toast.error("You are not authorized to place bids");
             break;
           case 404:
             toast.error("Auction not found");
             break;
           case 422:
             const errorMessage = error.response.data?.message || "Invalid bid data";
-            toast.error(errorMessage);
+            // toast.error(errorMessage);
             break;
           case 500:
-            toast.error("Server error. Please try again later.");
+            // toast.error("Server error. Please try again later.");
             // Log server error details
             console.error("Server Error Details:", {
               status: error.response.status,
@@ -176,7 +176,7 @@ const Detail = () => {
             });
             break;
           default:
-            toast.error("Failed to place bid. Please try again.");
+            // toast.error("Failed to place bid. Please try again.");
         }
         
         if (error.response.status !== 401) {
@@ -188,11 +188,11 @@ const Detail = () => {
         toast.error(error.message || "Failed to place bid");
       }
     } finally {
+      // navigate('/payment');
       setLoading(false);
     }
   };
 
-  // Render time box component
   const TimeBox = ({ unit, value }) => (
     <div 
       key={unit} 
